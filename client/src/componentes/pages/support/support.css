@@ -1,0 +1,29 @@
+#support{
+    width:100vw;
+    height:100vh;
+    background-color: rgb(21, 21, 21);
+    overflow: hidden;
+}
+
+#background{
+   height:100%;
+}
+
+#support_principal_div{
+    position: absolute;
+    height: 100vh;
+    width:100vw;
+    top:0;
+    background-color: rgba(255, 0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+#support_principal_bar{
+    height:100vh;
+    background-color: rgb(21, 21, 21);
+    width:80%;
+    max-width: 1300px;
+}

@@ -1,0 +1,181 @@
+*{
+    margin:0;
+    padding:0;
+
+}
+
+
+
+body{
+
+
+    width:100vw;
+    height:100vh;
+    background-color: white;
+    
+}
+
+#about_us{
+    scrollbar-color: transparent transparent;
+    width:100vw;
+    height:100vh;
+    overflow: hidden;
+    overflow-y: scroll;
+ background-color: rgb(21, 21, 21);
+}
+
+#about_us_page1{
+   display: flex;
+ 
+    height: 100vh;
+    width: 100vw;
+ 
+}
+
+#about_us_page2{
+   
+    background-color: rgb(11,11,11);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 100vw;
+ 
+}
+
+#slogan_part{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height:100%;
+    background-color: rgba(255, 255, 255, 0);
+    width:55vw;
+}
+
+#kangal_parte{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:100%;
+    background-color: rgba(134, 9, 9, 0);
+    width:45vw;
+}
+#kangal{
+    width:60%;
+  
+}
+#slogan{
+    width:80%;
+    max-width: 900px;
+    background-color: rgba(255, 0, 0, 0);
+}
+#slogan_text_top{
+    font-family: 'Signika Negative';
+    font-weight: 100;
+    color: rgb(129, 129, 129);
+    font-size: 20px;;
+}
+
+#slogan_text_core{
+    font-family: 'Signika Negative';
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    font-size: 60px;;
+}
+#slogan_buttons{
+    display: flex;
+    column-gap: 10px;
+    margin-top: 20px;;
+    background-color: rgba(255, 0, 0, 0);
+    align-items: center;
+}
+.slogan_button{
+    color:white;
+    font-size: 20px;
+    font-family:'Silkscreen';
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+#slogan_button_start{
+    
+    padding:10px;
+    background-color: #AACE1C;
+    color:black;
+    border:1px solid #AACE1C;
+    border-radius: 10px;
+}
+#slogan_button_start:hover{
+    background-color: #29292900;
+    color:#AACE1C;
+    border:1px solid ;
+    
+}
+
+#slogan_button_enter{
+    
+
+}
+#slogan_button_enter:hover{
+    
+    text-decoration: underline;
+}
+#sign{
+    height:30px;
+}
+
+#background{
+    align-items: center;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+
+    flex-direction: column;
+    background:linear-gradient(0deg,rgb(10, 10, 10),rgb(21, 21, 21));
+    min-height:600px;
+    height:30vw;
+    
+}
+#background_image{
+    
+    min-height:600px;
+    height:30vw;
+}
+
+
+#about_us_principal{
+    margin-top: 30px;
+    width:80%;
+    
+}
+
+#about_us_texts{
+    gap: 10px;
+    display: flex;
+
+}
+
+#about_us_text_green{
+    color: #AACE1C;
+    font-size: 40px;
+    font-family: 'Signika Negative';
+}
+
+#about_us_text{
+    color: #ffffff;
+    font-size: 40px;
+    font-family: 'Signika Negative';
+}
+
+#about_us_text_core{
+    margin-top: 10px;
+    font-size: 25px;
+    color: white;
+    font-family: 'Signika Negative';
+}
+
+.indexes{
+    transition: all 0.4s ease-in-out;
+
+    width:100%;
+    max-width: 1400px;
+}

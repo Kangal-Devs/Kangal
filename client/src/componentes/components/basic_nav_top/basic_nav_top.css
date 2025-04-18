@@ -1,0 +1,89 @@
+*{
+    user-select: none;
+}
+
+#basic_nav_top{
+    background-color: rgb(21, 21, 21);
+    top: 0;
+    position: absolute;
+    border-bottom: 1px solid #AACE1C;
+    width:100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#kangal_div{
+    cursor: pointer;
+    display: flex;
+    column-gap: 10px;
+    color: white;
+    align-items: center;
+    background-color: #AACE1C;
+    padding:10px 6% 10px 6%
+}
+#kangal_logo{
+    
+    width:70px;
+    aspect-ratio: 618/403;
+}
+
+#kangal_name{
+    font-family: 'Signika Negative';
+    font-weight: 100;
+}
+
+#basic_nav_top_buttons{
+    background-color: rgba(255, 0, 0, 0);
+    display: flex;
+    margin-right: 30px;
+    column-gap: 20px;
+}
+
+.basic_nav_top_button{
+    font-size: 15px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0);
+    font-family:'Silkscreen';
+    padding:10px;
+    border-radius: 10px;
+}
+#basic_nav_top_button_support{
+    transition: 0.1s ease-in-out;
+    border: none;
+    color: #e0e0e0;
+}
+#basic_nav_top_button_support:hover{
+
+    color: #ffffff;
+}
+#basic_nav_top_button_login{
+    transition: 0.1s ease-in-out;
+    color: #AACE1C;
+    border:1px solid #AACE1C;
+}
+#basic_nav_top_button_login:hover{
+    color: black;
+    background-color: #AACE1C;
+}
+#basic_nav_top_left{
+    display: flex;
+    align-items: center;
+    gap:20px;
+    width:50%;
+    background-color: rgba(255, 0, 0, 0);
+    overflow: hidden;
+}
+#name_page_div{
+display: flex;
+align-items: center;
+gap:10px;
+}
+#name_page_sign{
+    height: 30px;
+}
+#name_page_text{
+    color: rgb(167, 167, 167);
+    font-family: 'Signika Negative';
+    font-size: 20px;
+}
