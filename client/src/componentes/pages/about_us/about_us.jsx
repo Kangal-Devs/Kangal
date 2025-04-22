@@ -64,8 +64,9 @@ export function AboutUs() {
                         Com a Kangal, aprender programação é só o começo. Aqui, você transforma curiosidade em habilidade, e ideias em projetos reais.
                     </h4>
                 </div>
+                <Footer/>
             </div>
-            <Footer/>
+           
         </div>
     )
 }

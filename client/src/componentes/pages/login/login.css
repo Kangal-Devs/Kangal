@@ -1,0 +1,159 @@
+#login{
+    height:100vh;
+    width:100vw;
+    background:linear-gradient(30deg,rgb(20, 20, 20),rgb(44, 44, 44));
+    display:grid;
+    grid-template-columns: 3fr 2fr;
+    overflow: hidden;
+}
+#login_image_part{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 60px;
+}
+
+#login_image_kangal{
+    cursor: pointer;
+    width:50%;
+    max-width: 400px;
+}
+#login_image_perspective{
+    width:80%;
+    max-width: 800px;
+}
+#login_core_part{
+    background:linear-gradient(0deg,rgb(29, 29, 29),rgb(43, 43, 43));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#login_signin_active{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+flex-direction: column;
+    height:80%;
+width:80%;
+max-width: 600px;
+
+}
+
+#login_signin_inactive{
+display: none;
+
+}
+
+#login_core_part p{
+    color: white;
+    font-family: "Signika Negative";
+
+}
+#login_core_part h2{
+    
+    font-size: 50px;
+    color: white;
+    font-family: "Signika Negative";
+}
+#login_core_part button{
+    margin-top: 30px;
+    font-family: 'Silkscreen';
+    border: 2px solid;
+    color:#AACE1C;
+    border-radius: 10px;
+    background: none;
+    padding:20px;
+    width:100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+#login_core_part button:hover{
+    background:linear-gradient(0deg,#8fad17,#AACE1C);
+    color: rgb(48, 48, 48);
+}
+#login_core_part button:active{
+    background:linear-gradient(0deg,#999999,#afafaf);
+
+}
+
+.inputs{
+    margin-top: 30px;
+    background-color: rgba(255, 0, 0, 0);
+    width:100%;
+    flex-direction: column;
+    display: flex;
+}
+.inputs label{
+    font-size: 30px;
+    color: white;
+    font-family: "Signika Negative";
+}
+#login_core_part input[type="text"]{
+    color:white;
+    font-size: 20px;
+    padding:10px;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    border-radius: 5px;
+    transition: all 0.5s ease-in-out;
+}
+#login_core_part input[type="date"]{
+    color:white;
+    font-size: 20px;
+    padding:10px;
+    background:rgb(20, 20, 20);
+    border: none;
+    border-radius: 5px;
+    transition: all 0.5s ease-in-out;
+    width:200px;
+}
+#login_core_part input[type=text]:focus{
+    outline: 2px solid #AACE1C;
+    border: transparent;
+    background-color: rgb(41, 41, 41);
+    box-shadow: transparent;
+}
+
+
+
+#separator{
+    width:100%;
+    height:2px;
+    background-color: rgb(126, 126, 126);
+    margin-top: 30px;
+}
+
+
+#login_signup_active{
+
+    overflow-y: scroll;
+    scrollbar-color: rgb(20,20,20) transparent;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+flex-direction: column;
+    height:90%;
+width:80%;
+max-width: 600px;
+
+}
+#login_signup_active input[type="text"]{
+    width:80%;
+    z-index: 10;
+    margin-left: 2px;
+}
+
+#login_signup_active button{
+    color:rgb(142, 213, 255);
+}
+#login_signup_active button:hover{
+   color:rgb(20, 20, 20);
+   background:linear-gradient(0deg,rgb(91, 156, 194),rgb(142, 213, 255))
+}
+#login_signup_inactive{
+display: none;
+
+}

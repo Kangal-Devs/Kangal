@@ -145,10 +145,11 @@ body{
 #about_us_principal{
     margin-top: 30px;
     width:80%;
-    
+    max-width: 1200px;
 }
 
 #about_us_texts{
+  
     gap: 10px;
     display: flex;
 

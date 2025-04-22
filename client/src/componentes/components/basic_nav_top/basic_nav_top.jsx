@@ -2,7 +2,7 @@ import "./basic_nav_top.css"
 import kangal_logo from "../../../assets/all_pages/kangal.png"
 import {useEffect, useState,useCallback} from "react"
 import sign from "../../../assets/all_pages/nav_top_icons/sign.png"
-import {useNavigate} from "react-router-dom"
+import {useNavigate,Link} from "react-router-dom"
 export function BasicNavTop({title,contact,login}){
 
    const navigate = useNavigate()
@@ -11,13 +11,7 @@ export function BasicNavTop({title,contact,login}){
         navigate("/")
     },[])
 
-    const goToSupport = useCallback(()=>{
-        navigate("/support")
-    },[])
-
-    const goToLogin = useCallback(()=>{
-        navigate("/login")
-    },[])
+    
 
     return(
         <div id="basic_nav_top">
@@ -39,14 +33,14 @@ export function BasicNavTop({title,contact,login}){
             <div id="basic_nav_top_buttons">
                 { contact==true?
             
-                    <button onClick={()=>{goToSupport()}} id="basic_nav_top_button_support" className="basic_nav_top_button">Contante-nos</button>
+                    <Link to="/support"><button  id="basic_nav_top_button_support" className="basic_nav_top_button">Contante-nos</button></Link>
             
                 :""}
 
                 {login==true?
                 
                
-               <button onClick={()=>{goToLogin()}}id="basic_nav_top_button_login" className="basic_nav_top_button">Entrar</button>
+               <Link to="/login"><button id="basic_nav_top_button_login" className="basic_nav_top_button">Entrar</button></Link>
         
 :""}
                 </div>

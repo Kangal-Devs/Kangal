@@ -5,6 +5,7 @@
 #basic_nav_top{
     background-color: rgb(21, 21, 21);
     top: 0;
+    left: 0;
     position: absolute;
     border-bottom: 1px solid #AACE1C;
     width:100%;
@@ -41,6 +42,7 @@
 }
 
 .basic_nav_top_button{
+    transition: all 0.2s ease-in-out;
     font-size: 15px;
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0);
@@ -49,16 +51,16 @@
     border-radius: 10px;
 }
 #basic_nav_top_button_support{
-    transition: 0.1s ease-in-out;
+
     border: none;
-    color: #e0e0e0;
+    color: #c2c2c2;
 }
 #basic_nav_top_button_support:hover{
 
     color: #ffffff;
 }
 #basic_nav_top_button_login{
-    transition: 0.1s ease-in-out;
+   
     color: #AACE1C;
     border:1px solid #AACE1C;
 }
