@@ -1,0 +1,45 @@
+#token_invalid{
+    width:100vw;
+    height:100vh;
+  background:linear-gradient(30deg,rgb(20, 20, 20),rgb(44, 44, 44));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: 30px;
+}
+#token_invalid div{
+    row-gap: 20px;
+    color:white;
+    padding:20px;
+    border:1px solid rgba(153, 153, 153, 0.801) ;
+    font-family: Signika Negative;
+    font-size: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#token_invalid div button{
+    padding:10px;
+    background-color: #949494;
+    font-family: Silkscreen;
+    border-radius: 5px;
+    border:none;
+    transition: all 0.1s ease-in-out;
+    cursor: pointer;
+}
+#token_invalid div button:hover{
+
+        background-color: #fafafa;
+}
+#token_invalid_kangal{
+      position: absolute;
+    top:20px;
+    left:20px;
+    width:100px;
+}
+#token_invalid_paper_error{
+width:200px;
+margin-top: -200px;
+}

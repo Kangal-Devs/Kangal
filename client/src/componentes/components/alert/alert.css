@@ -1,0 +1,27 @@
+#alert{
+position: absolute;
+top:20px;
+right:20px;
+background-color: rgb(20, 20, 20);
+color: white;
+display:flex;
+align-items:center;
+padding-right:20px;
+column-gap: 20px;
+  border-radius:10px 0px 0px 10px
+}
+#alert p{
+    font-family:Silkscreen;
+}
+#alert div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:100px;
+    height:80px;
+    padding:10px;
+    border-radius:10px 0px 0px 10px
+}
+#alert div img{
+    height:70px
+}

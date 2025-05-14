@@ -32,7 +32,7 @@ const complaintSchema = mongoose.Schema({
     email:{
         type:String,
         maxlength:[40,"errorType3"],
-        minLength:[5,"errorType4"],
+        minLength:[7,"errorType4"],
         required:[true,"errorType5"],
         match: [/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,"errorType6"],
         validate:{
