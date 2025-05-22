@@ -5,6 +5,12 @@ const jwt = require("jsonwebtoken")
 const cookieParser = require("cookie-parser")
 const TOKEN_KEY = "_@_@_"
 const app = express()
+const multer = require("multer")
+const storage = multer.memoryStorage();
+const fs = require("fs")
+const path = require("path")
+
+const upload = multer({ storage });
 
 app.use(cookieParser())
 app.use(cors({
@@ -12,7 +18,6 @@ app.use(cors({
     credentials: true
 }))
 app.use(express.json())
-
 
 const { complaintModel } = require("./models/complaintModel.js")
 const { userModel } = require("./models/userModel.js")
@@ -22,9 +27,7 @@ mongoose.connect("mongodb://localhost:27017/Kangal")
 app.post("/api/complaints", async (req, res) => {
     try {
         let { userName, name, email, description, category } = req.body;
-
         !category ? category = "Anúncio" : category = category
-
         const complaint = await complaintModel.create({ userName, name, email, description, category })
         res.status(201).json({ message: "Reclamação criada" })
     }
@@ -36,25 +39,30 @@ app.post("/api/complaints", async (req, res) => {
 //ROTA APENAS VERIFICAR EMAIL GOOGLE -- SIGNIN COM GOOGLE
 app.post("/api/email_verification", async (req, res) => {
     try {
-
-
         const { email } = req.body
-
         const user = await userModel.findOne({ email, accountType: "google" })
-
         if (user) {
-
-            const token = jwt.sign({ _id:user._id, name: user.name, email: user.email, password: user.password, xp: user.xp, date: user.date.toISOString().slice(0, 10), accountType: user.accountType }, TOKEN_KEY, { expiresIn: "1m" })
-
+            const token = jwt.sign(
+                {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    password: user.password,
+                    xp: user.xp,
+                    date: user.date.toISOString().slice(0, 10),
+                    accountType: user.accountType,
+                    // image: user.image.toString('base64'),
+                    github: user.github,
+                    gender: user.gender
+                },
+                TOKEN_KEY, { expiresIn: "30m" })
             res.cookie("token", token, { httpOnly: true })
-
-            return res.status(200).json({ message: "email already used" })
-
+            return res.status(200).json({ message: "email already used",image:user.image.toString('base64') })
         }
         res.status(200).json({ message: "email not used" })
     }
     catch (err) {
-        res.status(400).json({ message: "internal error" })
+        res.status(400).json({ message: err.message })
     }
 })
 
@@ -64,11 +72,22 @@ app.post("/api/signin", async (req, res) => {
         const { name, password } = req.body
         const user = await userModel.findOne({ name, password, accountType: "common" })
         if (user) {
-            const token = jwt.sign({ _id : user._id,name: user.name, email: user.email, password: user.password, xp: user.xp, date: user.date.toISOString().slice(0, 10), accountType: user.accountType }, TOKEN_KEY, { expiresIn: "1m" })
-
+            const token = jwt.sign(
+                {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    password: user.password,
+                    xp: user.xp,
+                    date: user.date.toISOString().slice(0, 10),
+                    accountType: user.accountType,
+                    // image: user.image.toString('base64'),
+                    github: user.github,
+                    gender: user.gender
+                },
+                TOKEN_KEY, { expiresIn: "30m" })
             res.cookie("token", token, { httpOnly: true })
-
-            return res.status(200).json({ message: "achado" })
+            return res.status(200).json({ message: "achado", image:user.image.toString('base64') })
         }
         res.status(404).json({ message: "errorType-16" }) // errorType16:Nome ou senha incorreto
     }
@@ -79,43 +98,113 @@ app.post("/api/signin", async (req, res) => {
 // COMMONS E GOOGLE SIGNUP PASSARÃO POR ESSA ROTA V
 app.post("/api/signup", async (req, res) => {
     try {
-
+        const imageLocal = path.join(__dirname, "assets", "defaultProfilePicture.png")
+        const image = fs.readFileSync(imageLocal)
+        console.log(image)
         const { accountType, name, email, password } = req.body
         const date = new Date(req.body.date)
         const xp = 0
-        const user = await userModel.create({ accountType, name, email, password, xp, date })
+        const github = null
+        const gender = "Prefer not to say"
+        const user = await userModel.create({ accountType, name, email, password, xp, date, image, gender, github })
 
-        const token = jwt.sign({ _id : user._id,name: user.name, email: user.email, password: user.password, xp: user.xp, date: user.date.toISOString().slice(0, 10), accountType: user.accountType }, TOKEN_KEY, { expiresIn: "1m" })
-        res.cookie("token",token,{httpOnly:true})
-
-        res.status(200).json({ message: "Conta criada" })
+        const token = jwt.sign({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            xp: user.xp,
+            date: user.date.toISOString().slice(0, 10),
+            accountType: user.accountType,
+            // image: user.image.toString('base64'),
+            github: user.github,
+            gender: user.gender
+        },
+            TOKEN_KEY,
+            { expiresIn: "30m" })
+        res.cookie("token", token, { httpOnly: true })
+        res.status(200).json({ message: "Conta criada",image:user.image.toString('base64') })
     }
     catch (err) {
         res.status(400).json({ message: err.message })
     }
 })
 
-app.post("/api/authorization",async (req,res)=>{
-    try{
+app.post("/api/authorization", async (req, res) => {
+    try {
+        
         const token = req.cookies.token
-        const verify_token = jwt.verify(token,TOKEN_KEY)
-
-        res.status(200).json({message:verify_token})
-
-      
+        console.log(jwt.decode(token))
+        const verify_token = jwt.verify(token, TOKEN_KEY)
+        res.status(200).json({ message: verify_token })
     }
-    catch(err){
-        res.status(400).json({message:err.message})
+    catch (err) {
+        res.status(400).json({ message: err.message })
         console.log(req.cookies)
     }
 })
 
-app.post("/api/clear_cookie",(req,res)=>{
-     try{const token = ""
-     res.cookie("token",token,{httpOnly:true})
-     res.status(200).json({message:"cookie limpo"})
-    }catch(err){
-        res.status(400).json({message:"erro ao limpar cookie"})
-     }
+app.post("/api/clear_cookie", (req, res) => {
+    try {
+        const token = ""
+        res.cookie("token", token, { httpOnly: true })
+        res.status(200).json({ message: "cookie limpo" })
+    } catch (err) {
+        res.status(400).json({ message: "erro ao limpar cookie" })
+    }
 })
+
+app.put("/api/user_update/:_id",upload.single("file"), async (req, res) => {
+    try {
+        const image = req?.file?.buffer
+        const {email,password,gender,github} = req.body
+        let{_id} = req.params;
+        const date = new Date(req.body.date)
+
+        _id = _id.replace(/[^\da-f]/gi, "");
+ 
+              console.log(req?.file?.buffer)
+              console.log(req.body.email)
+        if(image){
+              
+                 var user = await userModel.findByIdAndUpdate(_id,{email,password,gender,github,date,image},{new:true,runValidators: true })   
+                   console.log("HL")
+        }
+        else{
+             console.log("UL")
+        var user = await userModel.findByIdAndUpdate(_id,{email,password,gender,github,date},{ runValidators: true ,new:true})
+        }
+       
+
+        if(!user){
+            return  res.status(404).json({ message: "not found" })
+        }
+        console.log("as")
+        const token = jwt.sign({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            xp: user.xp,
+            date: user.date.toISOString().slice(0, 10),
+            accountType: user.accountType,
+            // image: user.image.toString('base64'),
+            github: user.github,
+            gender: user.gender
+        },
+            TOKEN_KEY,
+            { expiresIn: "30m" })
+        res.cookie("token", token, { httpOnly: true })
+            console.log("asss")
+        res.status(200).json({ message: "Conta atualizada",image:user.image.toString('base64')})
+        
+       
+    } catch (err) {
+   
+        res.status(400).json({ message: err.message })
+    }
+})
+
+
+
 app.listen(5000)

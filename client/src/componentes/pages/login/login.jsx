@@ -30,10 +30,29 @@ const errorTypes = {
     "errorType-16":"Nome ou senha incorreto",
     "errorType-17":"ERRO INTERNO: problema ao fazer login",
     "errorType-18":"Senha de confirmação incorreta",
-    "date: Cast to date failed for value":"campo data é obrigatório"
+    "date: Cast to date failed for value":"campo data é obrigatório",
+    "errorType-19":"ERRO INTERNO: imagem é obrigatória",
 }
 
 export function Login() {
+    const [continueGoogleLogin,setContinueGoogleLogin] = useState("continue_google_login_inactive")
+          
+
+          //VALORES DOS INPUTS DE SIGNIN
+    const[signinName,setSigninName] = useState("")
+    const[signinPassword,setSigninPassword] = useState("")
+          //VALORES DOS INPUTS DE SIGNUP
+    const[signupName,setSignupName] = useState("")
+    const[signupPassword,setSignupPassword] = useState("")
+    const[signupPasswordConfirmation,setSignupPasswordConfirmation] = useState("")
+    const[signupEmail,setSignupEmail] = useState("")
+    const[signupDate,setSignupDate] = useState("")
+
+    const navigate = useNavigate()
+    const [actualModeSignIn, setActualModeSignIn] = useState("login_signin_active")
+    const [actualModeSignUp, setActualModeSignUp] = useState("login_signup_inactive")
+    const [image, setImage] = useState(perspective_image1)
+
 //VALORES DOS INPUTS DE SIGNUP GOOGLE
 const [signupNameGoogle,setSignupNameGoogle] = useState("")
 const [signupEmailGoogle,setSignupEmailGoogle] = useState("")
@@ -42,6 +61,11 @@ const [signupEmailGoogle,setSignupEmailGoogle] = useState("")
       const [alertError,setAlertError] = useState(false)
       const [alertStatus,setAlertStatus] = useState("alert_inactive")
 
+      useEffect(()=>{
+        axios.post("http://localhost:5000/api/authorization",{},{withCredentials:true})
+        .then(()=>{navigate("/home")})
+
+      },[])
         const showAlert = useCallback((errorType)=>{
             console.log(errorType)
             setAlertStatus("alert_active")
@@ -73,6 +97,7 @@ const [signupEmailGoogle,setSignupEmailGoogle] = useState("")
                     setSignupEmailGoogle(res1.data.email)
                     }
                     else{
+                        localStorage.setItem("image",res2.data.image)
                         console.log("Parece que seu email google já é cadastrado")
                         navigate("/home")
                     }
@@ -89,26 +114,9 @@ const [signupEmailGoogle,setSignupEmailGoogle] = useState("")
           });
 
 
-          const[] = useState("")
+         
 
-    const [continueGoogleLogin,setContinueGoogleLogin] = useState("continue_google_login_inactive")
-          
-
-          //VALORES DOS INPUTS DE SIGNIN
-    const[signinName,setSigninName] = useState("")
-    const[signinPassword,setSigninPassword] = useState("")
-          //VALORES DOS INPUTS DE SIGNUP
-    const[signupName,setSignupName] = useState("")
-    const[signupPassword,setSignupPassword] = useState("")
-    const[signupPasswordConfirmation,setSignupPasswordConfirmation] = useState("")
-    const[signupEmail,setSignupEmail] = useState("")
-    const[signupDate,setSignupDate] = useState("")
-
-    const navigate = useNavigate()
-    const [actualModeSignIn, setActualModeSignIn] = useState("login_signin_active")
-    const [actualModeSignUp, setActualModeSignUp] = useState("login_signup_inactive")
-    const [image, setImage] = useState(perspective_image1)
-
+    
     const goAboutUs = useCallback(()=>{
         navigate("/")
     },[])
@@ -127,7 +135,9 @@ const [signupEmailGoogle,setSignupEmailGoogle] = useState("")
         axios.post("http://localhost:5000/api/signin",{name:signinName,password:signinPassword},{withCredentials:true})
         .then(()=>{
              axios.post("http://localhost:5000/api/authorization",{},{withCredentials:true})
-                        .then((res)=>{ navigate("/home")})
+                        .then((res)=>{
+                            localStorage.setItem("image",res.data.image)
+                            navigate("/home")})
                         .catch((err)=>{
                             
                             showAlert(err.response.data.message)})
@@ -151,7 +161,9 @@ const [signupEmailGoogle,setSignupEmailGoogle] = useState("")
                 name:signupName
 
             },{withCredentials:true})
-            .then((res)=>{ navigate("/home")})
+            .then((res)=>{ 
+                localStorage.setItem("image",res.data.image)
+                navigate("/home")})
             .catch((err)=>{showAlert(err.response.data.message)})
         }
 
@@ -168,7 +180,9 @@ const [signupEmailGoogle,setSignupEmailGoogle] = useState("")
             password:"patternPassword123!",
             date:"1999-10-10",
             email:signupEmailGoogle},{withCredentials:true})
-        .then((res)=>{ navigate("/home")})
+        .then((res)=>{ 
+            localStorage.setItem("image",res.data.image)
+            navigate("/home")})
         .catch((err)=>{showAlert(err.response.data.message)})
 
     },[signupNameGoogle,signupEmailGoogle])

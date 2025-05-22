@@ -59,7 +59,28 @@ const userSchema = mongoose.Schema({
         type:Date,
         required:[true,"errorType-15"],
        
-    }
+    },
+    image:{
+        type:Buffer,
+        required:[true,"errorType-19"]
+    },
+    github:{
+        type:String,
+        // validate:{
+        //     validator:(value)=>{
+        //         if(value==null) return true;
+        //         if(value.includes("https://github.com/") || value.includes("github.com/") || value.includes("www.github.com/")){
+        //             return true
+        //         }
+        //         else{return false}
+        //     },
+        //     message:"errorType-20"
+        // }
+    },
+    gender:{
+        type:String,
+        required:[true,"errorType-21"]
+    },
 },
 {
     timestamps:true

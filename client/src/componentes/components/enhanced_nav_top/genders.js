@@ -1,0 +1,1 @@
+export const genders=[{name:"Homem",value:"Man"},{name:"Mulher",value:"Woman"},{name:"Não-Binário",value:"Non-binarie"},{name:"Prefiro não dizer",value:"Prefer not to say"},{name:"Outro",value:"Other"}]

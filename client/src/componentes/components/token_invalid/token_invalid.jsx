@@ -1,10 +1,13 @@
-import { useCallback } from "react"
+import { useCallback ,useState} from "react"
 import "./token_invalid.css"
 import paper_error from "../../../assets/all_pages/error/paper_error.png"
 import kangal from "../../../assets/all_pages/kangal.png"
 import { useNavigate } from "react-router-dom"
+
 export function TokenInvalid({token_error}){
+  
     const navigate = useNavigate()
+
     const toLogin = useCallback(()=>{
         navigate("/login")
     },[])
@@ -16,6 +19,7 @@ export function TokenInvalid({token_error}){
 
             <p> {token_error == 'jwt must be provided'?"Faça login para conseguir acessar está pagina":"Sua sessão foi expirada, faça login novamente"}</p>
             <button onClick={()=>{toLogin()}}>Login</button>
+        
         </div>
     </div>
 )
