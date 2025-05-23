@@ -11,9 +11,9 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import "./enhanced_nav_top.css"
 
-export function EnhancedNavTop({ page, home, group, host, search, userName, userImage, userEmail, userPassword, userDate, userAccountType, userGithub, userGender,userId }) {
+export function EnhancedNavTop({ page, home, group, host, search, userName, userImage, userEmail, userPassword, userDate, userAccountType, userGithub, userGender, userId }) {
 
-    const [gendersOpt,setGendersOpt] = useState()
+    const [gendersOpt, setGendersOpt] = useState()
 
     const [modifiedName, setModifiedName] = useState(null)
     const [updateName, setUpdateName] = useState(userName)
@@ -23,10 +23,10 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
     const [updateDate, setUpdateDate] = useState(userDate)
     const [updateGender, setUpdateGender] = useState(userGender)
     const [updateGithub, setUpdateGithub] = useState("")
-  
- const [inputImage, setInputImage] = useState("")
 
-   
+    const [inputImage, setInputImage] = useState("")
+
+
 
     const [backgroundUpdate, setBackgroundUpdate] = useState("background_update_inactive")
     const [backgroundOptions, setBackgroundOptions] = useState("background_options_inactive")
@@ -42,58 +42,58 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
         userGithub == null ? setUpdateGithub("") : setUpdateGithub(userGithub)
     }, [])
 
-    const alterImage = useCallback(()=>{
+    const alterImage = useCallback(() => {
         imageRef.current.click()
-    },[updateImage])
+    }, [updateImage])
 
- 
+
     const disconnect = useCallback(() => {
         axios.post("http://localhost:5000/api/clear_cookie", {}, { withCredentials: true })
             .then(() => { navigate("/login") })
             .catch((err) => { console.log("erro ao desconectar") })
     })
 
-  
 
 
-    useEffect(()=>{
+
+    useEffect(() => {
         console.log(updateImage)
-    },[])
-    useEffect(()=>{
-        if(inputImage=="" || inputImage==null){
+    }, [])
+    useEffect(() => {
+        if (inputImage == "" || inputImage == null) {
             setUpdateImage(`data:image/png;base64,${userImage}`)
             setModifiedName(null)
         }
 
-        else{
+        else {
             console.log(inputImage)
-        
-            if(typeof(inputImage)=="object"){
 
-          
-                  setModifiedName(inputImage)
-            const url = URL.createObjectURL(inputImage)
-            console.log(url)
-            setUpdateImage(url)
-                  console.log(inputImage)
-              }
+            if (typeof (inputImage) == "object") {
+
+
+                setModifiedName(inputImage)
+                const url = URL.createObjectURL(inputImage)
+                console.log(url)
+                setUpdateImage(url)
+                console.log(inputImage)
+            }
         }
-    },[inputImage])
-    useEffect(()=>{
+    }, [inputImage])
+    useEffect(() => {
         console.log(genders)
-        setGendersOpt(genders.map((gender,i)=>(
-           <option key={i} value={gender.value}>{gender.name}</option>
+        setGendersOpt(genders.map((gender, i) => (
+            <option key={i} value={gender.value}>{gender.name}</option>
         )))
-    },[])
+    }, [])
 
-    const resetUpdate = useCallback(()=>{
+    const resetUpdate = useCallback(() => {
         setBackgroundUpdate("background_update_inactive")
         setUpdateEmail(userEmail)
-         setUpdateImage(`data:image/png;base64,${userImage}`)
-         setUpdateGender(userGender)
-         setUpdateDate(userDate)
+        setUpdateImage(`data:image/png;base64,${userImage}`)
+        setUpdateGender(userGender)
+        setUpdateDate(userDate)
         setUpdateGithub(userGithub)
-    },[updateEmail,updateImage,updatePassword,updateDate,updateGender,updateGithub])
+    }, [updateEmail, updateImage, updatePassword, updateDate, updateGender, updateGithub])
 
     const update = useCallback(() => {
         console.log(updateDate)
@@ -102,30 +102,34 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
         console.log(updateGithub)
         console.log(updateGender)
         let image;
-        if(modifiedName){
+        if (modifiedName) {
             image = modifiedName
         }
-        else{
+        else {
             image = null
         }
-    
+
         const formData = new FormData;
-        formData.append("file",image)
-        formData.append("email",updateEmail)
-        formData.append("date",updateDate)
-        formData.append("password",updatePassword)
-        formData.append("github",updateGithub)
-        formData.append("gender",updateGender)
+        formData.append("file", image)
+        formData.append("email", updateEmail)
+        formData.append("date", updateDate)
+        formData.append("password", updatePassword)
+        formData.append("github", updateGithub)
+        formData.append("gender", updateGender)
 
         axios.put(`http://localhost:5000/api/user_update/${userId}`,
             formData
-        ,{withCredentials:true})
-        .then((res)=>{console.log(res);localStorage.setItem("image",res.data.image)})
-        .catch((err)=>{console.log(err)})
+            , { withCredentials: true })
+            .then((res) => { console.log(res); localStorage.setItem("image", res.data.image) })
+            .catch((err) => { console.log(err) })
     }, [updateEmail, updateImage, updatePassword, updateDate, updateGithub, updateGender])
     const navigate = useNavigate()
     return (
         <div id="enhanced_nav_top">
+            {/* Área da NavTop do usuário V */}
+            {/* ------------------------------------------------------------------------- */}
+            {/* ------------------------------------------------------------------------- */}
+
 
             <div id="left_side">
                 <div id="kangal_part">
@@ -145,8 +149,11 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
 
             <div id="right_side">
                 <img src={bell_img} className="nav_top_icons" id="bell_part" />
-
+            {group == true ?
                 <img src={group_img} className="nav_top_icons" id="_part" />
+
+                    : ""
+                }
                 <div onClick={() => { setBackgroundOptions("background_options_active") }}>
                     <p>{userName}</p>
                     <img src={`data:image/png;base64,${userImage}`} />
@@ -159,6 +166,11 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
                     <button onClick={() => { disconnect() }}>Sair</button>
                 </div>
             </div>
+
+            {/* Área de atualização do usuário V */}
+            {/* ------------------------------------------------------------------------- */}
+            {/* ------------------------------------------------------------------------- */}
+
             <div id={backgroundUpdate}  >
                 <div id="bar_decoration_update">
                     <button onClick={() => { resetUpdate() }}>X</button>
@@ -172,8 +184,8 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
                         </div>
                         <div id="bar_update_part_image">
                             <img src={updateImage} />
-                            <button onClick={()=>{alterImage()}}>Alterar imagem</button>
-                            <input type="file" ref={imageRef} onChange={(e)=>{setInputImage(e.target.files[0])}} id="fileInput"/>
+                            <button onClick={() => { alterImage() }}>Alterar imagem</button>
+                            <input type="file" ref={imageRef} onChange={(e) => { setInputImage(e.target.files[0]) }} id="fileInput" />
                         </div>
                         <div className="bar_update_part_inputs">
                             <label>Github</label>
@@ -215,15 +227,15 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
                         </div>
                         <div className="bar_update_part_inputs">
                             <label>Gênero</label>
-                            <select value={updateGender} onChange={(e)=>{console.log(e.target.value);setUpdateGender(e.target.value)}}>
+                            <select value={updateGender} onChange={(e) => { console.log(e.target.value); setUpdateGender(e.target.value) }}>
                                 {gendersOpt}
                             </select>
-                           
+
                         </div>
-                     
+
                     </div>
                     <div className="bar_update_part" id="bar_update_part_bottom">
-                        <button id="btn_cancel" onClick={()=>{resetUpdate()}}> Cancelar</button>
+                        <button id="btn_cancel" onClick={() => { resetUpdate() }}> Cancelar</button>
                         <button id="btn_apply" onClick={() => { update() }}> Aplicar</button>
                     </div>
                 </div>

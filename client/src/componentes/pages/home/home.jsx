@@ -3,6 +3,7 @@ import "./home.css"
 import { useState,useEffect,useCallback } from "react"
 import { TokenInvalid } from "../../components/token_invalid/token_invalid.jsx"
 import { EnhancedNavTop } from "../../components/enhanced_nav_top/enhanced_nav_top.jsx"
+import {Footer} from "../../components/footer/footer.jsx"
 import "./home.css"
 export function Home(){
     // const resetar = useCallback(()=>{
@@ -41,15 +42,22 @@ export function Home(){
             setUserGender(res.data.message.gender)
             setUserId(res.data.message._id)
         })
-        .catch((err)=>{console.log(err.response.data);setTokenError(err.response.data.message)})
+        .catch((err)=>{
+            console.log(err.response.data);
+            setTokenError(err.response.data.message);
+            localStorage.clear()
+        })
     },[])
     return(
         <div id="home">
+            {/* Verificação se usuário está com TOKEN válido V */}
             {connected==false?<TokenInvalid token_error={tokenError}/>:
                 <div id="home_principal">
+                    <div id="home_content">
                     <EnhancedNavTop 
                     page="Home"
-                    home={true}
+                    home={false}
+                    group={false}
                     userName={userName}
                     userImage={userImage}
                     userEmail={userEmail}
@@ -61,7 +69,14 @@ export function Home(){
                     userId={userId}
                     
                     />
+
+                    <div id="test">
+                        </div>
+                    </div>
+                    <Footer/>
                 </div>
+
+               
             }
         </div>
     )
