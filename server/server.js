@@ -8,6 +8,9 @@ const app = express()
 const userRoutes = require("./routes/userRoutes.js")
 const complaintRoutes = require("./routes/complaintRoutes.js")
 const solicitationRoutes = require("./routes/solicitationRoutes.js")
+const groupRoutes = require("./routes/groupRoutes.js")
+const userGroupRoutes = require("./routes/userGroupRoutes.js")
+
 
 app.use(cookieParser())
 app.use(cors({
@@ -18,7 +21,8 @@ app.use(express.json())
 
 mongoose.connect("mongodb://localhost:27017/Kangal")
 
-
+app.use('/api',userGroupRoutes.router)
+app.use('/api',groupRoutes.router)
 app.use('/api',userRoutes.router)
 app.use('/api',complaintRoutes.router)
 app.use('/api',solicitationRoutes.router)

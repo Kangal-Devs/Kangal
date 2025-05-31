@@ -133,16 +133,16 @@ const [signupEmailGoogle,setSignupEmailGoogle] = useState("")
 
     const commonLogin = useCallback(()=>{
         axios.post("http://localhost:5000/api/signin",{name:signinName,password:signinPassword},{withCredentials:true})
-        .then(()=>{
-             axios.post("http://localhost:5000/api/authorization",{},{withCredentials:true})
-                        .then((res)=>{
+        .then((res)=>{
+            //  axios.post("http://localhost:5000/api/authorization",{},{withCredentials:true})
+                        // .then((res)=>{
                             localStorage.setItem("image",res.data.image)
                             navigate("/home")})
-                        .catch((err)=>{
+                        // .catch((err)=>{
                             
-                            showAlert(err.response.data.message)})
+                        //     showAlert(err.response.data.message)})
 
-        })
+        // })
         .catch((err)=>{showAlert(err.response.data.message)})
     },[signinName,signinPassword])
 

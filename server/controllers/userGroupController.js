@@ -1,0 +1,82 @@
+const {userGroupModel} = require("../models/userGroupModel.js")
+const {solicitationModel} = require("../models/solicitationModel.js")
+const {userModel} = require("../models/userModel.js")
+const {groupModel} = require("../models/groupModel.js")
+
+exports.get_user_group = async (req,res)=>{
+    try{
+        const {groupId,userId} = req.body
+
+        const user = await userModel.findOne({_id:userId})
+        const group = await groupModel.findOne({_id:groupId})
+
+        if(user && group){
+            const userGroup = await userGroupModel.findOne({user:userId,group:groupId})
+            if(userGroup){
+                res.status(200).json({message:"found"})
+            }
+            return res.status(404).json({message:"not found userGroup"})
+        }
+        res.status(404).json({message:"not found group or user"})
+
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    }
+}
+
+exports.get_all_user_group = async (req,res)=>{
+    try{
+    const {userId} = req.body;
+
+    const user = await userModel.findOne({_id:userId})
+
+    if(user){
+        const userGroup = await userGroupModel.find({user:userId})
+        return res.status(200).json({message:userGroup})
+    }   
+    res.status(404).json({message:"not found user"})
+    }catch(err){
+        res.status(500).json({message:err.message})
+    }
+}
+
+exports.delete_user_group = async (req,res)=>{
+    try{
+        const {userId,groupId} = req.body
+
+        const user = await userModel.findOne({_id:userId})
+        const group = await groupModel.findOne({_id:groupId})
+
+        if(user && group){
+            const userGroup = await userGroupModel.findOneAndDelete({user:userId,group:groupId})
+            return res.status(200).json({message:"deleted!!"})
+        }
+        res.status(404).json({message:"not found group or user"})
+    }catch(err){
+        res.status(500).json({message:err.message})
+    }
+}
+
+exports.create_user_group = async (req,res)=>{
+    try{
+        const {userId,groupId} = req.body
+
+        const user = await userModel.findOne({_id:userId})
+        const group = await groupModel.findOne({_id:groupId})
+
+        if(user && group){
+            const solicitation = await solicitationModel.findOne({user:userId,group:groupId})
+            if(solicitation){
+                    await solicitation.deleteOne()
+                    const userGroup = await userGroupModel.create({user:userId,group:groupId})
+                    return res.status(200).json({message:"created!"})
+            }
+            return res.status(400).json({message:"you must have a solicitation to join in"})
+        }
+        res.status(404).json({message:"not found group or user"})
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    }
+}

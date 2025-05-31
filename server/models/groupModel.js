@@ -26,7 +26,8 @@ const groupSchema = mongoose.Schema({
         maxLength:[250,"groupErrorType6"]
     },
     owner:{
-        type:String,
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
         required:[true,"groupErrorType7"]
     }
 

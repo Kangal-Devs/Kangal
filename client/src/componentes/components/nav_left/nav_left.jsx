@@ -1,0 +1,138 @@
+import "./nav_left.css"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import controller_button from "../../../assets/all_pages/nav_left_icons/controller_button.png"
+import documents_button from "../../../assets/all_pages/nav_left_icons/documents_button.png"
+import group_button from "../../../assets/all_pages/nav_left_icons/group_button.png"
+import trophy_button from "../../../assets/all_pages/nav_left_icons/trophy_button.png"
+import controller_button_selected from "../../../assets/all_pages/nav_left_icons/controller_button_selected.png"
+import documents_button_selected from "../../../assets/all_pages/nav_left_icons/documents_button_selected.png"
+import group_button_selected from "../../../assets/all_pages/nav_left_icons/group_button_selected.png"
+import trophy_button_selected from "../../../assets/all_pages/nav_left_icons/trophy_button_selected.png"
+import { useEffect, useState, useCallback } from "react"
+import { NavLeftListItem } from "../nav_left_list_item/nav_left_list_item.jsx"
+import paper_error from "../../../assets/all_pages/error/paper_error.png"
+
+export function NavLeft({ userId, topButtons,updateButton,local,listTitle,requestLocal }) {
+
+    const [iz,setIz] = useState(0)
+    const navigate = useNavigate()
+    const [list,setList] = useState([])
+    const [list1,setList1] = useState()
+    const [borders, setBorders] = useState(['white','white','white','white'])
+
+    const [buttonController, setButtonController] = useState(controller_button)
+    const [buttonDocuments, setButtonDocuments] = useState(documents_button)
+    const [buttonGroup, setButtonGroup] = useState(group_button)
+    const [buttonTrophy, setButtonTrophy] = useState(trophy_button)
+
+    useEffect(()=>{
+   switch(local){
+        case 'game':
+        setButtonController(controller_button_selected)
+       
+        setBorders(['#637711','white','white','white'])
+        break;
+       
+        
+        case 'documents':
+        setButtonDocuments(documents_button_selected)
+     
+         setBorders(['white','#637711','white','white'])
+        break;
+         case 'group':
+        setButtonGroup(group_button_selected)
+           setBorders(['white','white','#637711','white'])
+        break;
+        case 'campaign':
+        setButtonTrophy(trophy_button_selected)
+        setBorders(['white','white','white','#637711'])
+        break;
+        default:
+        break;
+    }
+    },[])
+    
+   useEffect(() => {
+  if (requestLocal) {
+    axios.post(requestLocal, { _id: userId })
+      .then((res) => {
+        const arr_list = res.data.message;
+
+        if (arr_list.length !== 0) {
+          // Mapeia para um array de Promises
+          const promises = arr_list.map((item) => {
+            return axios.post("http://localhost:5000/api/get_group", { _id: item.group })
+              .then((res1) => ({
+                title: res1.data.message.name,
+                image: res1.data.message.image,
+              }));
+          });
+
+          // Espera todas as requisições terminarem
+          Promise.all(promises).then((results) => {
+            // Agora você tem todos os dados, então atualiza o estado
+            
+            setList(
+              results.map((item, i) => (
+                <NavLeftListItem key={i} title={item.title} image={item.image} />
+              ))
+            );
+          });
+        } else {
+          console.log("Você não possui solicitações");
+          setList(<><img src={paper_error} id="paper_error"/><p id="text_error">Você não possui solicitações</p></>)
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+}, []);
+   
+
+
+
+    return (
+        <div id="nav_left">
+            <div id="nav_left_principal">
+                {topButtons == true ?
+                    <div id="top_buttons">
+                        <ul>
+                            <li style={{'borderColor':`${borders[0]}`}} onMouseOver={()=>{setButtonController(controller_button_selected)}} onMouseOut={()=>{if(local!="game"){setButtonController(controller_button)}}} onClick={()=>{navigate('/games')}}><img src={buttonController} /></li>
+                            <li style={{'borderColor':`${borders[1]}`}} onMouseOver={()=>{setButtonDocuments(documents_button_selected)}} onMouseOut={()=>{if(local!="documents"){setButtonDocuments(documents_button)}}} onClick={()=>{navigate('/documents')}}><img src={buttonDocuments}/></li>
+                            <li style={{'borderColor':`${borders[2]}`}} onMouseOver={()=>{setButtonGroup(group_button_selected)}} onMouseOut={()=>{if(local!="group"){setButtonGroup(group_button)}}} onClick={()=>{navigate('/groups')}}><img src={buttonGroup}/></li>
+                            <li style={{'borderColor':`${borders[3]}`}} onMouseOver={()=>{setButtonTrophy(trophy_button_selected)}} onMouseOut={()=>{if(local!="campaign"){setButtonTrophy(trophy_button)}}} onClick={()=>{navigate('/campaign')}}><img src={buttonTrophy}/></li>
+                        </ul>
+                    </div>
+                    : ""}
+                    <p id="solicitation_title">{listTitle}</p>
+                    <div id="nav_left_bottom">
+                            <div id="nav_left_list">
+                            {
+                                list
+                            }
+                            </div>
+                            {
+                                updateButton==true?
+                                <button id="update_button" onClick={()=>{
+                                    // axios.post("http://localhost:5000/api/create_group",{owner:userId,name:"Ximbinhas",description:"os ximbinhas"})
+                                    // .then((res)=>{console.log(res.data.message)})
+                                    // .catch((err)=>{console.log(err.response.data.message)})
+
+                                    axios.post("http://localhost:5000/api/create_solicitation",{userId:userId,groupName:"Ximbinhas"})
+                                    .then((res)=>{console.log(res.data.message)})
+                                    .catch((err)=>{console.log(err.response.data.message)})
+                                }}>
+                                    Update
+                                </button>:""
+                            }
+                           </div>
+                    
+            </div>
+            <div id="nav_left_decoration">
+
+            </div>
+        </div>
+    )
+}

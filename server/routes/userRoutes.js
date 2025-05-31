@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require("../controllers/userController.js")
 const upload = require("../middleware/upload.js").upload
 
+// router.post("/get_user",userController.get_user)
 router.post("/signup",userController.signup)
 router.post("/signin",userController.signin)
 router.post("/email_verification",userController.email_verification)

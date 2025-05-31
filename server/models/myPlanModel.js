@@ -9,6 +9,9 @@ const myPlanSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Plan'
     }
+},
+{
+    timestamps:true
 })
 
 const myPlanModel = mongoose.model('MyPlan',myPlanSchema)

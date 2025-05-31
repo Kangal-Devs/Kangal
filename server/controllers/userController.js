@@ -1,8 +1,26 @@
 const { userModel } = require("../models/userModel.js")
+const { myPlanModel } = require("../models/myPlanModel.js")
+const { planModel } = require("../models/planModel.js")
 const jwt = require("jsonwebtoken")
 const { TOKEN_KEY } = require("../config.js")
 const fs = require("fs")
 const path = require("path")
+
+// exports.get_user = async (req,res)=>{
+//     try{
+//             const {_id} = req.body
+//             const user = userModel.findOne({_id})
+
+//             if(user){
+//                 return res.status(200).json({message:user})
+//             }
+//             res.status(400).json({message:"not found"})
+//     }
+//     catch(err){
+//         res.status(5000).json({message:err.message})
+//     }
+// }
+
 //ROTA APENAS VERIFICAR EMAIL GOOGLE -- SIGNIN COM GOOGLE
 exports.email_verification = async (req, res) => {
     try {
@@ -52,6 +70,7 @@ exports.signin = async (req, res) => {
                 },
                 TOKEN_KEY, { expiresIn: "30m" })
             res.cookie("token", token, { httpOnly: true })
+            
             return res.status(200).json({ message: "achado", image: user.image.toString('base64') })
         }
         res.status(404).json({ message: "errorType-16" }) // errorType16:Nome ou senha incorreto
@@ -65,13 +84,16 @@ exports.signup = async (req, res) => {
     try {
         const imageLocal = path.join(__dirname,"..", "assets", "defaultProfilePicture.png")
         const image = fs.readFileSync(imageLocal)
-        console.log(image)
         const { accountType, name, email, password } = req.body
         const date = new Date(req.body.date)
         const xp = 0
         const github = null
         const gender = "Prefer not to say"
         const user = await userModel.create({ accountType, name, email, password, xp, date, image, gender, github })
+
+        const plan = await planModel.findOne({name:"Basic"})
+        console.log(plan.name)
+        const myPlan = await myPlanModel.create({user:user._id,plan:plan._id})
 
         const token = jwt.sign({
             _id: user._id,
@@ -98,13 +120,13 @@ exports.authorization = async (req, res) => {
     try {
 
         const token = req.cookies.token
-        console.log(jwt.decode(token))
+        // console.log(jwt.decode(token))
         const verify_token = jwt.verify(token, TOKEN_KEY)
         res.status(200).json({ message: verify_token })
     }
     catch (err) {
         res.status(400).json({ message: err.message })
-        console.log(req.cookies)
+        // console.log(req.cookies)
     }
 }
 
@@ -127,8 +149,8 @@ exports.user_update = async (req, res) => {
 
         _id = _id.replace(/[^\da-f]/gi, "");
 
-        console.log(req?.file?.buffer)
-        console.log(req.body.email)
+        // console.log(req?.file?.buffer)
+        // console.log(req.body.email)
         if (image) {
 
             var user = await userModel.findByIdAndUpdate(_id, { email, password, gender, github, date, image }, { new: true, runValidators: true })

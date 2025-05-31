@@ -15,6 +15,6 @@ const solicitationSchema = mongoose.Schema({
     timestamps:true
 })
 
-const solicitationModel = mongoose.model("SolicitationGroup",solicitationSchema);
+const solicitationModel = mongoose.model("Solicitation",solicitationSchema);
 
 module.exports.solicitationModel = solicitationModel;
