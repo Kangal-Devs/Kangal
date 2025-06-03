@@ -1,0 +1,97 @@
+#upgrade{
+     backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top:0;
+    position: fixed;
+    height:100vh;
+    width:100vw;
+    background-color: rgba(0, 0, 0, 0.658);
+    z-index: 120;
+    
+}
+#upgrade_exit_button{
+    border: none;
+    position: absolute;
+    top:50px;
+    right:50px;
+    background-color: transparent;
+    color:white;
+    font-size: 40px;
+    font-family: Signika Negative;
+}
+#upgrade_list{
+    max-width: 1300px;
+    justify-content: space-around;
+    color:white;
+    font-family: Signika Negative;
+    width:100%;
+    display: flex;
+ 
+}
+.upgrade_item{
+align-items: center;
+flex-direction: column;
+display: flex;
+
+
+}
+.upgrade_bar{
+    overflow: hidden;
+       border-radius: 15px;
+
+}
+.upgrade_bar_top{
+    font-size: 30px;
+    padding:10px 10px 40px 10px;
+   
+    width: 15vw;
+    min-width: 200px;
+    max-width: 230px;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+.upgrade_bar_top span{
+    font-size: 15px;
+}
+.upgrade_bar_top_insignia{
+height:30px;
+    width:100%;
+}
+.upgrade_bar_top_insignia img{
+    height:100%;
+}
+.upgrade_bar_bottom img{
+    height:20px
+}
+.upgrade_bar_bottom {
+    row-gap: 10px;
+    background-color: rgb(39, 39, 39);
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    padding:20px
+}
+.upgrade_bar_bottom button{
+    cursor: pointer;
+    padding:10px;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 10px;
+    color: white;
+    font-family: leelawadee;
+    font-weight: bolder;
+    transition: all 0.2s ease-in-out;
+}
+.upgrade_bar_bottom button:hover{
+     background-color: white;
+      color: rgb(29, 29, 29);
+}
+.upgrade_bar_bottom p{
+    font-size: 20px;
+}
+.upgrade_bar_bottom h4{
+    color: rgb(212, 212, 212);
+}

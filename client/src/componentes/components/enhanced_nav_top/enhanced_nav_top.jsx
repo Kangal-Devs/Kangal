@@ -13,6 +13,8 @@ import "./enhanced_nav_top.css"
 
 export function EnhancedNavTop({ page, home, group, host, search, userName, userImage, userEmail, userPassword, userDate, userAccountType, userGithub, userGender, userId }) {
 
+    const navigate = useNavigate()
+
     const [gendersOpt, setGendersOpt] = useState()
 
     const [modifiedName, setModifiedName] = useState(null)
@@ -32,7 +34,7 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
     const [backgroundOptions, setBackgroundOptions] = useState("background_options_inactive")
 
     const [alertMessage, setAlertMessage] = useState("")
-    const [alertError, setAlertError] = useState(false)
+    const [isError, setIsError] = useState(false)
     const [alertStatus, setAlertStatus] = useState("alert_inactive")
 
     const imageRef = useRef()
@@ -95,6 +97,16 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
         setUpdateGithub(userGithub)
     }, [updateEmail, updateImage, updatePassword, updateDate, updateGender, updateGithub])
 
+    const showAlert = useCallback((isError,alertMessage,alertTime,reset)=>{
+        setIsError(isError);
+        setAlertMessage(alertMessage)
+        setAlertStatus('alert_active')
+        setTimeout(()=>{
+            setAlertStatus('alert_inactive')
+            if (reset==true) window.location.reload()
+        },alertTime)
+    },[])
+
     const update = useCallback(() => {
         console.log(updateDate)
         console.log(updateEmail)
@@ -120,10 +132,18 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
         axios.put(`http://localhost:5000/api/user_update/${userId}`,
             formData
             , { withCredentials: true })
-            .then((res) => { console.log(res); localStorage.setItem("image", res.data.image) })
-            .catch((err) => { console.log(err) })
+            .then((res) => {
+                
+                localStorage.setItem("image", res.data.image);
+                showAlert(false,"Conta Alterada",3000,true)
+            
+            })
+            .catch((err) => { 
+                console.log(err)
+                showAlert(true,"Erro ao alterar",3000,false)
+            })
     }, [updateEmail, updateImage, updatePassword, updateDate, updateGithub, updateGender])
-    const navigate = useNavigate()
+    
     return (
         <div id="enhanced_nav_top">
             {/* Área da NavTop do usuário V */}
@@ -156,7 +176,9 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
                 }
                 <div onClick={() => { setBackgroundOptions("background_options_active") }}>
                     <p>{userName}</p>
+                    <div id="nav_top_user_img">
                     <img src={`data:image/png;base64,${userImage}`} />
+                    </div>
                 </div>
 
             </div>
@@ -240,7 +262,9 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
                     </div>
                 </div>
             </div>
-            {/* <Alert error={true} message="Oi tudo bem" /> */}
+            <div id={alertStatus}>
+            <Alert error={isError} message={alertMessage} />
+            </div>
         </div>
     )
 }

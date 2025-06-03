@@ -13,7 +13,7 @@ import { useEffect, useState, useCallback } from "react"
 import { NavLeftListItem } from "../nav_left_list_item/nav_left_list_item.jsx"
 import paper_error from "../../../assets/all_pages/error/paper_error.png"
 
-export function NavLeft({ userId, topButtons,updateButton,local,listTitle,requestLocal }) {
+export function NavLeft({ userId, topButtons,updateButton,local,listTitle,requestLocal,requestType }) {
 
     const [iz,setIz] = useState(0)
     const navigate = useNavigate()
@@ -54,6 +54,7 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
     },[])
     
    useEffect(() => {
+    if(requestType == "solicitations"){
   if (requestLocal) {
     axios.post(requestLocal, { _id: userId })
       .then((res) => {
@@ -88,6 +89,7 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
         console.log(err);
       });
   }
+}
 }, []);
    
 
