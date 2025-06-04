@@ -76,6 +76,7 @@ export function Home() {
                 localStorage.clear()
             })
     }, [])
+
     return (
         <div id="home">
             {/* Verificação se usuário está com TOKEN válido V */}
@@ -104,7 +105,7 @@ export function Home() {
                                 requestLocal="http://localhost:5000/api/my_solicitation"
                                 listTitle="Solicitações"
                                 userId={userId}
-                                topButtons={true}
+                                topButtons={false}
                                 updateButton={true}
                                 local="game"
                             />
@@ -136,6 +137,7 @@ export function Home() {
                         </div>
 
                     </div>
+                    
                      <div id={upgradeStatus}>
                         <Upgrade exitFunction={setUpgradeStatus}/>
                         </div>

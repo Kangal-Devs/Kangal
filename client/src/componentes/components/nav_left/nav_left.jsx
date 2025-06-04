@@ -13,12 +13,12 @@ import { useEffect, useState, useCallback } from "react"
 import { NavLeftListItem } from "../nav_left_list_item/nav_left_list_item.jsx"
 import paper_error from "../../../assets/all_pages/error/paper_error.png"
 
-export function NavLeft({ userId, topButtons,updateButton,local,listTitle,requestLocal,requestType }) {
+export function NavLeft({ userId, topButtons,updateButton,local,listTitle,requestLocal,requestType ,upgradeFunction}) {
 
-    const [iz,setIz] = useState(0)
+   
     const navigate = useNavigate()
     const [list,setList] = useState([])
-    const [list1,setList1] = useState()
+
     const [borders, setBorders] = useState(['white','white','white','white'])
 
     const [buttonController, setButtonController] = useState(controller_button)
@@ -54,7 +54,7 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
     },[])
     
    useEffect(() => {
-    if(requestType == "solicitations"){
+    if(requestType == "solicitations" || requestType == "groups"){
   if (requestLocal) {
     axios.post(requestLocal, { _id: userId })
       .then((res) => {
@@ -90,6 +90,8 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
       });
   }
 }
+
+
 }, []);
    
 
@@ -122,11 +124,12 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
                                     // .then((res)=>{console.log(res.data.message)})
                                     // .catch((err)=>{console.log(err.response.data.message)})
 
-                                    axios.post("http://localhost:5000/api/create_solicitation",{userId:userId,groupName:"Ximbinhas"})
-                                    .then((res)=>{console.log(res.data.message)})
-                                    .catch((err)=>{console.log(err.response.data.message)})
+                                    // axios.post("http://localhost:5000/api/create_solicitation",{userId:userId,groupName:"Ximbinhas"})
+                                    // .then((res)=>{console.log(res.data.message)})
+                                    // .catch((err)=>{console.log(err.response.data.message)})
+                                    upgradeFunction('upgrade_background_active')
                                 }}>
-                                    Update
+                                    Upgrade
                                 </button>:""
                             }
                            </div>

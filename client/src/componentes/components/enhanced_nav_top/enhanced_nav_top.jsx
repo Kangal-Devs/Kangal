@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import "./enhanced_nav_top.css"
 
-export function EnhancedNavTop({ page, home, group, host, search, userName, userImage, userEmail, userPassword, userDate, userAccountType, userGithub, userGender, userId }) {
+export function EnhancedNavTop({ page,home,group,isOwner, search, userName, userImage, userEmail, userPassword, userDate, userAccountType, userGithub, userGender, userId}) {
 
     const navigate = useNavigate()
 
@@ -151,7 +151,7 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
             {/* ------------------------------------------------------------------------- */}
 
 
-            <div id="left_side">
+            {/* <div id="left_side">
                 <div id="kangal_part">
                     <img src={kangal} />
                 </div>
@@ -181,7 +181,43 @@ export function EnhancedNavTop({ page, home, group, host, search, userName, user
                     </div>
                 </div>
 
+            </div> */}
+
+            <div id="kangal_part">
+                <img src={kangal} />
             </div>
+            <div id="enhanced_nav_top_principal">
+                <div id="left_part">
+
+              
+                    <div id="page_part">
+                        <img src={sign_img} />
+                        <p>{page}</p>
+                    </div>
+                    {home == true ?
+                    <img src={home_img} onClick={() => { navigate("/home") }} className="nav_top_icons" id="home_part" />
+                    : ""
+                }
+                      </div>
+                      <div id="right_part">
+                        <div id="nav_top_icon_buttons">
+
+                     
+                        <img src={bell_img}/>
+                        {
+                            group==true?<img src={group_img}/>:""
+                        }
+                         </div>
+                          <div onClick={() => { setBackgroundOptions("background_options_active") }} id="user_part">
+                                <p>{userName}</p>
+                                <div id="nav_top_user_img">
+                                <img src={`data:image/png;base64,${userImage}`} />
+                    </div>
+                </div>
+                      </div>
+            </div>
+
+
             <div id={backgroundOptions} onClick={() => { setBackgroundOptions("background_options_inactive") }}>
                 <div id="options_nav_top">
                     <button onClick={() => { setBackgroundUpdate("background_update_active") }}>Configurações</button>

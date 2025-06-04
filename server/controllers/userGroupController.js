@@ -27,12 +27,12 @@ exports.get_user_group = async (req,res)=>{
 
 exports.get_all_user_group = async (req,res)=>{
     try{
-    const {userId} = req.body;
+    const {_id} = req.body;
 
-    const user = await userModel.findOne({_id:userId})
+    const user = await userModel.findOne({_id:_id})
 
     if(user){
-        const userGroup = await userGroupModel.find({user:userId})
+        const userGroup = await userGroupModel.find({user:_id})
         return res.status(200).json({message:userGroup})
     }   
     res.status(404).json({message:"not found user"})
