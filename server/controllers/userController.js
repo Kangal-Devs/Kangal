@@ -6,20 +6,20 @@ const { TOKEN_KEY } = require("../config.js")
 const fs = require("fs")
 const path = require("path")
 
-// exports.get_user = async (req,res)=>{
-//     try{
-//             const {_id} = req.body
-//             const user = userModel.findOne({_id})
-
-//             if(user){
-//                 return res.status(200).json({message:user})
-//             }
-//             res.status(400).json({message:"not found"})
-//     }
-//     catch(err){
-//         res.status(5000).json({message:err.message})
-//     }
-// }
+exports.get_user = async (req,res)=>{
+    try{
+            const {_id} = req.body
+            const user = await userModel.findOne({_id})
+            console.log(_id)
+            if(user){
+                return res.status(200).json({message:user})
+            }
+            res.status(404).json({message:"not found"})
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    }
+}
 
 //ROTA APENAS VERIFICAR EMAIL GOOGLE -- SIGNIN COM GOOGLE
 exports.email_verification = async (req, res) => {

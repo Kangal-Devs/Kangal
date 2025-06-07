@@ -28,7 +28,7 @@ exports.get_solicitation = async (req,res)=>{
 
 exports.delete_solicitation = async (req,res)=>{
     try{
-            const {userId,groupId} = req.body
+            const {userId,groupId} = req.params
            const user = await userModel.findOne({_id:userId})
            const group = await groupModel.findOne({_id:groupId})
 

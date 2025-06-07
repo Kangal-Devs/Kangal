@@ -13,7 +13,7 @@ import { useEffect, useState, useCallback } from "react"
 import { NavLeftListItem } from "../nav_left_list_item/nav_left_list_item.jsx"
 import paper_error from "../../../assets/all_pages/error/paper_error.png"
 
-export function NavLeft({ userId, topButtons,updateButton,local,listTitle,requestLocal,requestType ,upgradeFunction}) {
+export function NavLeft({ userId, topButtons,updateButton,local,listTitle,requestLocal,requestType ,upgradeFunction,funcAlter,vars,code}) {
 
    
     const navigate = useNavigate()
@@ -67,6 +67,7 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
               .then((res1) => ({
                 title: res1.data.message.name,
                 image: res1.data.message.image,
+                _id:   res1.data.message._id
               }));
           });
 
@@ -76,7 +77,17 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
             
             setList(
               results.map((item, i) => (
-                <NavLeftListItem key={i} title={item.title} image={item.image} />
+                <NavLeftListItem key={i}
+                  title={item.title}
+                   image={item.image}
+                   userId={userId}
+                    itemId={item._id}
+                     
+                      code={code}
+                      funcAlter={funcAlter}
+                      vars={vars}
+                      
+                      />
               ))
             );
           });
@@ -120,13 +131,15 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
                             {
                                 updateButton==true?
                                 <button id="update_button" onClick={()=>{
-                                    // axios.post("http://localhost:5000/api/create_group",{owner:userId,name:"Ximbinhas",description:"os ximbinhas"})
+                                    // axios.post("http://localhost:5000/api/create_group",{owner:userId,name:"",description:""})
                                     // .then((res)=>{console.log(res.data.message)})
                                     // .catch((err)=>{console.log(err.response.data.message)})
 
-                                    // axios.post("http://localhost:5000/api/create_solicitation",{userId:userId,groupName:"Ximbinhas"})
+                                    // axios.post("http://localhost:5000/api/create_solicitation",{userId:userId,groupName:""})
                                     // .then((res)=>{console.log(res.data.message)})
                                     // .catch((err)=>{console.log(err.response.data.message)})
+
+
                                     upgradeFunction('upgrade_background_active')
                                 }}>
                                     Upgrade

@@ -8,12 +8,15 @@ import { NavLeft } from "../../components/nav_left/nav_left.jsx"
 import { useNavigate } from "react-router-dom"
 import { Upgrade } from "../../components/upgrade/upgrade.jsx"
 import { generateLevelTable } from "../../../levelGenerator.js"
-
+import select_group from "../../../assets/specific_page/group/select_group.png"
 export function Groups() {
     const [upgradeStatus, setUpgradeStatus] = useState('upgrade_background_inactive')
 
 
-    const [currentGroup, setCurrentGroup] = useState()
+    const [currentGroupName, setCurrentGroupName] = useState("Group")
+
+    const [groupsContentEmptyStatus,setGroupsContentEmptyStatus] = useState("groups_content_empty_active")
+    const [groupsContentGroupStatus,setGroupsContentGroupStatus] = useState("groups_content_group_inactive")
 
     const [userName, setUserName] = useState()
     const [userEmail, setUserEmail] = useState()
@@ -58,7 +61,7 @@ export function Groups() {
             {connected == false ? <TokenInvalid token_error={tokenError} /> : 
                 <div id="groups_principal">
                 <EnhancedNavTop
-                            page="Group"
+                            page={currentGroupName}
                             home={true}
                             group={true}
                             userName={userName}
@@ -83,9 +86,28 @@ export function Groups() {
                                 topButtons={true}
                                 updateButton={true}
                                 local="group"
+                                code="group"
                                 upgradeFunction={setUpgradeStatus}
-                            />
+                                vars={[
+                                    currentGroupName
+                                ]}
+                                funcAlter={[
+                                    setCurrentGroupName,
+                                    setGroupsContentEmptyStatus,
+                                    setGroupsContentGroupStatus
 
+                                ]}
+                            />
+                            <div id={groupsContentGroupStatus}>
+                                <div>
+                                </div>
+                                <div id="group_users_part">
+                                </div>
+                            </div>
+                            <div id={groupsContentEmptyStatus}>
+                                <img src={select_group}/>
+                            </div>
+                            
                         </div>
                 
                 

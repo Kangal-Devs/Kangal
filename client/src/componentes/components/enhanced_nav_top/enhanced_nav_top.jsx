@@ -203,9 +203,9 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
                         <div id="nav_top_icon_buttons">
 
                      
-                        <img src={bell_img}/>
+                        <img src={bell_img} className="nav_top_icons"/>
                         {
-                            group==true?<img src={group_img}/>:""
+                            group==true?<img src={group_img} className="nav_top_icons"/>:""
                         }
                          </div>
                           <div onClick={() => { setBackgroundOptions("background_options_active") }} id="user_part">

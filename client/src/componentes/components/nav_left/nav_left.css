@@ -66,9 +66,10 @@ height:50%;
 }
 
 #solicitation_title{
+    margin-top: 20px;
     color:rgb(212, 212, 212);
   
-    margin-left: 5px;
+    margin-left: 15px;
 }
 
 #update_button{
@@ -81,6 +82,7 @@ height:50%;
     border: 2px solid ;
 }
 #nav_left_list{
+
        row-gap: 15px;
        display: flex;
        flex-direction: column;
@@ -91,6 +93,7 @@ height:50%;
 #nav_left_list #paper_error{
     margin-top: 50%;
     width:90%;
+    max-width: 200px;
 }
 #nav_left_list #text_error{
   

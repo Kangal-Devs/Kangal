@@ -4,7 +4,9 @@
     background-color: rgba(255, 0, 0, 0);
     align-items: center;
     display: flex;
+
 }
+
 #nav_left_list_item_decoration{
     height:100%;
     width:4px;
@@ -12,6 +14,7 @@
     background-color: aquamarine;
 }
 #nav_left_list_item_principal{
+    cursor: pointer;
     display: grid;
     align-items: center;
     justify-content: center;
@@ -21,9 +24,16 @@
     height:90%;
     background-color: rgb(26, 26, 26);
 
+    transition: all 0.2s ease-in;
+}
+#nav_left_list_item_principal:hover{
+  background-color: rgb(19, 19, 19);
 
 }
+#nav_left_list_item_principal:active{
+    background-color: rgba(80, 0, 0, 0);
 
+}
 #nav_left_list_item_principal p{
 font-size: 20px;
     color: white;

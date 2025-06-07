@@ -15,3 +15,31 @@
     height:100%;
   
 }
+#groups_content_empty_active{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+#groups_content_empty_active img{
+    height:40%;
+
+}
+#groups_content_empty_inactive{
+    display: none;
+}
+#groups_content_group_inactive{
+    display: none;
+}
+#groups_content_group_active{
+    display:grid;
+    grid-template-columns: 3fr 1fr;
+}
+#group_users_part{
+    background-color: #2F2F2F;
+}
+@media (min-width:1500px){
+     #groups_content_group_active{
+    display:grid;
+    grid-template-columns: 13fr 2fr;
+}
+}
