@@ -24,7 +24,7 @@ exports.get_user_group = async (req,res)=>{
         res.status(500).json({message:err.message})
     }
 }
-
+// Essa rota retorna todos os grupos que o usuário participa
 exports.get_all_user_group = async (req,res)=>{
     try{
     const {_id} = req.body;
@@ -36,6 +36,23 @@ exports.get_all_user_group = async (req,res)=>{
         return res.status(200).json({message:userGroup})
     }   
     res.status(404).json({message:"not found user"})
+    }catch(err){
+        res.status(500).json({message:err.message})
+    }
+}
+
+// Essa rota retorna todas os usuários que o participam do grupo
+exports.get_all_user_group2 = async (req,res)=>{
+    try{
+    const {_id} = req.body;
+
+    const group = await groupModel.findOne({_id:_id})
+
+    if(group){
+        const userGroup = await userGroupModel.find({group:_id})
+        return res.status(200).json({message:userGroup})
+    }   
+    res.status(404).json({message:"not found group"})
     }catch(err){
         res.status(500).json({message:err.message})
     }

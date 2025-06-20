@@ -1,4 +1,4 @@
-#nav_left_list_item{
+.nav_left_list_item{
     width:100%;
     height:80px;
     background-color: rgba(255, 0, 0, 0);
@@ -7,13 +7,13 @@
 
 }
 
-#nav_left_list_item_decoration{
+.nav_left_list_item_decoration{
     height:100%;
     width:4px;
     border-radius:2px;
     background-color: aquamarine;
 }
-#nav_left_list_item_principal{
+.nav_left_list_item_principal{
     cursor: pointer;
     display: grid;
     align-items: center;
@@ -26,20 +26,20 @@
 
     transition: all 0.2s ease-in;
 }
-#nav_left_list_item_principal:hover{
+.av_left_list_item_principal:hover{
   background-color: rgb(19, 19, 19);
 
 }
-#nav_left_list_item_principal:active{
+.nav_left_list_item_principal:active{
     background-color: rgba(80, 0, 0, 0);
 
 }
-#nav_left_list_item_principal p{
+.nav_left_list_item_principal p{
 font-size: 20px;
     color: white;
  place-self: center;
 }
-#nav_left_list_item_principal img{
+.nav_left_list_item_principal img{
      place-self: center;
     height:50px;
     aspect-ratio: 1/1;

@@ -40,7 +40,7 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
     const imageRef = useRef()
 
     useEffect(() => {
-        console.log(userGithub)
+        // console.log(userGithub)
         userGithub == null ? setUpdateGithub("") : setUpdateGithub(userGithub)
     }, [])
 
@@ -58,9 +58,9 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
 
 
 
-    useEffect(() => {
-        console.log(updateImage)
-    }, [])
+    // useEffect(() => {
+    //     console.log(updateImage)
+    // }, [])
     useEffect(() => {
         if (inputImage == "" || inputImage == null) {
             setUpdateImage(`data:image/png;base64,${userImage}`)
@@ -68,21 +68,21 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
         }
 
         else {
-            console.log(inputImage)
+            // console.log(inputImage)
 
             if (typeof (inputImage) == "object") {
 
 
                 setModifiedName(inputImage)
                 const url = URL.createObjectURL(inputImage)
-                console.log(url)
+                // console.log(url)
                 setUpdateImage(url)
-                console.log(inputImage)
+                // console.log(inputImage)
             }
         }
     }, [inputImage])
     useEffect(() => {
-        console.log(genders)
+        // console.log(genders)
         setGendersOpt(genders.map((gender, i) => (
             <option key={i} value={gender.value}>{gender.name}</option>
         )))
@@ -108,11 +108,11 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
     },[])
 
     const update = useCallback(() => {
-        console.log(updateDate)
-        console.log(updateEmail)
-        console.log(updatePassword)
-        console.log(updateGithub)
-        console.log(updateGender)
+        // console.log(updateDate)
+        // console.log(updateEmail)
+        // console.log(updatePassword)
+        // console.log(updateGithub)
+        // console.log(updateGender)
         let image;
         if (modifiedName) {
             image = modifiedName

@@ -52,7 +52,7 @@ export function Home() {
     const [level, setLevel] = useState(9)
 
     useEffect(() => {
-        console.log(generateLevelTable())
+      
         generateLevelTable().forEach((item) => {
             if (userXp >= item.xpMin && userXp <= item.xpMax) {
                 setLevel(item.level)

@@ -10,9 +10,20 @@ exports.get_user = async (req,res)=>{
     try{
             const {_id} = req.body
             const user = await userModel.findOne({_id})
-            console.log(_id)
             if(user){
-                return res.status(200).json({message:user})
+                const user2 = {
+                    email:user.email,
+                    _id:user._id,
+                    name:user.name,
+                    xp:user.xp,
+                    date:user.date,
+                    image:user.image.toString('base64'),
+                    github:user.github,
+                    gender:user.gender,
+                    accountType:user.accountType,
+                    password:user.password
+                }
+                return res.status(200).json({message:user2})
             }
             res.status(404).json({message:"not found"})
     }
@@ -92,7 +103,6 @@ exports.signup = async (req, res) => {
         const user = await userModel.create({ accountType, name, email, password, xp, date, image, gender, github })
 
         const plan = await planModel.findOne({name:"Basic"})
-        console.log(plan.name)
         const myPlan = await myPlanModel.create({user:user._id,plan:plan._id})
 
         const token = jwt.sign({

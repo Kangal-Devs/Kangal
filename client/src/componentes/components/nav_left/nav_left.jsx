@@ -67,7 +67,8 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
               .then((res1) => ({
                 title: res1.data.message.name,
                 image: res1.data.message.image,
-                _id:   res1.data.message._id
+                _id:   res1.data.message._id,
+                owner: res1.data.message.owner
               }));
           });
 
@@ -82,7 +83,8 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
                    image={item.image}
                    userId={userId}
                     itemId={item._id}
-                     
+                    owner={item.owner} 
+
                       code={code}
                       funcAlter={funcAlter}
                       vars={vars}
@@ -135,12 +137,16 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
                                     // .then((res)=>{console.log(res.data.message)})
                                     // .catch((err)=>{console.log(err.response.data.message)})
 
-                                    // axios.post("http://localhost:5000/api/create_solicitation",{userId:userId,groupName:""})
+                                    // axios.post("http://localhost:5000/api/create_user_group",{owner:userId,groupName:""})
+                                    // .then((res)=>{console.log(res.data.message)})
+                                    // .catch((err)=>{console.log(err.response.data.message)})
+
+                                    // axios.post("http://localhost:5000/api/create_solicitation",{userId:userId,groupName:"Ximbinhas"})
                                     // .then((res)=>{console.log(res.data.message)})
                                     // .catch((err)=>{console.log(err.response.data.message)})
 
 
-                                    upgradeFunction('upgrade_background_active')
+                                    // upgradeFunction('upgrade_background_active')
                                 }}>
                                     Upgrade
                                 </button>:""
