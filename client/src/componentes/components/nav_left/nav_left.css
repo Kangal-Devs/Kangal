@@ -133,3 +133,28 @@ height:50%;
         
     }
 }
+
+#button_create_group{
+    display: flex;
+    column-gap: 10px;
+    justify-content: center;
+    align-items: center;
+    font-family: Silkscreen;
+    background-color: transparent;
+    border: 1px solid;
+    color: #00ffffc5;
+    width:80%;
+    padding-block: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.16s ease-in-out;
+}
+#button_create_group img{
+height: 20px;;
+}
+#button_create_group:hover{
+    background-color:rgba(0, 255, 255, 0.39);
+   
+    
+}

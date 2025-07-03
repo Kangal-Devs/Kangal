@@ -12,6 +12,7 @@ import trophy_button_selected from "../../../assets/all_pages/nav_left_icons/tro
 import { useEffect, useState, useCallback } from "react"
 import { NavLeftListItem } from "../nav_left_list_item/nav_left_list_item.jsx"
 import paper_error from "../../../assets/all_pages/error/paper_error.png"
+import create_group from "../../../assets/specific_page/group/create_group1.png"
 
 export function NavLeft({ userId, topButtons,updateButton,local,listTitle,requestLocal,requestType ,upgradeFunction,funcAlter,vars,code}) {
 
@@ -126,7 +127,11 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
                     <p id="solicitation_title">{listTitle}</p>
                     <div id="nav_left_bottom">
                             <div id="nav_left_list">
+                              {
+                                  local=="group"?(<button id="button_create_group" onClick={()=>{funcAlter[13](true)}}> <img src={create_group}/>Criar Grupo</button>):null
+                                }
                             {
+                                
                                 list
                             }
                             </div>

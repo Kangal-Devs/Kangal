@@ -13,6 +13,7 @@
 }
 #upgrade_exit_button{
     border: none;
+    cursor: pointer;
     position: absolute;
     top:50px;
     right:50px;

@@ -1,6 +1,7 @@
 const solicitationController = require("../controllers/solicitationController.js")
 const express = require("express")
 const router = express.Router();
+router.post('/group_solicitation',solicitationController.get_solicitation2)
 router.post('/my_solicitation',solicitationController.get_solicitation)
 router.delete('/delete_solicitation/:userId/:groupId',solicitationController.delete_solicitation)
 router.post('/create_solicitation',solicitationController.create_solicitation)

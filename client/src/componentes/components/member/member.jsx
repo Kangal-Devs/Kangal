@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import "./member.css"
 import { generateLevelTable } from "../../../levelGenerator.js"
-export function Member({image,name,gender,xp,isOwner,funcAlter}){
+export function Member({isItMe,id,image,name,gender,xp,isOwner,funcAlter}){
 
     const [level,setLevel] = useState(0)
     const [levelWidth,setLevelWidth] = useState(0)
@@ -24,7 +24,8 @@ useEffect(()=>{
             funcAlter[7](image)
             funcAlter[8](level)
             funcAlter[9](levelWidth)
-            
+            funcAlter[11](id)
+            isItMe?funcAlter[12](true):funcAlter[12](false)
         }}>
             <div className="member_img_part">
             <div className="member_img">

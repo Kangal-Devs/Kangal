@@ -11,5 +11,7 @@ router.post("/clear_cookie",userController.clear_cookie)
 router.post("/authorization",userController.authorization)
 router.put("/user_update/:_id",upload.single("file"),userController.user_update)
 router.post("/get_user",userController.get_user)
+router.post("/get_user2",userController.get_user2)
+router.post("/get_users_limit5",userController.get_users_limit5)
 
 module.exports.router = router

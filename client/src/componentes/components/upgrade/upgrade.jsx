@@ -120,7 +120,7 @@ return(
                 </div>
             </div>
             <div className="upgrade_item">
-                <h1>Pro</h1>
+                <h1>Master</h1>
                 <div className="upgrade_bar" style={{ backgroundColor:" rgb(128, 90, 197)",border: "2px solid rgb(128, 90, 197)"}}>
                     <div className="upgrade_bar_top">
                     <div className="upgrade_bar_top_insignia">

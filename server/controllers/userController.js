@@ -6,6 +6,7 @@ const { TOKEN_KEY } = require("../config.js")
 const fs = require("fs")
 const path = require("path")
 
+//PEGAR USUARIO PELO ID 
 exports.get_user = async (req,res)=>{
     try{
             const {_id} = req.body
@@ -26,6 +27,63 @@ exports.get_user = async (req,res)=>{
                 return res.status(200).json({message:user2})
             }
             res.status(404).json({message:"not found"})
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    }
+}
+//PEGAR USUARIO PELO NOME
+exports.get_user2 = async (req,res)=>{
+    try{
+            const {name} = req.body
+            const user = await userModel.findOne({name})
+            if(user){
+                const user2 = {
+                    email:user.email,
+                    _id:user._id,
+                    name:user.name,
+                    xp:user.xp,
+                    date:user.date,
+                    image:user.image.toString('base64'),
+                    github:user.github,
+                    gender:user.gender,
+                    accountType:user.accountType,
+                    password:user.password
+                }
+                return res.status(200).json({message:user2})
+            }
+            res.status(404).json({message:"not found"})
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    }
+}
+
+exports.get_users_limit5 = async (req,res)=>{
+    try{
+            const {userName} = req.body;
+            const regex = new RegExp(userName, 'i');
+            const users = await userModel.find({ name: regex }).limit(5);
+            
+            let array_users; // eu crio esse array ao invez de usar oque o mongoose me retorna, pelo motivo de que eu tenho que configurar a imagem de cada objeto que o mongoose retorna;
+
+            array_users = users.map((user)=>{
+                return {
+                    email:user.email,
+                    _id:user._id,
+                    name:user.name,
+                    xp:user.xp,
+                    date:user.date,
+                    image:user.image.toString('base64'),
+                    github:user.github,
+                    gender:user.gender,
+                    accountType:user.accountType,
+                    password:user.password
+                }
+            })
+
+            return res.status(200).json({message:array_users})
+           
     }
     catch(err){
         res.status(500).json({message:err.message})
