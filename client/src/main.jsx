@@ -1,6 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import { Hangman } from './componentes/pages/all_games/hangman/hangman.jsx'
+import { PingPong } from './componentes/pages/all_games/ping_pong/ping_pong.jsx'
+import {TicTacToe} from './componentes/pages/all_games/tic_tac_toe/tic_tac_toe.jsx'
+import { MemoryGame } from './componentes/pages/all_games/memory_game/memory_game.jsx'
 
 import { Campaign } from './componentes/pages/campaign/campaign.jsx'
 import { Groups } from './componentes/pages/groups/groups.jsx'
@@ -12,6 +16,7 @@ import { Home } from './componentes/pages/home/home.jsx'
 import { Support } from './componentes/pages/support/support.jsx'
 import {createBrowserRouter,RouterProvider} from "react-router-dom"
 import { GoogleOAuthProvider } from '@react-oauth/google'
+
 
 const route = createBrowserRouter([{
   path:"/",
@@ -44,6 +49,22 @@ const route = createBrowserRouter([{
 {
   path:"/campaign",
   element:<Campaign/>
+},
+{
+  path:"/games/hangman",
+  element:<Hangman/>
+},
+{
+  path:"/games/ping_pong",
+  element:<PingPong/>
+},
+{
+  path:"/games/tic_tac_toe",
+  element:<TicTacToe/>
+},
+{
+  path:"/games/memory_game",
+  element:<MemoryGame/>
 },
 ])
 

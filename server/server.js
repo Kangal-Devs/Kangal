@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser")
 const app = express()
 
 //ROTAS V
+const gameRoutes = require("./routes/gameRoutes.js")
 const userRoutes = require("./routes/userRoutes.js")
 const complaintRoutes = require("./routes/complaintRoutes.js")
 const solicitationRoutes = require("./routes/solicitationRoutes.js")
@@ -21,6 +22,7 @@ app.use(express.json())
 
 mongoose.connect("mongodb://localhost:27017/Kangal")
 
+app.use('/api',gameRoutes.router)
 app.use('/api',reportRoutes.router)
 app.use('/api',userGroupRoutes.router)
 app.use('/api',groupRoutes.router)

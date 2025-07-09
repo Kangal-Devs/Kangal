@@ -273,6 +273,7 @@ export function Groups() {
                                 setCurrentGroupId
                             ]}
                         />
+                        
                         <div id={groupsContentGroupStatus}>
                             <div id="chat_part">
                                 <div id="chat_part_messages">
