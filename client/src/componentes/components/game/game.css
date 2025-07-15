@@ -1,5 +1,5 @@
 .game {
-    
+    /* cursor:pointer; */
     grid-template-columns: 3fr 4fr;
     display: grid;
     margin-left: 20px;
@@ -7,19 +7,28 @@
     height: 300px;
     max-width: 1000px;
     margin-top: 5px;
-  background-color: rgba(255, 0, 0, 0.404);
+    background-color: rgba(255, 0, 0, 0);
     border-bottom: 1px solid rgb(85, 85, 85);
 }
-.game h2,h3,p{
-    color:white;
+
+.game h2,
+h3,
+p {
+    color: white;
 }
-.game h3,p{
+
+.game h3,
+p {
     font-family: Signika Negative;
 }
-.game h2{
+.game h3{
+    color: #808080;
+}
+.game h2 {
     font-family: Silkscreen;
 }
-.thumbnail_part{
+
+.thumbnail_part {
     width: 100%;
     height: 100%;
     /* background-color: red; */
@@ -28,31 +37,66 @@
     justify-content: center;
     flex-direction: column;
 }
-.thumbnail_part_img{
+
+.thumbnail_part_img {
     border-radius: 10px;
     overflow: hidden;
-    height:250px;
-    background-color: white;
-    aspect-ratio:4/3;
+    height: 250px;
+    background-color: rgba(255, 255, 255, 0);
+    aspect-ratio: 4/3;
 }
-.thumbnail_part_img img{
+
+.thumbnail_part_img img {
+   cursor: pointer;
     height: 100%;
 }
-.thumbnail_part_footer{
+
+.thumbnail_part_footer {
     display: flex;
     align-items: end;
-    height:40px;
+    height: 40px;
     width: 334px;
     margin-top: -40px;
     background-color: rgba(0, 0, 0, 0.384);
 }
-.about_part{
+
+.about_part {
+    cursor: pointer;
+    align-self: center;
+    height: 70%;
     /* background-color: rgba(0, 255, 255, 0.452); */
 }
-.thumbnail_part_footer img{
-height:80px;
-margin-left: 10px;
-width:80px;
-border-radius: 10px;
-margin-bottom: 5px;
+
+.about_part button {
+    margin-top: 10px;
+    padding: 5px 15px 5px 15px;
+    font-size: 15px;
+    font-family: Silkscreen;
+    border-radius: 7px;
+    border: 1px solid;
+    background-color: transparent;
+    color: #AACE1C;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+
+}
+
+.about_part button:hover {
+    background-color: #AACE1C;
+    color: #242424;
+}
+
+.thumbnail_part_footer img {
+    background-color: rgba(0, 0, 0, 0.39);
+    cursor: pointer;
+    height: 80px;
+    margin-left: 10px;
+    width: 80px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    transition: all 0.1s ease-in-out;
+}
+.thumbnail_part_footer img:hover{
+     height:83px;
+         width: 83px;
 }

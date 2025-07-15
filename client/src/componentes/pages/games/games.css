@@ -25,7 +25,7 @@
   display: flex;
 }
 
-#listGames {
+#list_games {
 
   height: 100%;
   min-height: 0;
@@ -47,4 +47,62 @@ grid-template-columns: 1fr 1fr;
 gap:2px;
 
 }
+}
+
+#enter_game_background{
+  height: 100vh;
+  width:100vw;
+  top:0;
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#enter_game_background div p{
+  font-size: 20px;
+}
+#enter_game_background div button{
+  margin-top: 10px;
+  margin-left: 5px;
+  padding:10px;
+  background-color: transparent;
+  border-radius: 5px;
+  border:1px solid;
+  cursor: pointer;
+}
+#enter_game_cancel:hover{
+  background-color: rgba(255, 255, 255, 0.267);
+}
+
+#enter_game_play:hover{
+  background-color: rgba(255, 255, 255, 0.267);
+}
+#enter_game_cancel{
+  color: rgb(196, 196, 196);
+}
+#enter_game_play{
+  color: #AACE1C;
+}
+#enter_game_background div{
+  padding:10px;
+  border-radius: 15px;
+  background-color: rgb(48, 48, 48);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.39);
+}
+#about_game{
+  padding:20px;
+  height: 100%;
+  width:100%;
+  /* background-color: rgb(49, 49, 49); */
+}
+#button_arrow{
+  background-color: transparent;
+  border: none;
+  height:40px;
+  width:40px;
+}
+#button_arrow img{
+  cursor: pointer;
+  height:100%;
 }
