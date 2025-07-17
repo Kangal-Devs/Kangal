@@ -90,19 +90,270 @@ gap:2px;
   background-color: rgb(48, 48, 48);
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.39);
 }
-#about_game{
-  padding:20px;
+#about_game,#about_skill{
+  background-color: rgba(255, 0, 0, 0);
+  gap:1px;
   height: 100%;
   width:100%;
+  display: grid;
+  grid-template-columns: 1fr 9fr;
   /* background-color: rgb(49, 49, 49); */
 }
-#button_arrow{
+#about_game_top div{
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+#about_game_top{
+  align-items: end;
+  display: flex;
+  height:15vh;
+  margin-top: 20px;
+  width:100%;
+
+}
+#about_game_top h1{
+  color: white;
+  font-family: Signika Negative;
+}
+#about_game_top p{
+  color: rgb(187, 187, 187);
+  font-family: Signika Negative;
+}
+#about_game_top button{
+  font-family: Silkscreen;
+  max-width: 120px;
+  font-size: 20px;
+  padding:5px 10px 5px 10px;
+  background-color: transparent;
+  color:#AACE1C;
+  border: 1px solid;
+  border-radius: 5px;
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+}
+#about_game_top button:hover{
+   background-color: #AACE1C;
+  color:#242424;
+  
+}
+#about_game_top_icon{
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.63);
+  height:100%;
+  aspect-ratio: 1/1;
+  border-radius: 20px;
+  overflow: hidden;
+}
+#about_game_top_icon img{
+  height: 100%;
+}
+
+.button_arrow{
+  margin: 15px;
   background-color: transparent;
   border: none;
   height:40px;
   width:40px;
 }
-#button_arrow img{
+.button_arrow img{
   cursor: pointer;
   height:100%;
+}
+#about_game_description{
+
+  margin-top: 20px;
+  width:60%;
+  text-indent:10px;
+}
+
+#about_game_code_title{
+  margin-top:20px;
+}
+#about_game_code_part{
+  background-color: rgba(255, 0, 0, 0);
+  width:70%;
+  display: flex;
+  align-items: center;
+  height: fit-content;
+}
+#about_game_code_part_decoration{
+  height: 315px;
+  width:4px;
+  border-radius: 10px;
+  background-color: rgb(0, 241, 169);
+}
+#about_game_code_part_content{
+  background-color: rgba(0, 0, 0, 0);
+  height:98%;
+  width:96%;
+}
+#about_game_code_part_blur{
+  position: relative;
+  width:100%;
+  height:70px;
+  margin-top: -70px;
+  background:linear-gradient(0deg, rgb(24, 24, 24),rgba(255, 255, 255, 0));
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+#about_game_code_part_blur button{
+  padding:5px;
+  background: transparent;
+  color: rgb(0, 241, 169);
+  border: 1px solid;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+#about_game_code_part_blur button:hover{
+  background: rgba(0, 241, 169, 0.87);
+  color: black;
+}
+#about_game_code_part_principal{
+  padding:5px;
+  color: rgb(212, 212, 212);
+  width:100%;
+  height:300px;
+  overflow: hidden;
+  background-color: rgb(24, 24, 24);
+}
+#about_game_principal,#about_skill_principal{
+  overflow-y: auto;
+}
+#code_game_background{
+
+  height:100vh;
+  width:100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top:0;
+  background-color: #aace1c00;
+}
+#code_game_bar{
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.301);
+  scrollbar-color:  #3f3f3f rgb(36, 36, 36);
+  max-width: 900px;
+  height:fit-content;
+  width: 60%;
+  background-color: #242424;
+  border-radius: 10px;
+  padding:10px;
+}
+#code_game_bar pre{
+  overflow-y: auto;
+  height:70vh;
+  background-color: rgba(0, 0, 0, 0.411);
+  padding:5px;
+  color: white;
+}
+#code_game_bar_top{
+  display: flex;
+  justify-content: space-between;
+
+   padding-block: 10px;
+}
+#code_game_bar_top button{
+    cursor: pointer;
+    height:25px;
+    width: 25px;
+    background-color: #181818;
+    border-radius: 5px;
+    border: none;
+    color: white;
+}
+#code_game_bar_copy_button{
+  border: 1px solid;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding:5px;
+  color: aqua;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+#code_game_bar_copy_button:hover{
+    color: rgb(36, 36, 36);
+  background-color: aqua;
+}
+#about_game_skill_title{
+  margin-top: 20px;
+}
+#about_game_skill_part{
+  padding: 10px;
+  padding-right: 25px;
+  flex-wrap: nowrap;
+ margin-bottom: 60px;
+  gap:10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width:75%;
+ 
+  background-color: #181818;
+}
+@media (max-width:1200px){
+  #about_game_skill_part{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width:800px){
+  #about_game_skill_part{
+    grid-template-columns: 1fr;
+  }
+}
+@media (min-width:1800px){
+  #about_game_skill_part{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+#about_skill_principal{
+  color: white;
+}
+#about_skill_principal h1{
+  margin-top: 30px;
+  font-family: Signika Negative;
+}
+#about_skill_principal h2{
+  font-family: Signika Negative;
+  margin-bottom: 20px;
+}
+#about_skill_principal p{
+  text-indent: 15px;
+  width:80%;
+  font-size: 18px;
+}
+.about_skill_code_part{
+  padding: 10px;
+  
+  align-items: center;
+  display: flex;
+  height: fit-content;
+  align-items: stretch; /* <- importante */
+  
+  width: 80%;
+}
+.about_skill_code_decoration{
+  border-radius: 10px;
+
+  background-color: #AACE1C;
+  width:5px;
+}
+.about_skill_code_principal{
+  color: rgb(212, 212, 212);
+  padding:5px;
+  width: 100%;
+  background-color:#181818;
+}
+.about_skill_code_title{
+  margin-top: 10px;
+}
+.about_skill_code_principal button{
+  margin-top: 20px;
 }

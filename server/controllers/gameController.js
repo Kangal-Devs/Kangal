@@ -10,6 +10,7 @@ module.exports.get_game = async (req, res) => {
         const gameWithBase64 = game.toObject()
         gameWithBase64.icon = gameWithBase64.icon.toString("base64")
          gameWithBase64.thumbnail = gameWithBase64.thumbnail.toString("base64")
+         
         res.status(200).json({ message:gameWithBase64})
     }
     catch (err) {

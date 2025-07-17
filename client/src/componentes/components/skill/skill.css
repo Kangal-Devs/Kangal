@@ -1,0 +1,43 @@
+.skill{
+    background-color: rgba(255, 0, 0, 0);
+    
+    width:100%;
+    aspect-ratio: 3/2;
+    border: 10px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    gap:10px;
+    cursor: pointer;
+}
+.skill:hover{
+    background-color: rgb(19, 19, 19);
+}
+@media (max-width:1200px){
+    .skill{
+  aspect-ratio: 3/1.5;
+    }   
+}
+@media (max-width:800px){
+    .skill{
+  aspect-ratio: 3/1.1;
+    }   
+}
+.skill_image{
+    border-radius: 0px 5px 5px 0px;
+  
+    justify-self: center;
+    align-self: center;
+    height:70px;
+    aspect-ratio: 1/1;
+    /* background-color: rgba(148, 0, 0, 0.5); */
+    
+}
+.skill_image img{
+  
+    height:100%;
+}
+.skill p{
+    justify-self: center;
+    align-self: center;
+}
