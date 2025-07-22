@@ -88,7 +88,7 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
 
                       code={code}
                       funcAlter={funcAlter}
-                      vars={vars}
+       
                       
                       />
               ))
@@ -103,6 +103,23 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
         console.log(err);
       });
   }
+}else if(requestType="documents"){
+  axios.get(requestLocal)
+  .then((res)=>{
+    setList(res.data.message.map((subject,i)=>{
+      return <NavLeftListItem 
+      key={"D"+i}
+      vars={vars}
+       userId={userId} 
+       image={subject.image} 
+       title={subject.name} 
+       itemId={subject._id}
+       code={code}
+      funcAlter={funcAlter}
+      />
+    }))
+  })
+  .catch((err)=>{console.log(err)})
 }
 
 

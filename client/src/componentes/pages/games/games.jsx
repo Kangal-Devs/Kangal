@@ -27,7 +27,9 @@ export function Games() {
 
     const [games, setGames] = useState()
 
-    const [copyText,setCopyText] = useState()
+    const [copyCodeGame,setCopyCodeGame] = useState("Copiar código")
+    const [copyCodeSkill,setCopyCodeSkill] = useState("Copiar código")
+    const [copyCodeExampleSkill,setCopyCodeExampleSkill] = useState("Copiar código")
 
     const [currentGameName, setCurrentGameName] = useState()
     const [currentGameId, setCurrentGameId] = useState()
@@ -48,6 +50,7 @@ export function Games() {
     const [gameCodeStatus, setGameCodeStatus] = useState(false)
     const [enterGameStatus, setEnterGameStatus] = useState(false)
     const [skills, setSkills] = useState()
+
     const [connected, setConnected] = useState(false)
     const [tokenError, setTokenError] = useState("")
 
@@ -61,7 +64,8 @@ export function Games() {
                 setCurrentSkillCodeExample(res.data.message.codeExample)
                 setCurrentSkillDescription(res.data.message.description)
                 setCurrentSkillDescriptionExample(res.data.message.descriptionExample)
-
+                setCopyCodeSkill("Copiar código")
+                setCopyCodeExampleSkill("Copiar código")
             })  
             .catch(err=>console.log(err))
         }
@@ -78,7 +82,6 @@ export function Games() {
                     setCurrentGameCode(res.data.message.code)
                     setCurrentGameName(res.data.message.name)
                     setCurrentGameLink(res.data.message.link)
-                    setCopyText("Copiar código")
                     axios.post("http://localhost:5000/api/get_skills",{gameId:currentGameId})
                     .then((res)=>{
                  
@@ -106,6 +109,7 @@ export function Games() {
                 console.log(err)
             })
     }, [])
+    
     useEffect(() => {
         axios.post("http://localhost:5000/api/authorization", {}, { withCredentials: true })
             .then((res) => {
@@ -199,7 +203,7 @@ export function Games() {
                                                     <pre>{currentGameCode}</pre>
                                                 </div>
                                                 <div id="about_game_code_part_blur">
-                                                    <button onClick={() => { setGameCodeStatus(true);navigator.clipboard.writeText(currentGameCode) }}>Ver tudo</button>
+                                                    <button onClick={() => { setGameCodeStatus(true);setCopyCodeGame("Copiar código") }}>Ver tudo</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -228,7 +232,7 @@ export function Games() {
                                                 <pre>
                                                     {currentSkillCode}
                                                 </pre>
-                                                <button>Copiar código</button>
+                                                <button onClick={()=>{setCopyCodeSkill("Código copiado");navigator.clipboard.writeText(currentSkillCode)}}>{copyCodeSkill}</button>
                                             </div>
                                             </div>
                                             <p>{currentSkillDescriptionExample}</p>
@@ -239,7 +243,7 @@ export function Games() {
                                                 <pre>
                                                     {currentSkillCodeExample}
                                                 </pre>
-                                                <button>Copiar código</button>
+                                                <button onClick={()=>{setCopyCodeExampleSkill("Código copiado");navigator.clipboard.writeText(currentSkillCodeExample)}}>{copyCodeExampleSkill}</button>
                                             </div>
                                             </div>
 
@@ -263,14 +267,14 @@ export function Games() {
 
                     {
                         gameCodeStatus ? 
-                        (<div id="code_game_background" onClick={() => { setGameCodeStatus(false);setCopyText("Copiar código") }}>
+                        (<div id="code_game_background" onClick={() => { setGameCodeStatus(false); }}>
                             <div onClick={(e) => { e.stopPropagation() }} id="code_game_bar">
                                 <div id="code_game_bar_top">
                                     <p>Código:</p>
-                                    <button onClick={() => { setGameCodeStatus(false);setCopyText("Copiar código") }}>X</button>
+                                    <button onClick={() => { setGameCodeStatus(false); }}>X</button>
                                 </div>
                                 <pre>{currentGameCode}</pre>
-                                <button id="code_game_bar_copy_button"onClick={()=>{setCopyText("Código copiado")}}>{copyText}</button>
+                                <button id="code_game_bar_copy_button"onClick={()=>{setCopyCodeGame("Código copiado");navigator.clipboard.writeText(currentGameCode)}}>{copyCodeGame}</button>
                     
                             </div>
                         </div>) : null

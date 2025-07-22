@@ -125,6 +125,11 @@ export function NavLeftListItem({ userId, image, title, itemId, requestLocal, va
 
                     })
                     .catch((err) => { console.log(err) })
+            }else if(code=="document"){
+
+                funcAlter[0](itemId)
+                funcAlter[1](null)
+                
             }
         }}>
             <div className="nav_left_list_item_decoration"></div>

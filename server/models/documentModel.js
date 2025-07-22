@@ -9,33 +9,25 @@ const documentSchema = mongoose.Schema({
         type:String,
         required:[true,"documentError2"]
     },
-    image1:{
-        type:Buffer,
-        required:[true,"documentError3"]
-    },
     code1:{
         type:String,
-        required:[true,"documentError4"]
-    },
-    image2:{
-        type:Buffer,
-        required:[true,"documentError5"]
+        required:[true,"documentError3"]
     },
     code2:{
         type:String,
-        required:[true,"documentError6"]
+        required:false
     },
     description2:{
         type:String,
-        required:[true,"documentError7"]
+        required:[true,"documentError4"]
     },
     note:{
         type:String,
-        required:[true,"documentError8"]
+        required:false
     },
     subject:{
         type:mongoose.Schema.Types.ObjectId,
-        required:[true,"documentError9"]
+        required:[true,"documentError5"]
     }
 })
 

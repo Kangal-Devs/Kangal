@@ -13,6 +13,8 @@ const solicitationRoutes = require("./routes/solicitationRoutes.js")
 const groupRoutes = require("./routes/groupRoutes.js")
 const userGroupRoutes = require("./routes/userGroupRoutes.js")
 const reportRoutes = require("./routes/reportRoutes.js")
+const subjectRoutes = require("./routes/subjectRoutes.js")
+const documentRoutes = require("./routes/documentRoutes.js")
 
 require('dotenv').config();
 
@@ -31,6 +33,8 @@ mongoose.connect(process.env.MONGODB_URI)
     console.log(err)
 })
 
+app.use('/api',documentRoutes.router)
+app.use('/api',subjectRoutes.router)
 app.use('/api',skillRoutes.router)
 app.use('/api',gameRoutes.router)
 app.use('/api',reportRoutes.router)
