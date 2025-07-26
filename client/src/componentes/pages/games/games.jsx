@@ -139,7 +139,7 @@ export function Games() {
             {connected == false ? <TokenInvalid token_error={tokenError} /> :
                 <div id="games_principal">
                     <EnhancedNavTop
-                        page="Games"
+                        page="Jogos"
                         home={true}
                         group={true}
                         userName={userName}

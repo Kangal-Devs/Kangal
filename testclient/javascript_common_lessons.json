@@ -1,0 +1,499 @@
+[
+  {
+    "name": "O que é JavaScript?",
+    "introduction": "Descubra o que é JavaScript, como ele funciona nos bastidores dos navegadores modernos e sua importância no desenvolvimento web. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 86
+  },
+  {
+    "name": "Para que serve o JavaScript?",
+    "introduction": "Entenda as aplicações do JavaScript, desde páginas interativas até servidores com Node.js. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 86
+  },
+  {
+    "name": "Primeiro código em JavaScript",
+    "introduction": "Aprenda a escrever e executar seu primeiro código JavaScript direto no navegador. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 72
+  },
+  {
+    "name": "Comentando código",
+    "introduction": "Veja como adicionar comentários para explicar trechos de código e melhorar a legibilidade. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 82
+  },
+  {
+    "name": "Declarando variáveis com let",
+    "introduction": "Use a palavra-chave let para declarar variáveis com escopo de bloco de forma moderna e segura. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 93
+  },
+  {
+    "name": "Usando const para constantes",
+    "introduction": "Aprenda a criar valores imutáveis com const e evite modificações indesejadas no seu código. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 64
+  },
+  {
+    "name": "Diferença entre var, let e const",
+    "introduction": "Compare var, let e const, entendendo quando e por que usar cada uma delas. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 96
+  },
+  {
+    "name": "Tipos de dados: números e strings",
+    "introduction": "Veja como o JavaScript representa textos e números e como esses tipos se comportam. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 66
+  },
+  {
+    "name": "Strings: texto em JavaScript",
+    "introduction": "Manipule textos com métodos úteis de string como length, toUpperCase e substring. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 80
+  },
+  {
+    "name": "Concatenação de strings",
+    "introduction": "Junte textos com operadores + e template strings de forma simples e moderna. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 146
+  },
+  {
+    "name": "Template literals",
+    "introduction": "Use crases (`) e expressões embutidas (${...}) para criar strings dinâmicas. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 163
+  },
+  {
+    "name": "Operadores matemáticos",
+    "introduction": "Realize cálculos com os operadores básicos como +, -, *, / e %. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 164
+  },
+  {
+    "name": "Operadores de comparação",
+    "introduction": "Compare valores com ==, ===, <, >, != e veja como eles funcionam. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 195
+  },
+  {
+    "name": "Booleanos e valores true/false",
+    "introduction": "Trabalhe com valores lógicos e entenda o comportamento de true e false. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 151
+  },
+  {
+    "name": "Condicionais com if",
+    "introduction": "Tome decisões com estruturas condicionais e controle o fluxo do seu código. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 137
+  },
+  {
+    "name": "Else e else if",
+    "introduction": "Crie ramificações mais complexas para diferentes possibilidades em uma decisão. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 116
+  },
+  {
+    "name": "Operadores lógicos (&&, ||, !)",
+    "introduction": "Combine condições com operadores lógicos para expressões mais completas. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 130
+  },
+  {
+    "name": "Introdução a arrays",
+    "introduction": "Agrupe dados em listas usando arrays e manipule vários valores em uma única variável. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 115
+  },
+  {
+    "name": "Acessando elementos do array",
+    "introduction": "Use índices para acessar e modificar itens em um array JavaScript. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 184
+  },
+  {
+    "name": "Adicionando itens no array",
+    "introduction": "Use métodos como push() e unshift() para adicionar valores em um array. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 128
+  },
+  {
+    "name": "Removendo itens do array",
+    "introduction": "Remova itens com pop(), shift() e splice() de forma eficiente. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 171
+  },
+  {
+    "name": "Loop for",
+    "introduction": "Repita tarefas com o laço for e automatize execuções com contadores. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 158
+  },
+  {
+    "name": "Loop while",
+    "introduction": "Execute blocos de código enquanto uma condição for verdadeira com while. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 200
+  },
+  {
+    "name": "Funções em JavaScript",
+    "introduction": "Crie blocos reutilizáveis de código com funções nomeadas simples. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 176
+  },
+  {
+    "name": "Funções com parâmetros",
+    "introduction": "Passe informações para suas funções usando parâmetros dinâmicos. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 175
+  },
+  {
+    "name": "Funções com retorno",
+    "introduction": "Devolva resultados com return e use-os em outras partes do código. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 197
+  },
+  {
+    "name": "Arrow functions",
+    "introduction": "Use a sintaxe moderna e concisa das arrow functions com =>. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 116
+  },
+  {
+    "name": "Objetos em JavaScript",
+    "introduction": "Agrupe propriedades e comportamentos com objetos personalizados. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 151
+  },
+  {
+    "name": "Acessando propriedades de objetos",
+    "introduction": "Use a notação ponto ou colchete para acessar dados em objetos. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 162
+  },
+  {
+    "name": "Adicionando e removendo propriedades",
+    "introduction": "Manipule objetos dinamicamente adicionando ou apagando dados. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 448
+  },
+  {
+    "name": "Array de objetos",
+    "introduction": "Combine arrays e objetos para representar coleções mais estruturadas. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 236
+  },
+  {
+    "name": "Revisão: variáveis",
+    "introduction": "Recapitule como declarar, modificar e acessar variáveis corretamente. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 466
+  },
+  {
+    "name": "Revisão: arrays",
+    "introduction": "Reforce o uso de arrays com exemplos e práticas adicionais. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 489
+  },
+  {
+    "name": "Revisão: funções",
+    "introduction": "Revise os conceitos de criação e chamada de funções em JavaScript. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 397
+  },
+  {
+    "name": "Operador typeof",
+    "introduction": "Descubra o tipo de uma variável com typeof e trate dados corretamente. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 388
+  },
+  {
+    "name": "Conversão de tipos",
+    "introduction": "Transforme dados de um tipo para outro, como string para número. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 296
+  },
+  {
+    "name": "Null e undefined",
+    "introduction": "Conheça os significados de null e undefined e como lidar com eles. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 293
+  },
+  {
+    "name": "Math: números aleatórios",
+    "introduction": "Gere números aleatórios com Math.random() para usos variados. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 439
+  },
+  {
+    "name": "Math: arredondamentos",
+    "introduction": "Arredonde números com funções como Math.round, floor e ceil. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 230
+  },
+  {
+    "name": "switch/case",
+    "introduction": "Use switch para criar múltiplas alternativas de forma organizada. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 385
+  },
+  {
+    "name": "Operador ternário",
+    "introduction": "Substitua estruturas if simples com a sintaxe condicional ? :. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 331
+  },
+  {
+    "name": "Laço for...of",
+    "introduction": "Itere sobre arrays com for...of de forma limpa e legível. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 277
+  },
+  {
+    "name": "forEach: método de arrays",
+    "introduction": "Aplique funções a cada item do array com forEach(). Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 461
+  },
+  {
+    "name": "Map: transformando arrays",
+    "introduction": "Use map() para criar novos arrays com valores modificados. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 354
+  },
+  {
+    "name": "Filter: filtrando arrays",
+    "introduction": "Filtre elementos com base em condições usando filter(). Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 238
+  },
+  {
+    "name": "Reduce: somando arrays",
+    "introduction": "Use reduce() para combinar valores em uma única saída. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 301
+  },
+  {
+    "name": "includes e indexOf",
+    "introduction": "Verifique a existência de itens em arrays com métodos úteis. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 445
+  },
+  {
+    "name": "Funções como variáveis",
+    "introduction": "Atribua funções a variáveis para criar código flexível e reutilizável. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 261
+  },
+  {
+    "name": "Funções dentro de objetos",
+    "introduction": "Crie métodos para objetos que executam comportamentos próprios. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 444
+  },
+  {
+    "name": "Callback functions",
+    "introduction": "Entenda como funções podem ser passadas como parâmetros e executadas depois. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 642
+  },
+  {
+    "name": "Revisão geral até aqui",
+    "introduction": "Consolide seu aprendizado com uma grande revisão dos tópicos anteriores. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 746
+  },
+  {
+    "name": "Mais sobre arrays",
+    "introduction": "Explore métodos avançados como slice(), splice() e concat(). Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 513
+  },
+  {
+    "name": "Mais sobre objetos",
+    "introduction": "Percorra objetos e manipule suas chaves com for...in e Object.keys(). Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 617
+  },
+  {
+    "name": "Funções recursivas",
+    "introduction": "Descubra como funções podem se chamar para resolver problemas repetitivos. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 812
+  },
+  {
+    "name": "Funções anônimas",
+    "introduction": "Crie funções sem nome e use-as diretamente em expressões e eventos. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 883
+  },
+  {
+    "name": "Desestruturação de arrays",
+    "introduction": "Extraia valores de arrays com a sintaxe moderna de desestruturação. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 796
+  },
+  {
+    "name": "Desestruturação de objetos",
+    "introduction": "Pegue propriedades específicas de um objeto com facilidade. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 662
+  },
+  {
+    "name": "Spread e Rest",
+    "introduction": "Use ... para espalhar ou agrupar dados em arrays, objetos e funções. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 959
+  },
+  {
+    "name": "Revisão: loops",
+    "introduction": "Revise todos os tipos de laços e pratique com exercícios. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 501
+  },
+  {
+    "name": "Revisão: operadores",
+    "introduction": "Refaça os principais operadores de comparação e lógicos. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 840
+  },
+  {
+    "name": "Revisão: arrays e objetos",
+    "introduction": "Conecte os conceitos de arrays e objetos com aplicações práticas. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 686
+  },
+  {
+    "name": "Desafios com variáveis",
+    "introduction": "Teste seu conhecimento de variáveis com pequenos exercícios. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 519
+  },
+  {
+    "name": "Desafios com funções",
+    "introduction": "Aplique lógica para resolver problemas com funções simples. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 834
+  },
+  {
+    "name": "Desafios com arrays",
+    "introduction": "Pratique a manipulação de listas com exercícios variados. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 883
+  },
+  {
+    "name": "Desafios com objetos",
+    "introduction": "Resolva desafios que envolvem manipulação e criação de objetos. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 981
+  },
+  {
+    "name": "Funções avançadas",
+    "introduction": "Aprofunde seus conhecimentos em escopo, closures e funções dentro de funções. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 797
+  },
+  {
+    "name": "Introdução a escopos",
+    "introduction": "Entenda como o escopo afeta o comportamento de variáveis e funções. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 717
+  },
+  {
+    "name": "Closures",
+    "introduction": "Veja como funções podem manter acesso a variáveis mesmo após sua execução. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 705
+  },
+  {
+    "name": "Mini-projeto: Calculadora",
+    "introduction": "Use operadores, entrada de dados e funções para construir uma calculadora simples. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 906
+  },
+  {
+    "name": "Mini-projeto: Lista de tarefas",
+    "introduction": "Crie uma lista de tarefas no console usando arrays, loops e funções. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 795
+  },
+  {
+    "name": "Conclusão do módulo",
+    "introduction": "Parabéns! Você concluiu o curso. Prepare-se para os próximos desafios com confiança. Este é um detalhe adicional para a introdução.",
+    "color": "",
+    "image": "",
+    "points": 671
+  }
+]

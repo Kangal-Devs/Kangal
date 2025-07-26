@@ -10,7 +10,7 @@ import { Alert } from "../../components/alert/alert.jsx"
 import select_theme from "../../../assets/specific_page/documents/select_theme.png"
 import select_topic from "../../../assets/specific_page/documents/select_topic.png"
 import { Document } from "../../components/document/document.jsx"
-import note from "../../../assets/specific_page/documents/note3.png"
+import note3 from "../../../assets/specific_page/documents/note.png"
 
 export function Documents() {
 
@@ -103,7 +103,7 @@ export function Documents() {
             {connected == false ? <TokenInvalid token_error={tokenError} /> : (
                 <div id="documents_principal">
                     <EnhancedNavTop
-                        page="Documents"
+                        page="Documentos"
                         home={true}
                         group={false}
                         userName={userName}

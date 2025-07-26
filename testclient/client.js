@@ -1,8 +1,8 @@
-// const fs = require("fs")
-// const path = require("path")
-// const axios = require("axios")
+const fs = require("fs")
+const path = require("path")
+const axios = require("axios")
 
-// const formData = new FormData();
+const formData = new FormData();
 // formData.append("title", "hasOwnProperty()");
 
 // formData.append("description1",
@@ -58,3 +58,32 @@
 // axios.post("http://localhost:5000/api/create_document",formData)
 // .then((res)=>{console.log(res)})
 // .catch((err)=>console.log(err))
+
+
+
+// axios.post("http://localhost:5000/api/create_common_lesson")
+// .then((res)=>{console.log(res)})
+// .catch((err)=>{console.log(err)})
+
+function generateLevelTable(maxLevel = 99, xpInicial = 50, incrementoInicial = 50) {
+  const niveis = [];
+  let xpMin = 0;
+  let incremento = incrementoInicial;
+  let xpMax = xpMin + xpInicial;
+
+  for (let level = 0; level <= maxLevel; level++) {
+    niveis.push({
+      level,
+      xpMin,
+      xpMax
+    });
+
+    // Atualiza valores para o próximo nível
+    xpMin = xpMax + 1;
+    incremento += 50; // Aumenta a dificuldade
+    xpMax = xpMin + incremento - 1;
+  }
+
+  return niveis;
+}
+console.log(generateLevelTable())
