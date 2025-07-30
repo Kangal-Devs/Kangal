@@ -8,13 +8,16 @@ exports.create_group = async (req,res)=>{
     const imageLocal = path.join(__dirname,"..","assets","DefaultGroupPicture.png");
     const {name,description,owner} = req.body;
     const image = fs.readFileSync(imageLocal)
-    const group = await groupModel.create({name,description,owner,image})
 
+    const group = await groupModel.create({name,description,owner,image})
+    
+    if(owner){
     const userGroup = await userGroupModel.create({user:owner,group:group._id})
     
-    res.status(200).json({message:"grupo criado"})
+    return res.status(200).json({message:"grupo criado",groupId:userGroup.group})
 
-
+    }
+    res.status(404).json({message:"owner not found"})
     }catch(err){
         res.status(500).json({message:err.message})
     }

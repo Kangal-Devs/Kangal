@@ -45,11 +45,9 @@ exports.get_all_user_group = async (req,res)=>{
 exports.get_all_user_group2 = async (req,res)=>{
     try{
     const {_id} = req.body;
-    console.log("1")
     const group = await groupModel.findOne({_id:_id})
-console.log("2")
     if(group){
-        console.log("3")
+     
         const userGroup = await userGroupModel.find({group:_id})
         return res.status(200).json({message:userGroup})
     }   

@@ -55,7 +55,7 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
     },[])
     
    useEffect(() => {
-    if(requestType == "solicitations" || requestType == "groups"){
+    if(requestType == "solicitations"){
   if (requestLocal) {
     axios.post(requestLocal, { _id: userId })
       .then((res) => {
@@ -66,6 +66,7 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
           const promises = arr_list.map((item) => {
             return axios.post("http://localhost:5000/api/get_group", { _id: item.group })
               .then((res1) => ({
+                
                 title: res1.data.message.name,
                 image: res1.data.message.image,
                 _id:   res1.data.message._id,
@@ -102,8 +103,31 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
       .catch((err) => {
         console.log(err);
       });
+  }}
+  else if(requestType=="groups"){
+      axios.post("http://localhost:5000/api/get_all_user_group",{_id:userId})
+      .then((res)=>{
+
+        Promise.all(res.data.message.map((item)=>{
+            return axios.post("http://localhost:5000/api/get_group",{_id:item.group})
+          }))
+          .then((res2)=>{
+            console.log(res2)
+             setList(res2.map((group,i)=>{return <NavLeftListItem 
+              key={i+"G"} 
+              title={group.data.message.name}
+              image={group.data.message.image}
+              itemId={group.data.message._id}
+              funcAlter={funcAlter}
+              vars={vars}
+              code="groups"
+              />}))
+          })
+          .catch((err2)=>{console.log(err2)})
+      })
+      .catch((err)=>console.log(err))
   }
-}else if(requestType="documents"){
+else if(requestType=="documents"){
   axios.get(requestLocal)
   .then((res)=>{
     setList(res.data.message.map((subject,i)=>{
@@ -145,7 +169,7 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
                     <div id="nav_left_bottom">
                             <div id="nav_left_list">
                               {
-                                  local=="group"?(<button id="button_create_group" onClick={()=>{funcAlter[13](true)}}> <img src={create_group}/>Criar Grupo</button>):null
+                                  local=="groups"?(<button id="button_create_group" onClick={()=>{funcAlter[1](true)}}> <img src={create_group}/>Criar Grupo</button>):null
                                 }
                             {
                                 

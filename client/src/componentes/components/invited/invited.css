@@ -2,6 +2,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+
+    height: fit-content;
 }
 .invited_principal{
     width:100%;

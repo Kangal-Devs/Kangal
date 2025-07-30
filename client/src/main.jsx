@@ -7,7 +7,7 @@ import {TicTacToe} from './componentes/pages/all_games/tic_tac_toe/tic_tac_toe.j
 import { MemoryGame } from './componentes/pages/all_games/memory_game/memory_game.jsx'
 
 import { Campaign } from './componentes/pages/campaign/campaign.jsx'
-import { Groups } from './componentes/pages/groups/groups.jsx'
+import { Groups } from './componentes/pages/groups/groups2.jsx'
 import { Games } from './componentes/pages/games/games.jsx'
 import { Documents } from './componentes/pages/documents/documents.jsx'
 import { Login } from './componentes/pages/login/login.jsx'

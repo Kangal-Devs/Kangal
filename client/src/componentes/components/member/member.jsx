@@ -19,13 +19,7 @@ useEffect(()=>{
 
     return(
         <div className="member" onClick={()=>{
-            funcAlter[5](false)
-            funcAlter[6](name)
-            funcAlter[7](image)
-            funcAlter[8](level)
-            funcAlter[9](levelWidth)
-            funcAlter[11](id)
-            isItMe?funcAlter[12](true):funcAlter[12](false)
+         funcAlter[0](id)
         }}>
             <div className="member_img_part">
             <div className="member_img">

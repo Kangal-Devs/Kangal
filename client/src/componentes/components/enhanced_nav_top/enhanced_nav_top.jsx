@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import "./enhanced_nav_top.css"
 
-export function EnhancedNavTop({ page,home,group,isOwner, search, userName, userImage, userEmail, userPassword, userDate, userAccountType, userGithub, userGender, userId}) {
+export function EnhancedNavTop({ page,home,group,isOwner, search, userName, userImage, userEmail, userPassword, userDate, userAccountType, userGithub, userGender, userId,funcAlter}) {
 
     const navigate = useNavigate()
 
@@ -205,7 +205,7 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
                      
                         <img src={bell_img} className="nav_top_icons"/>
                         {
-                            group==true?<img src={group_img} className="nav_top_icons"/>:""
+                            group?<img src={group_img} className="nav_top_icons" onClick={()=>{funcAlter[0](true)}}/>:""
                         }
                          </div>
                           <div onClick={() => { setBackgroundOptions("background_options_active") }} id="user_part">
