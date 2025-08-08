@@ -18,7 +18,15 @@ module.exports.get_all_modules = async(req,res)=>{
      try{
 
         const modules = await moduleModel.find({})
-        res.status(200).json({message:modules})
+
+         const modulesWithBase64 = modules.map((module) => ({
+            ...module.toObject(),
+            image: module.image?.toString("base64")
+            
+        }));
+       
+
+        res.status(200).json({message:modulesWithBase64})
     }
     catch(err){
         res.status(500).json({message:err.message})

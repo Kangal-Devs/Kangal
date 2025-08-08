@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser")
 const app = express()
 
 //ROTAS V
+
+const messageRoutes = require("./routes/messageRoutes.js")
 const moduleRoutes = require("./routes/moduleRoutes.js")
 const skillRoutes = require("./routes/skillRoutes.js")
 const gameRoutes = require("./routes/gameRoutes.js")
@@ -34,6 +36,7 @@ mongoose.connect(process.env.MONGODB_URI)
     console.log(err)
 })
 
+app.use('/api',messageRoutes.router)
 app.use('/api',commonLessonRoutes.router)
 app.use('/api',moduleRoutes.router)
 app.use('/api',documentRoutes.router)

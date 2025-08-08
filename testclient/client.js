@@ -61,9 +61,7 @@ const formData = new FormData();
 
 
 
-// axios.post("http://localhost:5000/api/create_common_lesson")
-// .then((res)=>{console.log(res)})
-// .catch((err)=>{console.log(err)})
+
 
 function generateLevelTable(maxLevel = 99, xpInicial = 50, incrementoInicial = 50) {
   const niveis = [];

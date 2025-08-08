@@ -6,13 +6,7 @@
     "image": "",
     "points": 86
   },
-  {
-    "name": "Para que serve o JavaScript?",
-    "introduction": "Entenda as aplicações do JavaScript, desde páginas interativas até servidores com Node.js. Este é um detalhe adicional para a introdução.",
-    "color": "",
-    "image": "",
-    "points": 86
-  },
+
   {
     "name": "Primeiro código em JavaScript",
     "introduction": "Aprenda a escrever e executar seu primeiro código JavaScript direto no navegador. Este é um detalhe adicional para a introdução.",

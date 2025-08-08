@@ -1,0 +1,25 @@
+const {messageModel} = require("../models/messageModel.js")
+
+module.exports.create_message = async(req,res)=>{
+    try{
+        const {groupId,value,backgroundColor,fontColor} = req.body
+        const status = "A"
+        const message = await messageModel.create({group:groupId,value,backgroundColor,fontColor,status})
+
+        res.status(200).json({message:"criado"})
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    }   
+}
+module.exports.get_all_message = async (req,res)=>{
+    try{
+        const {groupId} = req.body
+
+        const messages = await messageModel.find({group:groupId})
+        res.status(200).json({message:messages})
+    }
+   catch(err){
+        res.status(500).json({message:err.message})
+    } 
+}

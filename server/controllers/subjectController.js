@@ -20,6 +20,7 @@ module.exports.create_subject = async(req,res)=>{
 module.exports.get_all_subjects = async(req,res)=>{
     try{
         const subjects = await subjectModel.find({})
+        
      const subjectsWithBase64 = subjects.map((subject) => ({
             ...subject.toObject(),
             image: subject.image?.toString("base64")

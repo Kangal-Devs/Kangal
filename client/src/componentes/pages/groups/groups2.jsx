@@ -1,6 +1,6 @@
 import "./groups2.css"
 import axios from "axios"
-import { useState, useEffect, useCallback, } from "react"
+import { useState, useEffect, useCallback, use, } from "react"
 import { TokenInvalid } from "../../components/token_invalid/token_invalid.jsx"
 import { EnhancedNavTop } from "../../components/enhanced_nav_top/enhanced_nav_top.jsx"
 import { Footer } from "../../components/footer/footer.jsx"
@@ -17,39 +17,54 @@ import more from "../../../assets/specific_page/group/more.png"
 import emogi from "../../../assets/specific_page/group/emogi.png"
 import report from "../../../assets/specific_page/group/report.png"
 import remove from "../../../assets/specific_page/group/remove.png"
-
+import { Message } from "../../components/messages/message.jsx"
 import chat_color1 from "../../../assets/specific_page/group/chat_color1.png"
 import chat_color2 from "../../../assets/specific_page/group/chat_color2.png"
 import chat_color3 from "../../../assets/specific_page/group/chat_color3.png"
 import chat_color4 from "../../../assets/specific_page/group/chat_color4.png"
 import chat_color5 from "../../../assets/specific_page/group/chat_color5.png"
 import chat_color6 from "../../../assets/specific_page/group/chat_color6.png"
-
+import not_invited from "../../../assets/specific_page/group/noInvited2.png"
 import add_user from "../../../assets/specific_page/group/add_user.png"
 import lup from "../../../assets/specific_page/group/lup.png"
+import copy_github from "../../../assets/specific_page/group/copy_github.png"
 import paper_error from "../../../assets/all_pages/error/paper_error.png"
 import select_group from "../../../assets/specific_page/group/select_group.png"
 export function Groups() {
 
     const navigate = useNavigate()
 
-    const [chatColorsImages,setChatColorsImages] = useState({
-        chatColor1:chat_color1,
-        chatColor2:chat_color2,
-        chatColor3:chat_color3,
-        chatColor4:chat_color4,
-        chatColor5:chat_color5,
-        chatColor6:chat_color6
+    const [chatColorsImages, setChatColorsImages] = useState({
+        chatColor1: chat_color1,
+        chatColor2: chat_color2,
+        chatColor3: chat_color3,
+        chatColor4: chat_color4,
+        chatColor5: chat_color5,
+        chatColor6: chat_color6
     })
-     const [chatColor,setChatColor] = useState("chatColor1")
+
+    const [chatColorInfo, setChatColorInfo] = useState({
+        chatColor1: { fontColor: "#2b2b2bff", backgroundColor: "#ecececff" },
+        chatColor2: { fontColor: "#B20000", backgroundColor: "#ecececff" },
+        chatColor3: { fontColor: "#FFFFFF", backgroundColor: "#32363F" },
+        chatColor4: { fontColor: "#B20000", backgroundColor: "#32363F" },
+        chatColor5: { fontColor: "#FFFFFF", backgroundColor: "#4A5823" },
+        chatColor6: { fontColor: "#B20000", backgroundColor: "#4A5823" },
+    })
+
+
+
+    const [chatColor, setChatColor] = useState("chatColor1")
 
     const [searchUser, setSearchUser] = useState("")
-    const [usersInvited, setUsersInvited] = useState()
-    const [usersToInvite, setUsersToInvite] = useState()
+    const [usersInvited, setUsersInvited] = useState([])
+    const [usersToInvite, setUsersToInvite] = useState([])
 
 
-    const [toInvite, setToInvite] = useState()
-    const [invited, setInvited] = useState()
+    const [toInvite, setToInvite] = useState([])
+    const [invited, setInvited] = useState([])
+
+    const [reportReason, setReportReason] = useState()
 
     const [userName, setUserName] = useState()
     const [userEmail, setUserEmail] = useState()
@@ -62,6 +77,7 @@ export function Groups() {
     const [userGender, setUserGender] = useState()
     const [userId, setUserId] = useState()
 
+    const [messages, setMessages] = useState()
 
     const [currentGroupName, setCurrentGroupName] = useState()
     const [currentGroupId, setCurrentGroupId] = useState()
@@ -78,12 +94,14 @@ export function Groups() {
     const [currentMemberName, setCurrentMemberName] = useState()
     const [currentMemberImage, setCurrentMemberImage] = useState()
     const [currentMemberXp, setCurrentMemberXp] = useState()
+    const [currentMemberGithub, setCurrentMemberGithub] = useState()
 
     const [currentInviteId, setCurrentInviteId] = useState()
     const [currentInviteImage, setCurrentInviteImage] = useState()
     const [currentInviteName, setCurrentInviteName] = useState()
 
-
+    const [reportUserStatus, setReportUserStatus] = useState()
+    const [removeUserStatus, setRemoveUserStatus] = useState()
 
     const [localName, setLocalName] = useState("Grupos")
 
@@ -95,7 +113,7 @@ export function Groups() {
     const [emogiBarStatus, setEmogiBarStatus] = useState(false)
     const [createGroupStatus, setCreateGroupStatus] = useState(false)
     const [aboutGroupStatus, setAboutGroupStatus] = useState()
-    const[chatColorStatus,setChatColorStatus] = useState()
+    const [chatColorStatus, setChatColorStatus] = useState()
 
 
     const [inputMessage, setInputMessage] = useState("")
@@ -103,17 +121,61 @@ export function Groups() {
     const [createGroupName, setCreateGroupName] = useState("")
     const [createGroupDescription, setCreateGroupDescription] = useState("")
 
-
+    const [updateGroupName,setUpdateGroupName] = useState()
+    const [updateGroupDescription,setUpdateGroupDescription] = useState()
+    const [updateGroupImage,setUpdateGroupImage] = useState()
 
     const insertEmogi = useCallback((e) => {
         setInputMessage(prev => prev + e)
         setEmogiBarStatus(false)
     }, [])
 
-    const changeChatColor = useCallback((color)=>{
+    const changeChatColor = useCallback((color) => {
         setChatColor(color)
         setChatColorStatus(false)
-    },[])
+
+    }, [])
+
+    const reportUser = useCallback(() => {
+        axios.post("http://localhost:5000/api/create_report", {
+            reporter: userId,
+            reported: currentMemberId,
+            reason: reportReason,
+            groupId: currentGroupId
+        })
+            .then((res) => { setReportUserStatus(false); setReportReason("") })
+            .catch((err) => { console.log(err) })
+    }, [reportReason, currentMemberId, userId, currentGroupId])
+
+    const removeUser = useCallback(() => {
+        axios.delete(`http://localhost:5000/api/delete_user_group/${currentMemberId}/${currentGroupId}`)
+            .then((res) => { window.location.reload() })
+            .catch((err) => { console.log(err) })
+    }, [currentGroupId, currentMemberId])
+
+    const createMessage = useCallback(() => {
+        if (inputMessage) {
+
+            axios.post("http://localhost:5000/api/create_message", {
+                fontColor: chatColorInfo[chatColor].fontColor,
+                backgroundColor: chatColorInfo[chatColor].backgroundColor,
+                value: inputMessage,
+                groupId: currentGroupId
+            }).then((res) => {
+                setInputMessage("")
+                axios.post("http://localhost:5000/api/get_all_messages", { groupId: currentGroupId })
+                    .then((res) => {
+                        setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} /> }))
+                    })
+                    .catch((err) => { console.log(err) })
+
+                console.log("message criada")
+            })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+    }, [chatColor, inputMessage, currentGroupId])
 
     const createGroup = useCallback(() => {
         if (createGroupName.length >= 3 && createGroupDescription.length >= 3) {
@@ -201,8 +263,8 @@ export function Groups() {
 
     const loadUsersInvite = useCallback(() => {
         setSearchUser("")
-        setUsersInvited()
-        setUsersToInvite()
+        setUsersInvited([])
+        setUsersToInvite([])
         axios.post("http://localhost:5000/api/group_solicitation", { _id: currentGroupId })
             .then((res) => {
 
@@ -255,8 +317,15 @@ export function Groups() {
                     setCurrentGroupDescription(res.data.message.description)
                     setAmIOwner(res.data.message.owner == userId)
 
+                    axios.post("http://localhost:5000/api/get_all_messages", { groupId: currentGroupId })
+                        .then((res) => {
+                            setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} /> }))
+                        })
+                        .catch((err) => { console.log(err) })
                 })
                 .catch((err) => { console.log(err) })
+
+
         }
     }, [currentGroupId])
 
@@ -327,16 +396,18 @@ export function Groups() {
                     setCurrentMemberImage(res.data.message.image)
                     setCurrentMemberXp(res.data.message.xp)
                     setCurrentMemberName(res.data.message.name)
+                    setCurrentMemberGithub(res.data.message.github)
                 })
                 .catch((err) => { console.log(err) })
         }
     }, [currentMemberId])
 
-    useEffect(()=>{
-        if(aboutGroupStatus){
+    useEffect(() => {
+        if (aboutGroupStatus) {
 
         }
-    },[aboutGroupStatus])
+    }, [aboutGroupStatus])
+
     return (
         <div id="groups">
             {connected == false ? <TokenInvalid token_error={tokenError} /> : (
@@ -365,7 +436,7 @@ export function Groups() {
                             userId={userId}
                             topButtons={true}
                             updateButton={false}
-                            local="groups"
+                            local="group"
                             code="groups"
                             vars={[currentGroupId]}
                             funcAlter={[setCurrentGroupId, setCreateGroupStatus]}
@@ -377,7 +448,13 @@ export function Groups() {
                                 </div> :
                                 <div id="groups_content_principal">
                                     <div id="groups_content_principal_chat_part">
-                                        <div id="group_chat"></div>
+                                        <div id="group_chat">
+
+
+
+                                            {messages}
+
+                                        </div>
                                         {currentGroupOwner == userId ?
                                             <div id="group_input_bar">
 
@@ -392,7 +469,7 @@ export function Groups() {
                                                         </button>
                                                         <input type="text" value={inputMessage} onChange={(e) => { setInputMessage(e.target.value) }} />
                                                     </div>
-                                                    <button id="input_submit" className="inputs_chat"><img src={submit} /></button>
+                                                    <button id="input_submit" className="inputs_chat" onClick={() => { createMessage() }}><img src={submit} /></button>
 
 
                                                 </div>
@@ -403,7 +480,7 @@ export function Groups() {
                                         (<div id="groups_content_principal_members_part">
                                             <p>Lider:</p>
                                             {groupOwner}
-                                            {amIOwner ? <button id="button_add_member" onClick={() => {
+                                            {currentGroupOwner == userId ? <button id="button_add_member" onClick={() => {
                                                 setInviteUserStatus(true)
                                             }}><img src={add_user} />Adicionar</button> : null}
                                             <p>Membros:</p>
@@ -421,14 +498,28 @@ export function Groups() {
                                                 </div>
                                                 <p>{currentMemberName}</p>
 
-
+                                                {currentMemberGithub ?
+                                                    <div id="member_github">
+                                                        <p id="member_github_title">Github:</p>
+                                                        <div id="member_github_principal">
+                                                            <p>{
+                                                            currentMemberGithub.length>16?
+                                                            currentMemberGithub.slice(0,14)+"...":
+                                                            currentMemberGithub
+                                                            }</p>
+                                                            <button onClick={()=>{navigator.clipboard.writeText(currentMemberGithub)}}>
+                                                                <img src={copy_github}/>
+                                                                </button>
+                                                        </div>
+                                                    </div>
+                                                    : null}
                                                 {
                                                     currentMemberId != userId ?
                                                         (<>
-                                                            <button id="button_report" onClick={() => { userReport() }}><img src={report} />Denunciar</button>
+                                                            <button id="button_report" onClick={() => { setReportUserStatus(true) }}><img src={report} />Denunciar</button>
                                                             {
                                                                 currentGroupOwner == userId ?
-                                                                    (<button id="button_kick" onClick={() => { userKick() }}><img src={remove} />Expulsar</button>
+                                                                    (<button id="button_kick" onClick={() => { setRemoveUserStatus(true) }}><img src={remove} />Expulsar</button>
                                                                     ) : null}
                                                         </>
                                                         ) : null}
@@ -469,10 +560,12 @@ export function Groups() {
                                         <div id="invited_users_decoration"></div>
                                         <div id="invited_users_bottom">
 
-
-                                            <div id="invited_users_bottom_list">
-                                                {usersInvited}
-                                            </div>
+                                            {usersInvited.length ?
+                                                <div id="invited_users_bottom_list">
+                                                    {usersInvited}
+                                                </div>
+                                                :
+                                                <img src={not_invited} id="not_invited" />}
                                         </div>
                                     </div>
                                 </div>
@@ -511,12 +604,12 @@ export function Groups() {
                                         <button onClick={() => { setChatColorStatus(false) }}>X</button>
                                     </div>
                                     <div id="chat_color_bar_bottom">
-                                        <button onClick={()=>{changeChatColor("chatColor1")}}> <img src={chatColorsImages.chatColor1}/></button>
-                                        <button onClick={()=>{changeChatColor("chatColor2")}}> <img src={chatColorsImages.chatColor2}/></button>
-                                        <button onClick={()=>{changeChatColor("chatColor3")}}> <img src={chatColorsImages.chatColor3}/></button>
-                                        <button onClick={()=>{changeChatColor("chatColor4")}}> <img src={chatColorsImages.chatColor4}/></button>
-                                        <button onClick={()=>{changeChatColor("chatColor5")}}> <img src={chatColorsImages.chatColor5}/></button>
-                                        <button onClick={()=>{changeChatColor("chatColor6")}}> <img src={chatColorsImages.chatColor6}/></button>
+                                        <button onClick={() => { changeChatColor("chatColor1") }}> <img src={chatColorsImages.chatColor1} /></button>
+                                        <button onClick={() => { changeChatColor("chatColor2") }}> <img src={chatColorsImages.chatColor2} /></button>
+                                        <button onClick={() => { changeChatColor("chatColor3") }}> <img src={chatColorsImages.chatColor3} /></button>
+                                        <button onClick={() => { changeChatColor("chatColor4") }}> <img src={chatColorsImages.chatColor4} /></button>
+                                        <button onClick={() => { changeChatColor("chatColor5") }}> <img src={chatColorsImages.chatColor5} /></button>
+                                        <button onClick={() => { changeChatColor("chatColor6") }}> <img src={chatColorsImages.chatColor6} /></button>
                                     </div>
                                 </div>
                             </div>
@@ -544,9 +637,45 @@ export function Groups() {
                     }
                     {
                         aboutGroupStatus ? (
-                            <div id="about_group_background" onClick={()=>{setAboutGroupStatus(false)}}>
-                                <div id="about_group_bar" onClick={(e)=>{e.stopPropagation()}}>
+                            <div id="about_group_background" onClick={() => { setAboutGroupStatus(false) }}>
+                                <div id="about_group_bar" onClick={(e) => { e.stopPropagation() }}>
 
+                                </div>
+                            </div>
+                        ) : null
+                    }
+                    {
+                        reportUserStatus ? (
+                            <div id="report_user_background" onClick={() => { setReportUserStatus(false) }}>
+                                <div id="report_user_bar" onClick={(e) => { e.stopPropagation() }}>
+                                    <div id="report_user_top"><h2>Denunciar</h2></div>
+                                    <div id="report_user_bottom">
+                                        <div id="report_user_bottom_left">
+                                            <div id="report_user_bottom_left_img">
+                                                <img src={`data:image/png;base64,${currentMemberImage}`} />
+                                            </div>
+                                            <p>{currentMemberName}</p>
+                                        </div>
+                                        <div id="report_user_bottom_right">
+                                            <p>Razão:</p>
+                                            <textarea placeholder="Este usuário..." value={reportReason} onChange={(e) => { setReportReason(e.target.value) }} />
+                                            <div id="report_user_bottom_right_buttons">
+                                                <button id="report_cancel" onClick={() => { setReportUserStatus(false) }}>Cancel</button>
+                                                <button id="report_button" onClick={() => { reportUser() }}>Denunciar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>) : null
+                    }
+                    {
+                        removeUserStatus ? (
+                            <div id="remove_user_background" onClick={(e) => { setRemoveUserStatus(false) }}>
+                                <div id="remove_user_bar" onClick={(e) => { e.stopPropagation() }}>
+                                    <h2>Remover</h2>
+                                    <p>{currentMemberName}</p>
+                                    <button id="remove_cancel" onClick={() => { setRemoveUserStatus(false) }}>Cancel</button>
+                                    <button id="remove_button" onClick={() => { removeUser() }}>Remover</button>
                                 </div>
                             </div>
                         ) : null

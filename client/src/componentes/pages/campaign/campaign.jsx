@@ -78,14 +78,14 @@ export function Campaign(){
                     <div id="campaign_content">
                         <NavLeft
 
-                            requestType="documents"
-                            requestLocal="http://localhost:5000/api/get_all_subjects"
+                            requestType="campaign"
+                            requestLocal="http://localhost:5000/api/get_all_modules"
                             listTitle="Tema"
                             userId={userId}
                             topButtons={true}
                             updateButton={false}
-                            local="documents"
-                            code="document"
+                            local="campaign"
+                            code="campaign"
 
                         />
 

@@ -153,9 +153,9 @@ export function Home() {
                                 code="home"
                                 listTitle="Solicitações"
                                 userId={userId}
-                                topButtons={true}
+                                topButtons={false}
                                 updateButton={true}
-                                local="game"
+                              
                             />
                             <div id="home_content_principal_all">
                                 <div id="home_content_principal_user">

@@ -11,6 +11,10 @@ const reportSchema = mongoose.Schema({
         ref:"User",
         required:[true,"reportError2"]
     },
+    group:{
+       type:mongoose.Schema.Types.ObjectId,
+        ref:"Group"
+    },
     reason:{
         type:String,
         required:[true,"reportError3"],

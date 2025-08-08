@@ -111,7 +111,7 @@ background-color: #2F2F2F;
 #button_add_member img{
   height:20px;
 }
-#invite_user_background{
+#invite_user_background,#remove_user_background,#report_user_background{
   width: 100vw;
   height:100vh;
   z-index: 1;
@@ -203,6 +203,7 @@ background-color: #2F2F2F;
 #invite_user_bottom{
 
 }
+
 #invite_user_top{
   height: 100%;
   width:100%;
@@ -279,7 +280,15 @@ height: 20px;
   grid-template-columns: 1fr 7fr 1fr;
 }
 #group_chat{
-
+  padding: 20px;
+  
+  /* ITEM SOBRE O CHAT ---------------------------------------------------------------------------*/
+  background-color: rgba(255, 0, 0, 0); 
+  display: flex;
+  row-gap: 20px;
+  flex-direction: column;
+  align-items: end;
+  justify-content: end;
 }
 #group_input_bar_principal input{
   z-index: 2;
@@ -360,7 +369,7 @@ background-color: rgb(14, 14, 14);
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.288);
   bottom: 100px;
   position: absolute;
-  width:300px;
+  width: fit-content;
   height: fit-content;
   background-color: rgb(59, 59, 59);
   padding: 10px;
@@ -550,4 +559,135 @@ background-color: rgb(14, 14, 14);
   background-color: #2F2F2F;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.288);
   border-radius: 10px;
+}
+#report_user_bar,#remove_user_bar{
+  padding:15px;
+  border-radius: 15px;
+  background-color: #2F2F2F;
+}
+
+#report_user_bar h2,#remove_user_bar h2{
+  font-family: Signika Negative;
+  color: white;
+}
+#report_user_bottom_left_img{
+  border-radius: 300px;
+  overflow: hidden;
+  height: 100px;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+#report_user_bottom_left_img img{
+  height: 100%;
+}
+#report_user_bottom{
+  display: flex;
+  column-gap: 10px;
+}
+#report_user_bottom_right textarea{
+   color:white;
+   min-height: 70px;
+    font-size: 20px;
+    padding:10px;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    border-radius: 5px 0px 0px 5px;
+    transition: all 0.5s ease-in-out;
+}
+#report_user_bottom_right{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#report_user_bottom_right_buttons{
+  display: flex;
+  justify-content: end;
+  column-gap: 10px;
+  margin-top: 20px;
+
+  
+}
+#report_user_bottom_right_buttons button{
+  border-radius: 8px;
+  cursor: pointer;
+  padding:10px;
+  border: 1px solid;
+  background-color: transparent;
+}
+#report_button,#remove_button{
+  color: rgb(204, 12, 12);
+  border: none;
+}
+#report_button:hover,#remove_button:hover{
+  color: rgb(48, 48, 48);
+  background-color: rgb(197, 3, 3);
+}
+#report_cancel,#remove_cancel{
+  color: rgb(161, 161, 161);
+}
+#report_cancel:hover,#remove_cancel:hover{
+  color: white;
+}
+#remove_user_bar{
+  width:15%;
+}
+#remove_button{
+  margin-left: 10px;
+}
+#remove_user_bar button{
+  cursor: pointer;
+  padding:10px;
+  border: 1px solid;
+  background-color: transparent;
+  border-radius:10px;
+  margin-top: 10px;
+}
+#not_invited{
+  margin: 20px;
+  height: 7vw;
+  width: 17vw;
+  max-height: 100px;
+  max-width: 200px;
+
+  filter:drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.363));
+
+}
+#member_github{
+  width: 100%;
+
+}
+#member_github p{
+    
+   font-size: 20px;
+}
+#member_github_principal{
+  padding:5px;
+  align-content: center;
+  justify-content: space-between;
+  background-color: #242424;
+  display: flex;
+}
+#member_github_principal button{
+  padding: 0;
+  max-width: 40px;
+  margin-top: 0;
+  border: none;
+
+}
+#member_github_principal button img{
+
+  width: 23px;
+  height: 26px;
+  aspect-ratio: 1/1;
+  transition: all 0.2s ease-in-out;
+}
+#member_github_principal button img:hover{
+  filter: drop-shadow(0px 0px 2px white);
+}
+#member_github_principal p{
+  padding:4px;
+  margin-top: 0;
+  font-size: 20px;
 }

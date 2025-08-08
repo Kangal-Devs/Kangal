@@ -22,25 +22,30 @@ height:100%;
 #nav_left_decoration{
     width:1px;
     height:100%;
-    background:linear-gradient(0deg,transparent,#AACE1C)
+    background:rgb(73, 73, 73)
 }
 #top_buttons{
     width:100%;
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 #top_buttons ul{
+    border-radius: 10px;
+    margin-top: 10px;
+    width:80%;
+    background-color:#1b1b1b;
     padding-block: 10px;
     display: flex;
     justify-content: space-around;
 }
-#top_buttons li:hover{
-    border: 2px solid #637711;
-    }
+
 #top_buttons li{
+    
     cursor: pointer;
-    border-radius: 15px;
-    border: 2px solid white;
+    border-radius: 5px;
+    
     list-style-type: none;
     width:15%;
     aspect-ratio: 1/1;
@@ -50,9 +55,11 @@ height:100%;
     align-items: center;
     justify-content: center;
 }
+
 #top_buttons li img{
 height:50%;
 }
+
 
 #nav_left_bottom{
  
@@ -83,7 +90,7 @@ height:50%;
 }
 #nav_left_list{
 
-       row-gap: 15px;
+       row-gap: 8px;
        display: flex;
        flex-direction: column;
     align-items: center;
@@ -142,11 +149,11 @@ height:50%;
     font-family: Silkscreen;
     background-color: transparent;
     border: 1px solid;
-    color: #00ffffc5;
-    width:80%;
-    padding-block: 10px;
+    color: #15cfcf;
+    width:90%;
+    padding-block: 8px;
     margin-top: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
     transition: all 0.16s ease-in-out;
 }
@@ -154,7 +161,7 @@ height:50%;
 height: 20px;;
 }
 #button_create_group:hover{
-    background-color:rgba(0, 255, 255, 0.39);
+    background-color:rgba(0, 255, 255, 0.267);
    
     
 }

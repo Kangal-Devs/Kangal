@@ -18,7 +18,7 @@ const commonLessonSchema = mongoose.Schema({
     color:{
         type:String,
         required:[true,"commonLessonError4"],
-        enum:["blue","red,"]
+        enum:["#BEFF55","#36AFE4","#FFF600","#AD51EA" ,"#30C4DE","#FFFFFF"]
     },
     image:{
         type:Buffer,

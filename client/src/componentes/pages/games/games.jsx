@@ -141,7 +141,7 @@ export function Games() {
                     <EnhancedNavTop
                         page="Jogos"
                         home={true}
-                        group={true}
+                        group={false}
                         userName={userName}
                         userImage={userImage}
                         userEmail={userEmail}

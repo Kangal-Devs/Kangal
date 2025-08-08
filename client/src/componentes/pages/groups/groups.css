@@ -625,6 +625,7 @@ background-color: #00ffff4f;
    filter: brightness(0.6);
 }
 .group_solicitation_empty{
+    color: rgb(190, 255, 85);
     color: rgb(22, 22, 22);
     font-family: Signika Negative;
     margin-top: 20px;

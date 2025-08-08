@@ -97,6 +97,7 @@ const [signupEmailGoogle,setSignupEmailGoogle] = useState("")
                     setSignupEmailGoogle(res1.data.email)
                     }
                     else{
+                        localStorage.setItem("currentGroup",null)
                         localStorage.setItem("image",res2.data.image)
                         console.log("Parece que seu email google já é cadastrado")
                         navigate("/home")
@@ -138,6 +139,7 @@ const [signupEmailGoogle,setSignupEmailGoogle] = useState("")
                         // .then((res)=>{
                             localStorage.setItem("image",res.data.image)
                             navigate("/home")})
+                            localStorage.setItem("currentGroup",null)
                         // .catch((err)=>{
                             
                         //     showAlert(err.response.data.message)})

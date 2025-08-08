@@ -25,7 +25,16 @@ const messageSchema = mongoose.Schema({
         type:String,
         enum:["A","B","D"], // A = Ativa, B = Bloqueada, D = Deletada
         required:[true,"messageError6"]
+    },
+    backgroundColor:{
+        type:String,
+        required:[true,"messageError7"]
+    },
+    fontColor:{
+        type:String,
+        required:[true,"messageError8"]
     }
+
 },
 {timestamps:true})
 

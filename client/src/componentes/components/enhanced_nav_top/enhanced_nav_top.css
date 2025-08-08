@@ -1,9 +1,9 @@
 #enhanced_nav_top{
     font-family: leelawadee;
-background-color: rgba(192, 68, 68, 0);
+background-color: rgb(19, 19, 19);
 width:100%;
+border-radius: 00px 00px 20px 20px;
 
-border-bottom: 1px solid #AACE1C;
 display: grid;
 grid-template-columns: 1fr 5fr;
 color: white;
@@ -248,7 +248,7 @@ background-color: red;
    justify-content: space-between;
 }
 #kangal_part{
-    background-color: #AACE1C;
+   
     display: flex;
     align-items: center;
     justify-content: center;
