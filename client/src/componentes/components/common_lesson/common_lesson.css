@@ -1,0 +1,36 @@
+.common_lesson,.common_lesson_blocked{
+    margin-top: 20px;
+    display: flex;
+    padding-block:10px;
+    width:fit-content;
+    border-radius: 10px;
+    border: 2px solid gray;
+    font-family: Signika Negative;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+    padding-inline: 20px;
+    cursor: pointer;
+    background-color: rgb(26, 26, 26);
+ 
+}
+.common_lesson h1,.common_lesson img{
+    font-weight: 400;
+    
+}
+.common_lesson{
+    filter: hue-rotate(20deg) opacity(0.8);
+}
+
+.common_lesson img{
+    height:30px;
+
+
+}
+.common_lesson_blocked img{
+height:30px;
+}
+.common_lesson_blocked img,.common_lesson_blocked h1{
+    
+     filter: grayscale(100%) brightness(0.6) invert(1);
+}

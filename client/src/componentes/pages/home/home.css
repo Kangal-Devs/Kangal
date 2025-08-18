@@ -40,18 +40,39 @@ display: flex;
 
 display: grid;
 grid-template-columns: 1fr 1fr 1fr;
-grid-template-rows: 3fr 1fr;
+grid-template-rows: 115fr 35fr 35fr;
 gap:10px;
-
+aspect-ratio: 300/185;
 width:70vw;
 max-width: 900px;
 
 }
+#home_content_principal_pages div{
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 5px black;
+    cursor: pointer;
+}
+#home_content_principal_pages div:hover{
+        box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 0.315);
+}
+#campaign_button{
 
+    grid-row: 1 / span 2
+}
+#suggestion_button{
+    background-color: rgb(0, 0, 0);
+grid-column: 2 / span 2;
+}
+
+#campaign_button img,#group_button img,#game_button img,#documents_button img,#upgrade_button img,#collection_button img{
+    width:100%;
+    height:100%
+}
 
 #home_content_principal_user_image{
    
-       
+    max-height: 400px;
     height:80%;
     aspect-ratio: 1/1;
     overflow: hidden;
@@ -103,25 +124,7 @@ height:100%;
 background:#AACE1C
 }
 
-#home_content_principal_pages img{
-    z-index: 1;
-      border-radius: 10px;
-    cursor: pointer;
-    height:100%;
-    width: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    transition: all 0.1s ease-in-out;
-  
-}
-#home_content_principal_pages img:hover{
 
-    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.486)
-   
-}
-#campaign_button{
-grid-row-start: 1;
-grid-row-end: 3;
-}
 #upgrade_background_inactive{
     display: none;
 }
@@ -238,4 +241,126 @@ grid-row-end: 3;
 #refuse_button:hover{
      color: #1f1f1f;
      background-color: #ce1c1c;
+}
+#collection_background{
+    width:100vw;
+    height:100vh;
+    position: absolute;
+    top:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+#collection_bar{
+    display: grid;
+    grid-template-rows: 1fr 1fr 10fr;
+    padding:10px 10px 20px 10px;
+    width:70%;
+    height:50%;
+    background-color: #1E1E1E;
+    border-radius: 10px;
+    max-width: 800px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.219);
+}
+#collection_bar_top{
+    display: flex;
+    justify-content: space-between;
+}
+#collection_bar_top h1{
+    color:rgb(231, 231, 231);
+    font-family: Signika Negative;
+}
+#collection_bar_top button{
+    cursor: pointer;
+    width: 25px;
+    height:25px;
+    background-color:#111111;
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+#collection_introduction{
+    color: rgb(218, 218, 218);
+}
+#collection_introduction span{
+    cursor: pointer;
+    color: rgb(0, 152, 253);
+    text-decoration: underline;
+}
+#collection_bar_bottom{
+    padding-top: 10px;
+    row-gap: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Mantém alinhado à esquerda */
+    align-items: flex-start;
+    width:100%;
+    height:100%;
+    overflow-y:scroll;
+    scrollbar-color: rgb(78, 78, 78) transparent ;
+    border-radius: 10px;
+background-color: #181818;}
+
+#collection_bar_bottom_empty{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+background-color: #181818;}
+#collection_bar_bottom_empty img{
+    width:50%
+}
+#collection_bar_bottom_empty button{
+
+    margin-top: 30px;
+    padding:10px;
+    border-radius: 5px;
+    border: 2px solid;
+    color: rgb(0, 152, 253);
+    background-color: transparent;
+    cursor: pointer;
+}
+#collection_bar_bottom_empty button:hover{
+    color: rgb(31, 31, 31);
+    background-color: rgb(0, 152, 253);
+}
+#delete_collection_background{
+    width:100vw;
+    height:100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top:0;
+    position: absolute;
+}
+#delete_collection_bar{
+     padding:10px;
+  border-radius: 15px;
+  background-color: rgb(48, 48, 48);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.39);
+}
+#delete_collection_bar button{
+      margin-top: 10px;
+  margin-left: 5px;
+  padding:10px;
+  background-color: transparent;
+  border-radius: 5px;
+  border:1px solid;
+  cursor: pointer;
+}
+#delete_collection_confirm{
+color: rgb(223, 0, 0);
+}
+#delete_collection_cancel{
+    color: rgb(233, 233, 233);
+}
+#delete_collection_confirm:hover{
+background-color: rgb(223, 0, 0);
+color:#111111;
+}
+#delete_collection_cancel:hover{
+    background-color: rgb(231, 231, 231);
+color:#111111;
 }

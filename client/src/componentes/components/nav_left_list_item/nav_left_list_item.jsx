@@ -43,6 +43,9 @@ export function NavLeftListItem({ userId, image, title, itemId, requestLocal, va
                 funcAlter[1](null)
                 
             }
+            else if(campaign){
+                funcAlter[0](itemId)
+            }
         }}>
             <div className="nav_left_list_item_decoration"></div>
             <div className="nav_left_list_item_principal">

@@ -36,7 +36,7 @@ module.exports.get_all_subjects = async(req,res)=>{
 module.exports.get_subject = async(req,res)=>{
     try{
         const {subjectId} = req.body
-        const subject = await subjectModel({_id:subjectId})
+        const subject = await subjectModel.findOne({_id:subjectId})
         res.status(200).json({message:{
             name:subject.name,
             image:subject.image.toString("base64"),

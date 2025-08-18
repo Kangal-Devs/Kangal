@@ -6,15 +6,18 @@ import { EnhancedNavTop } from "../../components/enhanced_nav_top/enhanced_nav_t
 import { Footer } from "../../components/footer/footer.jsx"
 import { NavLeft } from "../../components/nav_left/nav_left.jsx"
 import "./home.css"
+import { Collection } from "../../components/collection/collection.jsx"
 import { generateLevelTable } from "../../../levelGenerator.js"
-import campaign_home_button from "../../../assets/specific_page/home/campaign_home_button2.png"
-import documents_home_button from "../../../assets/specific_page/home/documents_home_button2.png"
-import group_home_button from "../../../assets/specific_page/home/group_home_button2.png"
-import upgrade_home_button from "../../../assets/specific_page/home/upgrade_home_button2.png"
-import game_home_button from "../../../assets/specific_page/home/game_home_button3.png"
+import campaign_home_button from "../../../assets/specific_page/home/campaign_home_button5.jpg"
+import documents_home_button from "../../../assets/specific_page/home/documents_home_button5.jpg"
+import group_home_button from "../../../assets/specific_page/home/group_home_button5.jpg"
+import upgrade_home_button from "../../../assets/specific_page/home/upgrade_home_button5.jpg"
+import game_home_button from "../../../assets/specific_page/home/game_home_button5.jpg"
+import collection_home_button from "../../../assets/specific_page/home/collection_home_button5.jpg"
 import { useNavigate } from "react-router-dom"
 import { Upgrade } from "../../components/upgrade/upgrade.jsx"
 import { Alert } from "../../components/alert/alert.jsx"
+import empty_collections from "../../../assets/specific_page/home/empty_collections.png"
 export function Home() {
 
     // const resetar = useCallback(()=>{
@@ -36,6 +39,8 @@ export function Home() {
     const [alertMessage, setAlertMessage] = useState("")
     const [isError, setIsError] = useState(false)
     const [alertStatus, setAlertStatus] = useState("alert_inactive")
+    const [collectionStatus, setCollectionStatus] = useState(false)
+
 
     const [userName, setUserName] = useState()
     const [userEmail, setUserEmail] = useState()
@@ -49,10 +54,39 @@ export function Home() {
     const [userId, setUserId] = useState()
     const [groupId, setGroupId] = useState()
 
-    const [level, setLevel] = useState(9)
+    const [level, setLevel] = useState()
+
+    const [currentCollection, setCurrentCollection] = useState()
+
+    const [collections, setCollections] = useState(0)
+
+    const deleteCollection = useCallback(()=>{
+        axios.post("http://localhost:5000/api/delete_collection",{collectionId:currentCollection})
+        .then((res)=>{
+            setCurrentCollection(null)
+            axios.post("http://localhost:5000/api/get_all_collections", { userId })
+                .then((res) => {
+                    console.log(res)
+                    if (res.data.message.length) {
+                        setCollections(res.data.message.map((collection) => {
+                            return <Collection
+                            funcAlter={[setCurrentCollection]}
+                                date={collection.createdAt}
+                                documentId={collection.document}
+                                userId={userId}
+                                itemId={collection._id}
+                                message={collection.message}
+                            />
+                        }))
+                    }else{setCollections(null)}
+                })
+                .catch((err) => { console.log(err) })
+        })
+        .catch((err)=>{console.log(err)})
+    },[currentCollection])
 
     useEffect(() => {
-      
+
         generateLevelTable().forEach((item) => {
             if (userXp >= item.xpMin && userXp <= item.xpMax) {
                 setLevel(item.level)
@@ -62,6 +96,28 @@ export function Home() {
         })
 
     }, [userXp])
+
+    useEffect(() => {
+        if (collectionStatus) {
+            axios.post("http://localhost:5000/api/get_all_collections", { userId })
+                .then((res) => {
+                    console.log(res)
+                    if (res.data.message.length) {
+                        setCollections(res.data.message.map((collection) => {
+                            return <Collection
+                            funcAlter={[setCurrentCollection]}
+                                date={collection.createdAt}
+                                documentId={collection.document}
+                                userId={userId}
+                                itemId={collection._id}
+                                message={collection.message}
+                            />
+                        }))
+                    }
+                })
+                .catch((err) => { console.log(err) })
+        }
+    }, [collectionStatus])
 
     const [connected, setConnected] = useState(false)
     const [tokenError, setTokenError] = useState("")
@@ -100,6 +156,9 @@ export function Home() {
                 localStorage.clear()
             })
     }, [])
+
+
+
     return (
 
         <div id="home">
@@ -127,7 +186,7 @@ export function Home() {
 
                         <div id="home_content_principal">
                             <NavLeft
-                              
+
                                 requestType="solicitations"
                                 requestLocal="http://localhost:5000/api/my_solicitation"
                                 vars={
@@ -155,7 +214,7 @@ export function Home() {
                                 userId={userId}
                                 topButtons={false}
                                 updateButton={true}
-                              
+
                             />
                             <div id="home_content_principal_all">
                                 <div id="home_content_principal_user">
@@ -175,12 +234,27 @@ export function Home() {
                                     </div>
                                 </div>
                                 <div id="home_content_principal_pages">
-                                    <img src={campaign_home_button} id="campaign_button" onClick={() => { navigate('/campaign') }} />
-                                    <img src={game_home_button} onClick={() => { navigate('/games') }} />
-                                    <img src={group_home_button} onClick={() => { navigate('/groups') }} />
-                                    <img src={documents_home_button} onClick={() => { navigate('/documents') }} />
-                                    <img src={upgrade_home_button} onClick={() => { setUpgradeStatus('upgrade_background_active') }} />
+                                    <div id="campaign_button" onClick={() => { navigate("/campaign") }}>
+                                        <img src={campaign_home_button} />
+                                    </div>
+                                    <div id="group_button" onClick={() => { navigate("/groups") }}>
+                                        <img src={group_home_button} />
+                                    </div>
+                                    <div id="game_button" onClick={() => { navigate("/games") }}>
+                                        <img src={game_home_button} />
+                                    </div>
+                                    <div id="documents_button" onClick={() => { navigate("/documents") }}>
+                                        <img src={documents_home_button} />
+                                    </div>
+                                    <div id="upgrade_button">
+                                        <img src={upgrade_home_button} />
+                                    </div>
+                                    <div id="collection_button" onClick={() => { setCollectionStatus(true) }}>
+                                        <img src={collection_home_button} />
+                                    </div>
+                                    <div id="suggestion_button"></div>
                                 </div>
+                                {/* upgrade_background_active */}
                             </div>
                         </div>
                     </div>
@@ -204,16 +278,16 @@ export function Home() {
                         </div>
                         <div id="accept_solicitation_bottom">
                             <button id="refuse_button" onClick={() => {
-                                    console.log(userId);
-                                    console.log(groupId);
-                                    axios.delete(`http://localhost:5000/api/delete_solicitation/${userId}/${groupId}`)
-                                    .then((res)=>{
+                                console.log(userId);
+                                console.log(groupId);
+                                axios.delete(`http://localhost:5000/api/delete_solicitation/${userId}/${groupId}`)
+                                    .then((res) => {
                                         console.log("ola")
                                         setAcceptSolicitationStatus("accept_solicitation_inactive")
                                         showAlert(false, "Solicitação recusada", 1200, true)
                                     })
-                                    .catch((err)=>{
-                                            console.log(err)
+                                    .catch((err) => {
+                                        console.log(err)
                                     })
                             }}>Recusar</button>
 
@@ -234,6 +308,44 @@ export function Home() {
                     <div id={alertStatus}>
                         <Alert error={isError} message={alertMessage} />
                     </div>
+                    {
+                        collectionStatus ?
+                            (<div id="collection_background" onClick={() => { setCollectionStatus(false) }}>
+                                <div id="collection_bar" onClick={(e) => { e.stopPropagation() }}>
+                                    <div id="collection_bar_top">
+                                        <h1>Meu báu</h1>
+                                        <button onClick={() => { setCollectionStatus(false) }}>X</button>
+                                    </div>
+                                    <p id="collection_introduction">Salve
+                                        <span onClick={() => { 
+                                            navigate("/documents");
+                                            localStorage.setItem("currentDocument",null)
+                                            localStorage.setItem("currentSubject",null)
+                                            }}> documentos </span>
+                                        que você acha ser importantes aqui.</p>
+                                    {!collections ? <div id="collection_bar_bottom_empty">
+                                        <img src={empty_collections} />
+                                        <button onClick={() => { navigate("/documents") }}>Salvar documentos</button>
+                                    </div> :
+                                        <div id="collection_bar_bottom">
+                                            {
+                                                collections
+                                            }
+
+                                        </div>}
+                                </div>
+                            </div>) : null
+                    }
+                    {
+                        currentCollection ?
+                            (<div id="delete_collection_background" onClick={()=>{setCurrentCollection(null)}}>
+                                <div id="delete_collection_bar" onClick={(e)=>{e.stopPropagation()}}>
+                                    <p>Tem certeza que quer deletar este ítem?</p>
+                                    <button id="delete_collection_confirm" onClick={()=>{deleteCollection()}}>Deletar</button>
+                                    <button id="delete_collection_cancel" onClick={()=>{setCurrentCollection(null)}}>Cancelar</button>
+                                </div>
+                            </div>) : null
+                    }
                     <Footer />
                 </div>
             }

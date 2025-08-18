@@ -183,7 +183,7 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
 
             </div> */}
 
-            <div id="kangal_part">
+            <div id="kangal_part" onClick={()=>{navigate("/home")}}>
                 <img src={kangal} />
             </div>
             <div id="enhanced_nav_top_principal">

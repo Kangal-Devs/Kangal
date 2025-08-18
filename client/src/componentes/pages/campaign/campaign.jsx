@@ -5,10 +5,15 @@ import { TokenInvalid } from "../../components/token_invalid/token_invalid.jsx"
 import { EnhancedNavTop } from "../../components/enhanced_nav_top/enhanced_nav_top.jsx"
 import { NavLeft } from "../../components/nav_left/nav_left.jsx"
 import axios from "axios"
-
+import select_module from "../../../assets/specific_page/campaign/select_module.png"
+import ad1 from "../../../assets/specific_page/campaign/ad1.jpg"
+import ad2 from "../../../assets/specific_page/campaign/ad2.jpg"
+import {CommonLesson} from "../../components/common_lesson/common_lesson.jsx"
 export function Campaign(){
 
     const navigate = useNavigate()
+
+    const [lessons,setLessons] = useState()
 
     const [userName, setUserName] = useState()
     const [userEmail, setUserEmail] = useState()
@@ -25,13 +30,63 @@ export function Campaign(){
     const [tokenError, setTokenError] = useState("")
 
     const [currentModuleId,setCurrentModuleId] = useState()
-   
+
+    
+
 
     
     const [currentCommonLessonId,setCurrentCommonLessonId] = useState()
     const [currentCommonLessonIntroduction,setCurrentCommonLessonIntroduction] = useState()
 
+    useEffect(()=>{
+        if(localStorage.getItem("currentModule")){
+            setCurrentModuleId(JSON.parse(localStorage.getItem("currentModule")))
+        }
+    },[])
 
+    const [ad,setAd] = useState()
+    useEffect(()=>{
+        if(currentModuleId){
+        if((Math.random()*10) >5){
+            setAd(ad1)
+        }
+        else{
+            setAd(ad2)
+        }
+
+        if(currentModuleId){
+        localStorage.setItem("currentModule",JSON.stringify(currentModuleId))
+        axios.post("http://localhost:5000/api/get_all_common_lessons",{moduleId:currentModuleId})
+        .then((res)=>{
+      
+            setLessons(res.data.message.map((common_lesson,i)=>{
+                if(i<8){
+                return <CommonLesson 
+                funcAlter={[setCurrentCommonLessonId]}
+                itemId={common_lesson._id}
+                name={common_lesson.name} 
+                introduction={common_lesson.introduction} 
+                image={common_lesson.image} 
+                color={common_lesson.color}
+                blocked={false}/>
+                }
+                else{
+                return <CommonLesson 
+                funcAlter={[setCurrentCommonLessonId]}
+                itemId={common_lesson._id}
+                name={common_lesson.name} 
+                introduction={common_lesson.introduction} 
+                image={common_lesson.image} 
+                color={common_lesson.color}
+                blocked={true}/>
+                }
+              
+            }))
+        })
+        .catch((err)=>{console.log(err)})
+        }
+    }
+    },[currentModuleId])
     useEffect(() => {
         axios.post("http://localhost:5000/api/authorization", {}, { withCredentials: true })
             .then((res) => {
@@ -55,6 +110,16 @@ export function Campaign(){
                 localStorage.clear()
             })
     }, [])
+
+    useEffect(()=>{
+        if(currentCommonLessonId){
+            axios.post("http://localhost:5000/api/get_common_lesson",{commonLesson:currentCommonLessonId})
+            .then((res)=>{
+                setCurrentCommonLessonIntroduction(res.data.message.introduction)
+            })
+            .catch((err)=>{console.log(err)})
+        }
+},[currentCommonLessonId])
 
     return (
         <div id="campaign">
@@ -80,15 +145,45 @@ export function Campaign(){
 
                             requestType="campaign"
                             requestLocal="http://localhost:5000/api/get_all_modules"
-                            listTitle="Tema"
+                            listTitle="Módulo"
                             userId={userId}
                             topButtons={true}
                             updateButton={false}
                             local="campaign"
                             code="campaign"
-
+                            funcAlter={[setCurrentModuleId]}
                         />
-
+                        {
+                            !currentModuleId?
+                            (<div id="campaign_content_empty">
+                                <img src={select_module}/>
+                            </div>)
+                            :
+                            (<div id="campaign_content_principal">
+                                {
+                                    currentCommonLessonId?
+                                    <div id="introduction_part">
+                                        <div>
+                                            <h2>Introdução</h2>
+                                            <p>{currentCommonLessonIntroduction}</p>
+                                        </div>
+                                        <button>Começar</button>
+                                    </div>
+                                    :
+                                    <div></div>
+                                }
+                                <div id="lessons_part" onClick={()=>{
+                                    setCurrentCommonLessonId(null)
+                                }}>
+                                    {lessons}
+                                </div>
+                                <div id="ad_part" onClick={()=>{
+                                    setCurrentCommonLessonId(null)
+                                }}>
+                                    <img src={ad}/>
+                                </div>
+                            </div>)
+                        }
                     
 
 

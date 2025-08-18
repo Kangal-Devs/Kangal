@@ -183,10 +183,10 @@ else if(requestType=="campaign"){
                 {topButtons == true ?
                     <div id="top_buttons">
                         <ul>
-                            <li style={{'backgroundColor':`${borders[0]}`}} onMouseOver={()=>{setButtonController(controller_button_selecting)}} onMouseOut={()=>{if(local!="game"){setButtonController(controller_button)}}} onClick={()=>{navigate('/games')}}><img src={buttonController} /></li>
-                            <li style={{'backgroundColor':`${borders[1]}`}} onMouseOver={()=>{setButtonDocuments(documents_button_selecting)}} onMouseOut={()=>{if(local!="documents"){setButtonDocuments(documents_button)}}} onClick={()=>{navigate('/documents')}}><img src={buttonDocuments}/></li>
-                            <li style={{'backgroundColor':`${borders[2]}`}} onMouseOver={()=>{setButtonGroup(group_button_selecting)}} onMouseOut={()=>{if(local!="group"){setButtonGroup(group_button)}}} onClick={()=>{navigate('/groups')}}><img src={buttonGroup}/></li>
-                            <li style={{'backgroundColor':`${borders[3]}`}} onMouseOver={()=>{setButtonTrophy(trophy_button_selecting)}} onMouseOut={()=>{if(local!="campaign"){setButtonTrophy(trophy_button)}}} onClick={()=>{navigate('/campaign')}}><img src={buttonTrophy}/></li>
+                            <li style={{'backgroundColor':`${borders[0]}`}} onMouseOver={()=>{setButtonController(controller_button_selecting)}} onMouseOut={()=>{if(local!="game"){setButtonController(controller_button)}else{setButtonController(controller_button_selected)}}} onClick={()=>{navigate('/games')}}><img src={buttonController} /></li>
+                            <li style={{'backgroundColor':`${borders[1]}`}} onMouseOver={()=>{setButtonDocuments(documents_button_selecting)}} onMouseOut={()=>{if(local!="documents"){setButtonDocuments(documents_button)}else{setButtonDocuments(documents_button_selected)}}} onClick={()=>{navigate('/documents')}}><img src={buttonDocuments}/></li>
+                            <li style={{'backgroundColor':`${borders[2]}`}} onMouseOver={()=>{setButtonGroup(group_button_selecting)}} onMouseOut={()=>{if(local!="group"){setButtonGroup(group_button)}else{setButtonGroup(group_button_selected)}}} onClick={()=>{navigate('/groups')}}><img src={buttonGroup}/></li>
+                            <li style={{'backgroundColor':`${borders[3]}`}} onMouseOver={()=>{setButtonTrophy(trophy_button_selecting)}} onMouseOut={()=>{if(local!="campaign"){setButtonTrophy(trophy_button)}else{setButtonTrophy(trophy_button_selected)}}} onClick={()=>{navigate('/campaign')}}><img src={buttonTrophy}/></li>
                         </ul>
                     </div>
                     : ""}
