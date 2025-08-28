@@ -96,3 +96,12 @@ exports.create_user_group = async (req,res)=>{
         res.status(500).json({message:err.message})
     }
 }
+module.exports.get_count_user_group = async (req,res) =>{
+    try{const {userId} = req.body;
+
+    const countGroup = await userGroupModel.countDocuments({user:userId})
+    res.status(200).json({message:countGroup})}
+     catch(err){
+        res.status(500).json({message:err.message})
+    }
+}

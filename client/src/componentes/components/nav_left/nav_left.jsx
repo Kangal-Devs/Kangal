@@ -49,7 +49,7 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
      
          setBorders(['transparent','#808080ff','transparent','transparent'])
         break;
-         case 'group':
+         case 'groups':
         setButtonGroup(group_button_selected)
            setBorders(['transparent','transparent','#808080ff','transparent'])
         break;
@@ -180,16 +180,18 @@ else if(requestType=="campaign"){
     return (
         <div id="nav_left">
             <div id="nav_left_principal">
-                {topButtons == true ?
+                
                     <div id="top_buttons">
+                      {topButtons == true ?
                         <ul>
                             <li style={{'backgroundColor':`${borders[0]}`}} onMouseOver={()=>{setButtonController(controller_button_selecting)}} onMouseOut={()=>{if(local!="game"){setButtonController(controller_button)}else{setButtonController(controller_button_selected)}}} onClick={()=>{navigate('/games')}}><img src={buttonController} /></li>
                             <li style={{'backgroundColor':`${borders[1]}`}} onMouseOver={()=>{setButtonDocuments(documents_button_selecting)}} onMouseOut={()=>{if(local!="documents"){setButtonDocuments(documents_button)}else{setButtonDocuments(documents_button_selected)}}} onClick={()=>{navigate('/documents')}}><img src={buttonDocuments}/></li>
-                            <li style={{'backgroundColor':`${borders[2]}`}} onMouseOver={()=>{setButtonGroup(group_button_selecting)}} onMouseOut={()=>{if(local!="group"){setButtonGroup(group_button)}else{setButtonGroup(group_button_selected)}}} onClick={()=>{navigate('/groups')}}><img src={buttonGroup}/></li>
+                            <li style={{'backgroundColor':`${borders[2]}`}} onMouseOver={()=>{setButtonGroup(group_button_selecting)}} onMouseOut={()=>{if(local!="groups"){setButtonGroup(group_button)}else{setButtonGroup(group_button_selected)}}} onClick={()=>{navigate('/groups')}}><img src={buttonGroup}/></li>
                             <li style={{'backgroundColor':`${borders[3]}`}} onMouseOver={()=>{setButtonTrophy(trophy_button_selecting)}} onMouseOut={()=>{if(local!="campaign"){setButtonTrophy(trophy_button)}else{setButtonTrophy(trophy_button_selected)}}} onClick={()=>{navigate('/campaign')}}><img src={buttonTrophy}/></li>
                         </ul>
+                        : ""}
                     </div>
-                    : ""}
+                    
                     <p id="solicitation_title">{listTitle}</p>
                     <div id="nav_left_bottom">
                             <div id="nav_left_list">
@@ -201,29 +203,18 @@ else if(requestType=="campaign"){
                                 list
                             }
                             </div>
+                            
+                           </div>
+                            <div id="update">
                             {
                                 updateButton==true?
                                 <button id="update_button" onClick={()=>{
-                                    // axios.post("http://localhost:5000/api/create_group",{owner:userId,name:"",description:""})
-                                    // .then((res)=>{console.log(res.data.message)})
-                                    // .catch((err)=>{console.log(err.response.data.message)})
-
-                                    // axios.post("http://localhost:5000/api/create_user_group",{owner:userId,groupName:""})
-                                    // .then((res)=>{console.log(res.data.message)})
-                                    // .catch((err)=>{console.log(err.response.data.message)})
-
-                                    // axios.post("http://localhost:5000/api/create_solicitation",{userId:userId,groupName:"Ximbinhas"})
-                                    // .then((res)=>{console.log(res.data.message)})
-                                    // .catch((err)=>{console.log(err.response.data.message)})
-
-
-                                    // upgradeFunction('upgrade_background_active')
+                                  
                                 }}>
                                     Upgrade
                                 </button>:""
                             }
-                           </div>
-                    
+                            </div>
             </div>
             <div id="nav_left_decoration">
 

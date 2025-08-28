@@ -7,17 +7,21 @@ import { Footer } from "../../components/footer/footer.jsx"
 import { NavLeft } from "../../components/nav_left/nav_left.jsx"
 import "./home.css"
 import { Collection } from "../../components/collection/collection.jsx"
+import add from "../../../assets/specific_page/home/add.jpg"
 import { generateLevelTable } from "../../../levelGenerator.js"
-import campaign_home_button from "../../../assets/specific_page/home/campaign_home_button5.jpg"
-import documents_home_button from "../../../assets/specific_page/home/documents_home_button5.jpg"
-import group_home_button from "../../../assets/specific_page/home/group_home_button5.jpg"
-import upgrade_home_button from "../../../assets/specific_page/home/upgrade_home_button5.jpg"
-import game_home_button from "../../../assets/specific_page/home/game_home_button5.jpg"
-import collection_home_button from "../../../assets/specific_page/home/collection_home_button5.jpg"
+
+import statistic_icon from "../../../assets/specific_page/home/statistic_icon.png"
+import collection from "../../../assets/specific_page/home/collection.png"
 import { useNavigate } from "react-router-dom"
+
+import games_icon from "../../../assets/specific_page/home/games_icon.png"
+import campaign_icon from "../../../assets/specific_page/home/campaign_icon.png"
+import documents_icon from "../../../assets/specific_page/home/documents_icon.png"
+import groups_icon from "../../../assets/specific_page/home/groups_icon.png"
+
 import { Upgrade } from "../../components/upgrade/upgrade.jsx"
 import { Alert } from "../../components/alert/alert.jsx"
-import empty_collections from "../../../assets/specific_page/home/empty_collections.png"
+import empty_collections from "../../../assets/specific_page/home/empty_collections1.png"
 export function Home() {
 
     // const resetar = useCallback(()=>{
@@ -25,6 +29,13 @@ export function Home() {
     //     .then((res)=>{console.log(res.data)})
     //     .catch((err)=>{console.log(err.response.data)})
     // },[])
+
+    //Estatísticas para mostrar ao usuário:
+    const [joinedGroups,setJoinedGroups] = useState(0)
+    const [createdGroups,setCreatedGroups] = useState(0)
+     const [userCreated, setUserCreated] = useState(0)
+     const [countCollection,setCountCollection] = useState(0)
+    const [countOwner,setCountOwner] = useState(0)
 
     const navigate = useNavigate()
     const [levelWidth, setLevelWidth] = useState()
@@ -42,7 +53,11 @@ export function Home() {
     const [collectionStatus, setCollectionStatus] = useState(false)
 
 
+    const [xpNeeded,setXpNeeded] = useState()
+
+
     const [userName, setUserName] = useState()
+
     const [userEmail, setUserEmail] = useState()
     const [userPassword, setUserPassword] = useState()
     const [userXp, setUserXp] = useState()
@@ -59,6 +74,26 @@ export function Home() {
     const [currentCollection, setCurrentCollection] = useState()
 
     const [collections, setCollections] = useState(0)
+
+    
+
+    useEffect(()=>{
+        if(userId)
+       { axios.post("http://localhost:5000/api/get_count_user_group",{userId:userId})
+        .then((res)=>{setJoinedGroups(res.data.message)})
+        .catch((err)=>{console.log(err)})
+
+        axios.post("http://localhost:5000/api/get_count_collection",{userId:userId})
+        .then((res)=>{setCountCollection(res.data.message)})
+        .catch((err)=>{console.log(err)})
+
+        axios.post("http://localhost:5000/api/get_count_owner_group",{userId:userId})
+        .then((res)=>{setCountOwner(res.data.message)})
+        .catch((err)=>{console.log(err)})
+    
+    }
+    },[userId])
+
 
     const deleteCollection = useCallback(()=>{
         axios.post("http://localhost:5000/api/delete_collection",{collectionId:currentCollection})
@@ -87,15 +122,27 @@ export function Home() {
 
     useEffect(() => {
 
-        generateLevelTable().forEach((item) => {
+        generateLevelTable().forEach((item,i) => {
             if (userXp >= item.xpMin && userXp <= item.xpMax) {
                 setLevel(item.level)
-                setLevelWidth(userXp / item.xpMax * 100)
+                console.log("passar de level: "+item.xpMax)
+                console.log("seu xp: "+userXp)
+                if((userXp-item.xpMin/item.xpMax-item.xpMin)>=0){
+                setLevelWidth((userXp-item.xpMin/item.xpMax-item.xpMin))
+                }
+                else{
+                    setLevelWidth(0)
+                }
                 console.log(levelWidth)
+                setXpNeeded(generateLevelTable()[i+1].xpMin-userXp)
             }
         })
 
     }, [userXp])
+
+    useEffect(()=>{
+        console.log(levelWidth)
+    },[levelWidth])
 
     useEffect(() => {
         if (collectionStatus) {
@@ -148,6 +195,7 @@ export function Home() {
                 setUserGithub(res.data.message.github)
                 setUserGender(res.data.message.gender)
                 setUserId(res.data.message._id)
+                setUserCreated(res.data.message.createdAt)
             })
 
             .catch((err) => {
@@ -216,46 +264,82 @@ export function Home() {
                                 updateButton={true}
 
                             />
-                            <div id="home_content_principal_all">
-                                <div id="home_content_principal_user">
-                                    <div id="home_content_principal_user_image">
-                                        <img src={`data:image/png;base64,${userImage}`} draggable={false} />
-                                    </div>
-                                    <div id="home_content_principal_user_info">
-                                        <div id="home_content_principal_user_name">
-                                            <p>{userName}</p>
+                           <div id="home_content_principal_right">
+                                    <div id="home_content_left_part">
+                                        <div id="about_me_top">
+                                            <div id="about_me_top_left">
+                                            <img src={`data:image/png;base64,${userImage}`}/>
                                         </div>
-                                        <div>
-                                            <p >Level: {level}</p>
-                                            <div id="home_content_principal_user_level">
-                                                <div style={{ width: levelWidth + "%" }}></div>
+                                        <div id="about_me_top_right">
+                                                <h1 id="about_me_name">{userName}</h1>
+                                                <p>Level:{level}</p>
+                                                <div id="level_part">
+                                                    <div style={{width:levelWidth+"%"}}></div>
+                                                </div>
+                                        </div>
+                                        </div>
+                                        <div id="about_info">
+                                            <div id="about_info_left">
+                                                <h2>Continue o modo campanha</h2>
+                                                 <p>Ganhe {xpNeeded}xp para chegar ao level {level+1}</p>
                                             </div>
-                                        </div>
+                                            <button onClick={()=>{setCollectionStatus(true)}}> 
+                                                
+                                                <img src={collection}/>
+                                                Coleção</button>
+                                            </div>
+                                            <div id="pages_part">
+                                                <div id="campaign_page" onClick={()=>{navigate("/campaign")}}>
+                                                    <img src={campaign_icon}/>
+                                                    <div>
+                                                        <h1>Campanha</h1>
+                                                        <p>Você fez -- lições</p>
+                                                    </div>
+                                                </div>
+                                                <div id="groups_page" onClick={()=>{navigate("/groups")}}>
+                                                      <img src={groups_icon}/>
+                                                      <div>
+                                                        <h1>Grupos</h1>
+                                                        <p>Você está em {joinedGroups} grupos</p>
+                                                    </div>
+                                                </div>
+                                                 <div id="documents_page" onClick={()=>{navigate("/documents")}}>
+                                                      <img src={documents_icon}/>
+                                                      <div>
+                                                        <h1>Documentos</h1>
+                                                        <p>Aprenda novos conceitos</p>
+                                                    </div>
+                                                 </div>
+                                                <div id="games_page" onClick={()=>{navigate("/games")}}>
+                                                      <img src={games_icon}/>
+                                                      <div>
+                                                        <h1>Jogos</h1>
+                                                        <p>Divirta-se e aprenda</p>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div id="upgrade_page" onClick={()=>{setUpgradeStatus("upgrade_background_active")}}>
+                                                <p>Assinatura</p>
+                                            </div>
+                                            <div id="statistic_title">
+                                                <img src={statistic_icon}/>
+                                                Estatística:</div>
+                                                <div id="statistics">
+                                                    <div><h2>--</h2><p>Lições feitas</p></div>
+                                                    <div><h2>--</h2><p>Lições criadas</p></div>
+                                                    <div><h2>{joinedGroups}</h2><p>Grupos que participa</p></div>
+                                                    <div><h2>{countOwner}</h2><p>Grupos criados</p></div>
+                                                    <div><h2>{userCreated.slice(0,10)}</h2><p>Criação da conta</p></div>
+                                                    <div><h2>{userXp}</h2><p>Quantidade de XP</p></div>
+                                                    <div><h2>{countCollection}</h2><p>Itens na coleção</p></div>
+                                                </div>
                                     </div>
-                                </div>
-                                <div id="home_content_principal_pages">
-                                    <div id="campaign_button" onClick={() => { navigate("/campaign") }}>
-                                        <img src={campaign_home_button} />
+                                    <div id="home_content_right_part">
+                                            <img src={add}/>
                                     </div>
-                                    <div id="group_button" onClick={() => { navigate("/groups") }}>
-                                        <img src={group_home_button} />
-                                    </div>
-                                    <div id="game_button" onClick={() => { navigate("/games") }}>
-                                        <img src={game_home_button} />
-                                    </div>
-                                    <div id="documents_button" onClick={() => { navigate("/documents") }}>
-                                        <img src={documents_home_button} />
-                                    </div>
-                                    <div id="upgrade_button">
-                                        <img src={upgrade_home_button} />
-                                    </div>
-                                    <div id="collection_button" onClick={() => { setCollectionStatus(true) }}>
-                                        <img src={collection_home_button} />
-                                    </div>
-                                    <div id="suggestion_button"></div>
-                                </div>
-                                {/* upgrade_background_active */}
-                            </div>
+                           </div>
+                            
                         </div>
                     </div>
                     <div id={upgradeStatus}>
@@ -313,7 +397,7 @@ export function Home() {
                             (<div id="collection_background" onClick={() => { setCollectionStatus(false) }}>
                                 <div id="collection_bar" onClick={(e) => { e.stopPropagation() }}>
                                     <div id="collection_bar_top">
-                                        <h1>Meu báu</h1>
+                                        <h1>Minha coleção</h1>
                                         <button onClick={() => { setCollectionStatus(false) }}>X</button>
                                     </div>
                                     <p id="collection_introduction">Salve
@@ -346,7 +430,7 @@ export function Home() {
                                 </div>
                             </div>) : null
                     }
-                    <Footer />
+           
                 </div>
             }
         </div>

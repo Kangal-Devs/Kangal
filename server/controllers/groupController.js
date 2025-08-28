@@ -28,7 +28,6 @@ exports.get_group = async (req,res)=>{
         const {_id} = req.body
 
         const group = await groupModel.findOne({_id:_id})
-        console.log(group)
         res.status(200).json({
             message:{
                 _id:group._id,
@@ -43,4 +42,17 @@ exports.get_group = async (req,res)=>{
           res.status(500).json({message:err.message})
     }
 
+}
+module.exports.get_count_owner_group = async (req,res)=>{
+    try{
+        const {userId} = req.body
+
+        const countOwnerGroup = await groupModel.countDocuments({owner:userId})
+        const groups = await groupModel.find({owner:userId})
+        console.log(groups)
+        res.status(200).json({message:countOwnerGroup})
+    }
+    catch(err){
+          res.status(500).json({message:err.message})
+    }
 }

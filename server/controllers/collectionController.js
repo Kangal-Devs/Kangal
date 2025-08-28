@@ -40,3 +40,14 @@ module.exports.delete_collection = async(req,res)=>{
         res.status(500).json({message:err.message})
     }
 }
+
+module.exports.get_count_collection = async(req,res)=>{
+    try{
+    const {userId} = req.body
+
+    const countCollection = await collectionModel.countDocuments({user:userId})
+    res.status(200).json({message:countCollection})}
+    catch(err){
+        res.status(500).json({message:err.message})
+    }
+}

@@ -435,8 +435,8 @@ export function Groups() {
                             listTitle="Grupos"
                             userId={userId}
                             topButtons={true}
-                            updateButton={false}
-                            local="group"
+                            updateButton={true}
+                            local="groups"
                             code="groups"
                             vars={[currentGroupId]}
                             funcAlter={[setCurrentGroupId, setCreateGroupStatus]}

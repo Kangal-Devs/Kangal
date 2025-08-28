@@ -11,7 +11,7 @@ import select_theme from "../../../assets/specific_page/documents/select_theme.p
 import select_topic from "../../../assets/specific_page/documents/select_topic.png"
 import { Document } from "../../components/document/document.jsx"
 import note3 from "../../../assets/specific_page/documents/note.png"
-import collection from "../../../assets/specific_page/documents/collection.png"
+import collection from "../../../assets/specific_page/documents/collection1.png"
 import collection_note from "../../../assets/specific_page/documents/collection_note.png"
 export function Documents() {
 
@@ -244,11 +244,11 @@ export function Documents() {
                         createCollectionStatus ?
                             <div id="create_collection_background" onClick={()=>{setCollectionDescription("");setCreateCollectionStatus(false)}}>
                                 <div id="create_collection_bar" onClick={(e)=>{e.stopPropagation()}}>
-                                    <h1>Báu</h1>
-                                    <p>Não perda documentos, salve eles no báu</p>
+                                    <h1>Coleção</h1>
+                                    <p>Não perda documentos, salve eles.</p>
                                      <div id="create_collection_bar_note">
                                         <img src={collection_note}/>
-                                        <p>Encontre os documentos salvos na página home na aba báu</p>
+                                        <p>Encontre os documentos salvos na página home na aba coleções</p>
                                         </div>
                                         <label>Documento: {currentDocumentTitle}</label>
                                         <label>Descrição:</label>

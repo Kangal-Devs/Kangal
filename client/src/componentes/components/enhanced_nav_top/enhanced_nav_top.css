@@ -160,6 +160,7 @@ column-gap: 20px;
     flex-direction: column;
 }
 #nav_top_user_img{
+
  height:3vh;
  display: flex;
  align-items: center;
@@ -167,7 +168,8 @@ column-gap: 20px;
 border-radius: 100%;
 overflow: hidden;
 aspect-ratio: 1/1;
-background-color: red;
+background-color: rgba(0, 0, 0, 0.178);
+box-shadow: 0px 0px 5px black;
 }
 #nav_top_user_img img{
     height:3vh;

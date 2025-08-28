@@ -135,7 +135,7 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
             .then((res) => {
                 
                 localStorage.setItem("image", res.data.image);
-                showAlert(false,"Conta Alterada",3000,true)
+                showAlert(false,"Conta Alterada",700,true)
             
             })
             .catch((err) => { 

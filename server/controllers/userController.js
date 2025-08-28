@@ -22,7 +22,8 @@ exports.get_user = async (req,res)=>{
                     github:user.github,
                     gender:user.gender,
                     accountType:user.accountType,
-                    password:user.password
+                    password:user.password,
+                    createdAt:user.createdAt
                 }
                 return res.status(200).json({message:user2})
             }
@@ -48,7 +49,8 @@ exports.get_user2 = async (req,res)=>{
                     github:user.github,
                     gender:user.gender,
                     accountType:user.accountType,
-                    password:user.password
+                    password:user.password,
+                    createdAt:user.createdAt
                 }
                 return res.status(200).json({message:user2})
             }
@@ -78,7 +80,8 @@ exports.get_users_limit5 = async (req,res)=>{
                     github:user.github,
                     gender:user.gender,
                     accountType:user.accountType,
-                    password:user.password
+                    password:user.password,
+                    createdAt:user.createdAt
                 }
             })
 
@@ -106,7 +109,8 @@ exports.email_verification = async (req, res) => {
                     date: user.date.toISOString().slice(0, 10),
                     accountType: user.accountType,
                     github: user.github,
-                    gender: user.gender
+                    gender: user.gender,
+                    createdAt:user.createdAt
                 },
                 TOKEN_KEY, { expiresIn: "30m" })
             res.cookie("token", token, { httpOnly: true })
@@ -135,7 +139,8 @@ exports.signin = async (req, res) => {
                     date: user.date.toISOString().slice(0, 10),
                     accountType: user.accountType,
                     github: user.github,
-                    gender: user.gender
+                    gender: user.gender,
+                    createdAt:user.createdAt
                 },
                 TOKEN_KEY, { expiresIn: "30m" })
             res.cookie("token", token, { httpOnly: true })
@@ -172,7 +177,8 @@ exports.signup = async (req, res) => {
             date: user.date.toISOString().slice(0, 10),
             accountType: user.accountType,
             github: user.github,
-            gender: user.gender
+            gender: user.gender,
+            createdAt:user.createdAt
         },
             TOKEN_KEY,
             { expiresIn: "30m" })
@@ -241,7 +247,8 @@ exports.user_update = async (req, res) => {
             date: user.date.toISOString().slice(0, 10),
             accountType: user.accountType,
             github: user.github,
-            gender: user.gender
+            gender: user.gender,
+            createdAt:user.createdAt
         },
             TOKEN_KEY,
             { expiresIn: "30m" })
