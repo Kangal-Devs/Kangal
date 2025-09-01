@@ -23,11 +23,12 @@
     font-family: Signika Negative;
 }
 #upgrade_list{
+
     max-width: 1300px;
     justify-content: space-around;
     color:white;
     font-family: Signika Negative;
-    width:100%;
+    width:60%;
     display: flex;
  
 }

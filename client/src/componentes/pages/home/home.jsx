@@ -260,8 +260,8 @@ export function Home() {
                                 code="home"
                                 listTitle="Solicitações"
                                 userId={userId}
-                                topButtons={false}
-                                updateButton={true}
+                                topButtons={true}
+                                updateButton={false}
 
                             />
                            <div id="home_content_principal_right">

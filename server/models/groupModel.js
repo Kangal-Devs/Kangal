@@ -1,41 +1,57 @@
 const mongoose = require("mongoose")
-const {prohibitedWords} = require("../prohibitedWords.js")
+const { prohibitedWords } = require("../prohibitedWords.js")
 
 const groupSchema = mongoose.Schema({
-    name:{
-        type:String,
-        required:[true,"groupErrorType1"],
-        minLength:[3,"groupErrorType2"],
-        maxLength:[25,"groupErrorType3"],
+    name: {
+        type: String,
+        required: [true, "groupErrorType1"],
+        minLength: [3, "groupErrorType2"],
+        maxLength: [25, "groupErrorType3"],
 
-        validate:{
-                validator:(value)=>{
-                    const val = prohibitedWords.some((prohibitedWord)=> value.toLowerCase().includes(prohibitedWord))
-                    return !val;
-                },
-                message:"groupErrorType4"
+        validate: {
+            validator: (value) => {
+                const val = prohibitedWords.some((prohibitedWord) => value.toLowerCase().includes(prohibitedWord))
+                return !val;
+            },
+            message: "groupErrorType4"
         }
     },
-     image:{
-        type:Buffer,
-        required:[true,"groupErrorType5"]
+    image: {
+        type: Buffer,
+        required: [true, "groupErrorType5"]
     },
-    description:{
-        type:String,
-        required:false,
-        maxLength:[250,"groupErrorType6"]
+    description: {
+        type: String,
+        required: false,
+        maxLength: [250, "groupErrorType6"]
     },
-    owner:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required:[true,"groupErrorType7"]
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: [true, "groupErrorType7"]
+    },
+    link1: {
+        type: String,
+        required: [true, "groupErrorType8"]
+    },
+    link2: {
+        type: String,
+        required: [true, "groupErrorType9"]
+    },
+    titleLink1: {
+        type: String,
+        required: [true, "groupErrorType10"]
+    },
+    titleLink2: {
+        type: String,
+        required: [true, "groupErrorType11"]
     }
 
 
-},{
-    timestamps:true
+}, {
+    timestamps: true
 })
 
-const groupModel = mongoose.model("Group",groupSchema)
+const groupModel = mongoose.model("Group", groupSchema)
 
 exports.groupModel = groupModel

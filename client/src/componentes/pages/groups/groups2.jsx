@@ -18,6 +18,8 @@ import emogi from "../../../assets/specific_page/group/emogi.png"
 import report from "../../../assets/specific_page/group/report.png"
 import remove from "../../../assets/specific_page/group/remove.png"
 import { Message } from "../../components/messages/message.jsx"
+import group_icon from "../../../assets/specific_page/group/group.png"
+import member_icon from "../../../assets/specific_page/group/member.png"
 import chat_color1 from "../../../assets/specific_page/group/chat_color1.png"
 import chat_color2 from "../../../assets/specific_page/group/chat_color2.png"
 import chat_color3 from "../../../assets/specific_page/group/chat_color3.png"
@@ -66,6 +68,9 @@ export function Groups() {
 
     const [reportReason, setReportReason] = useState()
 
+    const [leaveGroupStatus,setLeaveGroupStatus] = useState()
+    const [updateGroupStatus,setUpdateGroupStatus] = useState()
+
     const [userName, setUserName] = useState()
     const [userEmail, setUserEmail] = useState()
     const [userPassword, setUserPassword] = useState()
@@ -79,6 +84,7 @@ export function Groups() {
 
     const [messages, setMessages] = useState()
 
+    const [currentGroupCreatedAt, setCurrentGroupCreatedAt] = useState()
     const [currentGroupName, setCurrentGroupName] = useState()
     const [currentGroupId, setCurrentGroupId] = useState()
     const [currentGroupDescription, setCurrentGroupDescription] = useState()
@@ -86,6 +92,10 @@ export function Groups() {
     const [amIOwner, setAmIOwner] = useState()
     const [currentGroupOwner, setCurrentGroupOwner] = useState()
     const [currentGroupMembers, setCurrentGroupMembers] = useState()
+    const [currentGroupTitleLink2, setCurrentGroupTitleLink2] = useState()
+    const [currentGroupTitleLink1, setCurrentGroupTitleLink1] = useState()
+    const [currentGroupLink2, setCurrentGroupLink2] = useState()
+    const [currentGroupLink1, setCurrentGroupLink1] = useState()
 
     const [groupMembers, setGroupMembers] = useState()
     const [groupOwner, setGroupOwner] = useState()
@@ -121,9 +131,28 @@ export function Groups() {
     const [createGroupName, setCreateGroupName] = useState("")
     const [createGroupDescription, setCreateGroupDescription] = useState("")
 
-    const [updateGroupName,setUpdateGroupName] = useState()
-    const [updateGroupDescription,setUpdateGroupDescription] = useState()
-    const [updateGroupImage,setUpdateGroupImage] = useState()
+    const [updateGroupName, setUpdateGroupName] = useState()
+    const [updateGroupDescription, setUpdateGroupDescription] = useState()
+    const [updateGroupImage, setUpdateGroupImage] = useState()
+    const [updateGroupTitleLink1, setUpdateGroupTitleLink1] = useState()
+    const [updateGroupLink1, setUpdateGroupLink1] = useState()
+    const [updateGroupTitleLink2, setUpdateGroupTitleLink2] = useState()
+    const [updateGroupLink2, setUpdateGroupLink2] = useState()
+
+    useEffect(()=>{
+        setUpdateGroupImage(`data:image/png;base64,${currentGroupImage}`)
+    },[currentGroupImage])
+
+    const [countMembers, setCounteMembers] = useState(0)
+    useEffect(() => {
+        if (aboutGroupStatus) {
+            axios.get(`http://localhost:5000/api/get_count_members_group/${currentGroupId}`)
+                .then((res) => {
+                    setCounteMembers(res.data.message)
+                })
+                .catch((err) => { console.log(err) })
+        }
+    }, [aboutGroupStatus])
 
     const insertEmogi = useCallback((e) => {
         setInputMessage(prev => prev + e)
@@ -135,6 +164,18 @@ export function Groups() {
         setChatColorStatus(false)
 
     }, [])
+
+    const leaveGroup = useCallback((amIOwner)=>{
+        axios.delete(`http://localhost:5000/api/delete_user_group/${userId}/${currentGroupId}`)
+        .then((res)=>{
+            
+            localStorage.setItem("currentGroup",null)
+            window.location.reload()
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    },[userId,currentGroupId])
 
     const reportUser = useCallback(() => {
         axios.post("http://localhost:5000/api/create_report", {
@@ -257,7 +298,14 @@ export function Groups() {
 
     useEffect(() => {
         if (localStorage.getItem("currentGroup")) {
-            setCurrentGroupId(JSON.parse(localStorage.getItem("currentGroup")))
+            axios.post("http://localhost:5000/api/get_group", { _id: JSON.parse(localStorage.getItem("currentGroup")) })
+                .then((res) => {
+                    setCurrentGroupId(JSON.parse(localStorage.getItem("currentGroup")))
+                })
+                .catch((err) => {
+                    setCurrentGroupId(null)
+                })
+
         }
     }, [])
 
@@ -312,6 +360,11 @@ export function Groups() {
                         setCurrentGroupOwner(res.data.message.owner)
                     }, 100)
 
+                    setCurrentGroupCreatedAt(res.data.message.createdAt)
+                    setCurrentGroupLink1(res.data.message.link1)
+                    setCurrentGroupLink2(res.data.message.link2)
+                    setCurrentGroupTitleLink2(res.data.message.titleLink2)
+                    setCurrentGroupTitleLink1(res.data.message.titleLink1)
                     setCurrentGroupImage(res.data.message.image)
                     setCurrentGroupName(res.data.message.name)
                     setCurrentGroupDescription(res.data.message.description)
@@ -319,7 +372,10 @@ export function Groups() {
 
                     axios.post("http://localhost:5000/api/get_all_messages", { groupId: currentGroupId })
                         .then((res) => {
-                            setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} /> }))
+                            if (res.data.message.length) {
+                                console.log(res.data.message.length)
+                                setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} /> }))
+                            }
                         })
                         .catch((err) => { console.log(err) })
                 })
@@ -503,13 +559,13 @@ export function Groups() {
                                                         <p id="member_github_title">Github:</p>
                                                         <div id="member_github_principal">
                                                             <p>{
-                                                            currentMemberGithub.length>16?
-                                                            currentMemberGithub.slice(0,14)+"...":
-                                                            currentMemberGithub
+                                                                currentMemberGithub.length > 16 ?
+                                                                    currentMemberGithub.slice(0, 14) + "..." :
+                                                                    currentMemberGithub
                                                             }</p>
-                                                            <button onClick={()=>{navigator.clipboard.writeText(currentMemberGithub)}}>
-                                                                <img src={copy_github}/>
-                                                                </button>
+                                                            <button onClick={() => { navigator.clipboard.writeText(currentMemberGithub) }}>
+                                                                <img src={copy_github} />
+                                                            </button>
                                                         </div>
                                                     </div>
                                                     : null}
@@ -639,10 +695,126 @@ export function Groups() {
                         aboutGroupStatus ? (
                             <div id="about_group_background" onClick={() => { setAboutGroupStatus(false) }}>
                                 <div id="about_group_bar" onClick={(e) => { e.stopPropagation() }}>
-
+                                    <div id="about_group_bar_top">
+                                        <div id="about_group_bar_top_left">
+                                            <img src={`data:image/png;base64,${currentGroupImage}`} />
+                                        </div>
+                                        <div id="about_group_bar_top_right">
+                                            <div id="about_group_title_part">
+                                                {/* <img src={group_icon}/> */}
+                                                <div id="about_group_title_part_principal">
+                                                    <h1>{currentGroupName}</h1>
+                                                    {
+                                                        currentGroupOwner == userId ?
+                                                            <h2>você é o lider</h2>
+                                                            : null
+                                                    }
+                                                </div>
+                                            </div>
+                                            <p id="about_group_created_at">Criado: {currentGroupCreatedAt.split("-")[0]+"/"+
+                                                currentGroupCreatedAt.split("-")[1]+"/"+
+                                                currentGroupCreatedAt.split("-")[2].slice(0,2)
+                                                }</p>
+                                            <div id="about_group_count_member">
+                                                <img src={member_icon} />
+                                                <p>Membros: {countMembers}</p>
+                                            </div>
+                                            {currentGroupOwner == userId ?
+                                                <button id="edit_group_button"onClick={()=>{setUpdateGroupStatus(true)}}>Configurações</button>
+                                                :
+                                                <button id="leave_group_button" onClick={()=>{setLeaveGroupStatus(true)}}>Sair</button>
+                                            }
+                                        </div>
+                                    </div>
+                                    {
+                                        !(
+                                            (currentGroupLink1 == "" || currentGroupLink1 == " ")
+                                            &&
+                                            (currentGroupLink2 == "" || currentGroupLink2 == " ")
+                                        ) ?
+                                            (<div id="">
+                                          
+                                            </div>) :
+                                            <div id="about_group_no_link">
+                                                Este grupo não possui nenhum link
+                                            </div>
+                                    }
+                                    <h2 id="about_group_title_description">Descrição:</h2>
+                                    <p>{currentGroupDescription}</p>
                                 </div>
                             </div>
                         ) : null
+                    }
+                    {
+                        updateGroupStatus?
+                        <div id="update_group_background" onClick={()=>{setUpdateGroupStatus(false)}}>
+                        <div id="update_group_bar" onClick={(e)=>{e.stopPropagation()}}>
+                        <div id="update_group_exit_part">
+                            <button id="update_group_leave" onClick={()=>{setLeaveGroupStatus(true)}}>Sair e deletar</button>
+                            <button id="update_group_exit" onClick={()=>{setUpdateGroupStatus(false)}}>X</button>
+                        </div>
+                        <div id="update_group_left">
+                            <h1>Configurar grupo</h1>
+                            <div id="update_group_image_part">
+                                <div>
+                                    <img src={updateGroupImage}/>
+                                </div>
+                                <button>Alterar</button>
+                            </div>
+                            
+                        </div>
+                        <div id="update_group_right"></div>
+                        <div id="update_group_bottom">
+                            <p>Título</p>
+                            <p>Link</p>
+                            <input placeholder="YouTube"></input>
+                            <input placeholder="https://www.youtube.com/..."></input>
+                            <input placeholder="Github"></input>
+                            <input placeholder="https://github.com/googleapis/..."></input>
+                        </div>
+                        <div id="update_group_apply_part">
+                            <button>Cancelar</button>
+                            <button>Aplicar</button>
+                        </div>
+                        </div>
+                        </div>
+                        :null
+                    }
+                    {   
+
+                        leaveGroupStatus?
+                        
+                        <div id="leave_group_background" onClick={()=>{setLeaveGroupStatus(false)}}>
+                            <div id="leave_group_bar" onClick={(e)=>{e.stopPropagation()}}>
+                                {
+                                    currentGroupOwner==userId?
+                                    (
+                                    <><p>Tem certeza de que quer sair e deletar o grupo:</p>
+                                        <p>{currentGroupName}</p>
+                                        <p id="delete_group_alert">Após deletar o grupo todos os usuários serão expulsos e nada do grupo será possível recuperar.</p>
+                                        </>
+                                    )
+                                    :
+                                    <>
+                                    <p>Tem certeza de que quer sair do grupo:</p>
+                                    <p>{currentGroupName}</p>
+                                    </>
+                                }
+                                <div>
+                                    <button id="leave_group_sure" onClick={()=>{leaveGroup(userId==currentGroupOwner)}}>
+                                        {
+                                            currentGroupOwner==userId?
+                                            "Sair e deletar"
+                                            :
+                                            "Sair"
+                                        }
+                                    </button>
+                                    <button id="leave_group_cancel" onClick={()=>{setLeaveGroupStatus(false)}}>Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        :null
                     }
                     {
                         reportUserStatus ? (
@@ -680,6 +852,7 @@ export function Groups() {
                             </div>
                         ) : null
                     }
+                    
 
                 </div>)
             }

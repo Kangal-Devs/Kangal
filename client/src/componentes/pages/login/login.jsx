@@ -103,7 +103,7 @@ export function Login() {
                             navigate("/home")
                         }
                     })
-                    .catch((err) => { showAlert(err.response.data) })
+                    .catch((err) => { showAlert(err.response?.data) })
 
             } catch (err) {
                 console.error("Erro ao buscar perfil do Google:", err);

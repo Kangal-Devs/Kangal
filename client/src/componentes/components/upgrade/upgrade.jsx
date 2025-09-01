@@ -84,41 +84,7 @@ return(
                 </div>
             </div>
             
-            <div className="upgrade_item">
-                <h1>Pro+</h1>
-                <div className="upgrade_bar" style={{ backgroundColor:" rgb(162, 201, 57)",border: "2px solid rgb(162, 201, 57)"}}>
-                    <div className="upgrade_bar_top">
-                    <div className="upgrade_bar_top_insignia">
-                    <img src={pro}/>
-                    </div>
-                    <h3>R$120<span>/ano</span></h3>
-                    </div>
-
-                    <div className="upgrade_bar_bottom">
-                        <div>
-                            <h4>Criar até</h4>
-                            <p>15 Grupos</p>
-                        </div>
-                        <div>
-                            <h4>Módulo liberado</h4>
-                            <p>PYTHON</p>
-                        </div>
-                          <div>
-                            <h4>Jogos</h4>
-                            <p>Ilimitados</p>
-                        </div>
-                        <div>
-                            <h4>Insígnia</h4>
-                            <img src={pro}/>
-                        </div>
-                         <div>
-                            <h4>Sugestões</h4>
-                             <p>Liberado</p>
-                        </div>
-                        <button>Inscrever-se</button>
-                    </div>
-                </div>
-            </div>
+           
             <div className="upgrade_item">
                 <h1>Master</h1>
                 <div className="upgrade_bar" style={{ backgroundColor:" rgb(128, 90, 197)",border: "2px solid rgb(128, 90, 197)"}}>

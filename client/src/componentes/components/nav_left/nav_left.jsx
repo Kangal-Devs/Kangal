@@ -58,6 +58,7 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
         setBorders(['transparent','transparent','transparent','#808080ff'])
         break;
         default:
+          setBorders(['transparent','transparent','transparent','transparent'])
         break;
     }
     },[])
@@ -115,12 +116,12 @@ export function NavLeft({ userId, topButtons,updateButton,local,listTitle,reques
   else if(requestType=="groups"){
       axios.post("http://localhost:5000/api/get_all_user_group",{_id:userId})
       .then((res)=>{
-
+        console.log(res)
         Promise.all(res.data.message.map((item)=>{
             return axios.post("http://localhost:5000/api/get_group",{_id:item.group})
           }))
           .then((res2)=>{
-            console.log(res2)
+            console.log("passei aqui")
              setList(res2.map((group,i)=>{return <NavLeftListItem 
               key={i+"G"} 
               title={group.data.message.name}
