@@ -1,6 +1,6 @@
 import "./groups2.css"
 import axios from "axios"
-import { useState, useEffect, useCallback, use, } from "react"
+import { useState, useEffect, useCallback, useRef, } from "react"
 import { TokenInvalid } from "../../components/token_invalid/token_invalid.jsx"
 import { EnhancedNavTop } from "../../components/enhanced_nav_top/enhanced_nav_top.jsx"
 import { Footer } from "../../components/footer/footer.jsx"
@@ -68,8 +68,8 @@ export function Groups() {
 
     const [reportReason, setReportReason] = useState()
 
-    const [leaveGroupStatus,setLeaveGroupStatus] = useState()
-    const [updateGroupStatus,setUpdateGroupStatus] = useState()
+    const [leaveGroupStatus, setLeaveGroupStatus] = useState()
+    const [updateGroupStatus, setUpdateGroupStatus] = useState()
 
     const [userName, setUserName] = useState()
     const [userEmail, setUserEmail] = useState()
@@ -84,14 +84,16 @@ export function Groups() {
 
     const [messages, setMessages] = useState()
 
+
+    const [amIOwner, setAmIOwner] = useState()
+    const [currentGroupOwner, setCurrentGroupOwner] = useState()
+    const [currentGroupMembers, setCurrentGroupMembers] = useState()
+
     const [currentGroupCreatedAt, setCurrentGroupCreatedAt] = useState()
     const [currentGroupName, setCurrentGroupName] = useState()
     const [currentGroupId, setCurrentGroupId] = useState()
     const [currentGroupDescription, setCurrentGroupDescription] = useState()
     const [currentGroupImage, setCurrentGroupImage] = useState()
-    const [amIOwner, setAmIOwner] = useState()
-    const [currentGroupOwner, setCurrentGroupOwner] = useState()
-    const [currentGroupMembers, setCurrentGroupMembers] = useState()
     const [currentGroupTitleLink2, setCurrentGroupTitleLink2] = useState()
     const [currentGroupTitleLink1, setCurrentGroupTitleLink1] = useState()
     const [currentGroupLink2, setCurrentGroupLink2] = useState()
@@ -133,15 +135,39 @@ export function Groups() {
 
     const [updateGroupName, setUpdateGroupName] = useState()
     const [updateGroupDescription, setUpdateGroupDescription] = useState()
+    // updateGroupImage é usado para pegar imagem e carrega-la na tela, enquanto o updateGroupImageFile, ele fica responsável por ficar com as informações da imagem para mandar para o backend.
     const [updateGroupImage, setUpdateGroupImage] = useState()
-    const [updateGroupTitleLink1, setUpdateGroupTitleLink1] = useState()
-    const [updateGroupLink1, setUpdateGroupLink1] = useState()
-    const [updateGroupTitleLink2, setUpdateGroupTitleLink2] = useState()
-    const [updateGroupLink2, setUpdateGroupLink2] = useState()
+    const [updateGroupImageFile, setUpdateGroupImageFile] = useState(null)
+    const [updateGroupTitleLink1, setUpdateGroupTitleLink1] = useState("")
+    const [updateGroupLink1, setUpdateGroupLink1] = useState("")
+    const [updateGroupTitleLink2, setUpdateGroupTitleLink2] = useState("")
+    const [updateGroupLink2, setUpdateGroupLink2] = useState("")
 
-    useEffect(()=>{
+    const updateAlterImageRef = useRef()
+
+    useEffect(() => {
+        console.log(updateGroupTitleLink1)
+    }, [updateGroupTitleLink1])
+
+    useEffect(() => {
+
+        setUpdateGroupDescription(currentGroupDescription)
+        setUpdateGroupName(currentGroupName)
         setUpdateGroupImage(`data:image/png;base64,${currentGroupImage}`)
-    },[currentGroupImage])
+    }, [currentGroupImage, currentGroupDescription, currentGroupName])
+
+    // useEffect(()=>{
+    //     console.log(updateGroupImageFile)
+    // },[updateGroupStatus])
+
+    useEffect(() => {
+        setUpdateGroupLink1(currentGroupLink1)
+        setUpdateGroupTitleLink1(currentGroupTitleLink1)
+
+        setUpdateGroupLink2(currentGroupLink2)
+        setUpdateGroupTitleLink2(currentGroupTitleLink2)
+
+    }, [currentGroupTitleLink1, currentGroupTitleLink2, currentGroupLink1, currentGroupLink2,])
 
     const [countMembers, setCounteMembers] = useState(0)
     useEffect(() => {
@@ -165,17 +191,17 @@ export function Groups() {
 
     }, [])
 
-    const leaveGroup = useCallback((amIOwner)=>{
+    const leaveGroup = useCallback((amIOwner) => {
         axios.delete(`http://localhost:5000/api/delete_user_group/${userId}/${currentGroupId}`)
-        .then((res)=>{
-            
-            localStorage.setItem("currentGroup",null)
-            window.location.reload()
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
-    },[userId,currentGroupId])
+            .then((res) => {
+
+                localStorage.setItem("currentGroup", null)
+                window.location.reload()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [userId, currentGroupId])
 
     const reportUser = useCallback(() => {
         axios.post("http://localhost:5000/api/create_report", {
@@ -217,6 +243,38 @@ export function Groups() {
                 })
         }
     }, [chatColor, inputMessage, currentGroupId])
+
+    const changeGroupImage = useCallback((e) => {
+        const file = e.target.files[0]
+        if (file) {
+            console.log(typeof (file))
+            setUpdateGroupImageFile(file)
+            setUpdateGroupImage(URL.createObjectURL(file))
+        }
+    }, [])
+
+    const updateGroup = useCallback(() => {
+        const formData = new FormData
+
+        formData.append("name", updateGroupName)
+        formData.append("description", updateGroupDescription)
+        formData.append("link1", updateGroupLink1)
+        formData.append("link2", updateGroupLink2)
+        formData.append("titleLink1", updateGroupTitleLink1)
+        formData.append("titleLink2", updateGroupTitleLink2)
+        formData.append("file", updateGroupImageFile)
+
+        console.log(updateGroupTitleLink1)
+
+        axios.put(`http://localhost:5000/api/update_group/${currentGroupId}`, formData)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+
+    }, [updateGroupDescription, updateGroupImage, updateGroupLink1, updateGroupLink2, updateGroupName, updateGroupTitleLink1, updateGroupTitleLink2, updateGroupImageFile, currentGroupId])
 
     const createGroup = useCallback(() => {
         if (createGroupName.length >= 3 && createGroupDescription.length >= 3) {
@@ -711,18 +769,18 @@ export function Groups() {
                                                     }
                                                 </div>
                                             </div>
-                                            <p id="about_group_created_at">Criado: {currentGroupCreatedAt.split("-")[0]+"/"+
-                                                currentGroupCreatedAt.split("-")[1]+"/"+
-                                                currentGroupCreatedAt.split("-")[2].slice(0,2)
-                                                }</p>
+                                            <p id="about_group_created_at">Criado: {currentGroupCreatedAt.split("-")[0] + "/" +
+                                                currentGroupCreatedAt.split("-")[1] + "/" +
+                                                currentGroupCreatedAt.split("-")[2].slice(0, 2)
+                                            }</p>
                                             <div id="about_group_count_member">
                                                 <img src={member_icon} />
                                                 <p>Membros: {countMembers}</p>
                                             </div>
                                             {currentGroupOwner == userId ?
-                                                <button id="edit_group_button"onClick={()=>{setUpdateGroupStatus(true)}}>Configurações</button>
+                                                <button id="edit_group_button" onClick={() => { setUpdateGroupStatus(true) }}>Configurações</button>
                                                 :
-                                                <button id="leave_group_button" onClick={()=>{setLeaveGroupStatus(true)}}>Sair</button>
+                                                <button id="leave_group_button" onClick={() => { setLeaveGroupStatus(true) }}>Sair</button>
                                             }
                                         </div>
                                     </div>
@@ -732,8 +790,20 @@ export function Groups() {
                                             &&
                                             (currentGroupLink2 == "" || currentGroupLink2 == " ")
                                         ) ?
-                                            (<div id="">
-                                          
+                                            (<div id="link_part">
+                                                {
+                                                    !((currentGroupLink1 == "" || currentGroupLink1 == " ")) ?
+                                                        (<p>{currentGroupTitleLink1}: <span onClick={()=>{ window.location.href = currentGroupLink1}}>{currentGroupLink1}</span></p>)
+                                                        : null
+
+
+                                                }
+
+                                                {
+                                                    !((currentGroupLink2 == "" || currentGroupLink2 == " ")) ?
+                                                        (<p>{currentGroupTitleLink2}: <span onClick={()=>{ window.location.href = currentGroupLink2}}>{currentGroupLink2}</span></p>)
+                                                        : null
+                                                }
                                             </div>) :
                                             <div id="about_group_no_link">
                                                 Este grupo não possui nenhum link
@@ -746,75 +816,82 @@ export function Groups() {
                         ) : null
                     }
                     {
-                        updateGroupStatus?
-                        <div id="update_group_background" onClick={()=>{setUpdateGroupStatus(false)}}>
-                        <div id="update_group_bar" onClick={(e)=>{e.stopPropagation()}}>
-                        <div id="update_group_exit_part">
-                            <button id="update_group_leave" onClick={()=>{setLeaveGroupStatus(true)}}>Sair e deletar</button>
-                            <button id="update_group_exit" onClick={()=>{setUpdateGroupStatus(false)}}>X</button>
-                        </div>
-                        <div id="update_group_left">
-                            <h1>Configurar grupo</h1>
-                            <div id="update_group_image_part">
-                                <div>
-                                    <img src={updateGroupImage}/>
-                                </div>
-                                <button>Alterar</button>
-                            </div>
-                            
-                        </div>
-                        <div id="update_group_right"></div>
-                        <div id="update_group_bottom">
-                            <p>Título</p>
-                            <p>Link</p>
-                            <input placeholder="YouTube"></input>
-                            <input placeholder="https://www.youtube.com/..."></input>
-                            <input placeholder="Github"></input>
-                            <input placeholder="https://github.com/googleapis/..."></input>
-                        </div>
-                        <div id="update_group_apply_part">
-                            <button>Cancelar</button>
-                            <button>Aplicar</button>
-                        </div>
-                        </div>
-                        </div>
-                        :null
-                    }
-                    {   
+                        updateGroupStatus ?
+                            <div id="update_group_background" onClick={() => { setUpdateGroupStatus(false) }}>
+                                <div id="update_group_bar" onClick={(e) => { e.stopPropagation() }}>
+                                    <div id="update_group_exit_part">
+                                        <button id="update_group_leave" onClick={() => { setLeaveGroupStatus(true) }}>Sair e deletar</button>
+                                        <button id="update_group_exit" onClick={() => { setUpdateGroupStatus(false) }}>X</button>
+                                    </div>
+                                    <div id="update_group_left">
+                                        <h1>Configurar grupo</h1>
+                                        <div id="update_group_image_part">
+                                            <div>
+                                                <img src={updateGroupImage} />
+                                            </div>
+                                            <button onClick={() => { updateAlterImageRef.current.click() }}>Alterar</button>
+                                            <input type="file" style={{ display: "none" }} ref={updateAlterImageRef} onChange={(e) => { changeGroupImage(e) }} />
+                                        </div>
 
-                        leaveGroupStatus?
-                        
-                        <div id="leave_group_background" onClick={()=>{setLeaveGroupStatus(false)}}>
-                            <div id="leave_group_bar" onClick={(e)=>{e.stopPropagation()}}>
-                                {
-                                    currentGroupOwner==userId?
-                                    (
-                                    <><p>Tem certeza de que quer sair e deletar o grupo:</p>
-                                        <p>{currentGroupName}</p>
-                                        <p id="delete_group_alert">Após deletar o grupo todos os usuários serão expulsos e nada do grupo será possível recuperar.</p>
-                                        </>
-                                    )
-                                    :
-                                    <>
-                                    <p>Tem certeza de que quer sair do grupo:</p>
-                                    <p>{currentGroupName}</p>
-                                    </>
-                                }
-                                <div>
-                                    <button id="leave_group_sure" onClick={()=>{leaveGroup(userId==currentGroupOwner)}}>
-                                        {
-                                            currentGroupOwner==userId?
-                                            "Sair e deletar"
-                                            :
-                                            "Sair"
-                                        }
-                                    </button>
-                                    <button id="leave_group_cancel" onClick={()=>{setLeaveGroupStatus(false)}}>Cancelar</button>
+                                    </div>
+                                    <div id="update_group_right">
+                                        <label>Nome</label>
+                                        <input type="text" value={updateGroupName} onChange={(e) => { setUpdateGroupName(e.target.value) }} />
+
+                                        <label>Descrição</label>
+                                        <textarea value={updateGroupDescription} onChange={(e) => { setUpdateGroupDescription(e.target.value) }} />
+                                    </div>
+                                    <div id="update_group_bottom">
+                                        <p>Título</p>
+                                        <p>Link</p>
+                                        <input placeholder="YouTube" value={updateGroupTitleLink1} onChange={(e) => { setUpdateGroupTitleLink1(e.target.value) }} />
+                                        <input placeholder="https://www.youtube.com/..." value={updateGroupLink1} onChange={(e) => { setUpdateGroupLink1(e.target.value) }} />
+                                        <input placeholder="Github" value={updateGroupTitleLink2} onChange={(e) => { setUpdateGroupTitleLink2(e.target.value) }} />
+                                        <input placeholder="https://github.com/googleapis/..." value={updateGroupLink2} onChange={(e) => { setUpdateGroupLink2(e.target.value) }} />
+                                    </div>
+                                    <div id="update_group_apply_part">
+                                        <button>Cancelar</button>
+                                        <button onClick={() => { updateGroup() }}>Aplicar</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        :null
+                            : null
+                    }
+                    {
+
+                        leaveGroupStatus ?
+
+                            <div id="leave_group_background" onClick={() => { setLeaveGroupStatus(false) }}>
+                                <div id="leave_group_bar" onClick={(e) => { e.stopPropagation() }}>
+                                    {
+                                        currentGroupOwner == userId ?
+                                            (
+                                                <><p>Tem certeza de que quer sair e deletar o grupo:</p>
+                                                    <p>{currentGroupName}</p>
+                                                    <p id="delete_group_alert">Após deletar o grupo todos os usuários serão expulsos e nada do grupo será possível recuperar.</p>
+                                                </>
+                                            )
+                                            :
+                                            <>
+                                                <p>Tem certeza de que quer sair do grupo:</p>
+                                                <p>{currentGroupName}</p>
+                                            </>
+                                    }
+                                    <div>
+                                        <button id="leave_group_sure" onClick={() => { leaveGroup(userId == currentGroupOwner) }}>
+                                            {
+                                                currentGroupOwner == userId ?
+                                                    "Sair e deletar"
+                                                    :
+                                                    "Sair"
+                                            }
+                                        </button>
+                                        <button id="leave_group_cancel" onClick={() => { setLeaveGroupStatus(false) }}>Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            : null
                     }
                     {
                         reportUserStatus ? (
@@ -852,7 +929,7 @@ export function Groups() {
                             </div>
                         ) : null
                     }
-                    
+
 
                 </div>)
             }

@@ -217,6 +217,7 @@ exports.clear_cookie = (req, res) => {
 exports.user_update = async (req, res) => {
     try {
         const image = req?.file?.buffer
+        console.log(typeof(image))
         const { email, password, gender, github } = req.body
         let { _id } = req.params;
         const date = new Date(req.body.date)
@@ -228,7 +229,7 @@ exports.user_update = async (req, res) => {
         if (image) {
 
             var user = await userModel.findByIdAndUpdate(_id, { email, password, gender, github, date, image }, { new: true, runValidators: true })
-
+            
         }
         else {
             var user = await userModel.findByIdAndUpdate(_id, { email, password, gender, github, date }, { runValidators: true, new: true })

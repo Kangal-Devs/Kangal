@@ -31,6 +31,7 @@ const groupSchema = mongoose.Schema({
         required: [true, "groupErrorType7"]
     },
     link1: {
+        
         type: String,
         required: [true, "groupErrorType8"]
     },

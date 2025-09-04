@@ -279,7 +279,7 @@ export function Home() {
                                         </div>
                                         </div>
                                         <div id="about_info">
-                                            <div id="about_info_left">
+                                            <div id="about_info_left" onClick={()=>{navigate("/campaign")}}>
                                                 <h2>Continue o modo campanha</h2>
                                                  <p>Ganhe {xpNeeded}xp para chegar ao level {level+1}</p>
                                             </div>

@@ -50,8 +50,8 @@ exports.get_group = async (req,res)=>{
                 description:group.description,
                 owner:group.owner,
                 name:group.name,
-                textLink1:group.textLink1,
-                textLink2:group.textLink2,
+                titleLink1:group.titleLink1,
+                titleLink2:group.titleLink2,
                 link2:group.link2,
                 link1:group.link1,
                 createdAt:group.createdAt,
@@ -78,3 +78,27 @@ module.exports.get_count_owner_group = async (req,res)=>{
     }
 }
 
+module.exports.update_group = async(req,res)=>{
+    try{
+        const {groupId} = req.params
+
+        const image = req?.file?.buffer
+
+        const {link1,link2,titleLink1,titleLink2,name,description} = req.body
+
+        if((link1=="" && titleLink1!="")||(link1!="" && titleLink1=="")||(link2=="" && titleLink2!="")||(link2!="" && titleLink2=="")){
+            res.status(500).json({message:"campo link esta faltando"})
+        }
+
+        if(image){
+            const group = await groupModel.findByIdAndUpdate(groupId,{link1,link2,titleLink1,titleLink2,name,description,image}, { runValidators: true})
+        }
+        else{
+           const group = await groupModel.findByIdAndUpdate(groupId,{link1,link2,titleLink1,titleLink2,name,description}, { runValidators: true}) 
+        }
+        res.status(200).json({message:"atualizado"})
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    }
+}
