@@ -80,7 +80,15 @@
     align-items: end;
 }
 #about_me_top_right p{
+    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
     margin-top: 10px;
+    width: 100%;
+}
+#about_me_xp{
+    margin-right: 15px;
+    color: #3f3f3f;
 }
 #about_me_top_left img{
     height: 100%;

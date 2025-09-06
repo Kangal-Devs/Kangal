@@ -272,10 +272,15 @@ export function Home() {
                                         </div>
                                         <div id="about_me_top_right">
                                                 <h1 id="about_me_name">{userName}</h1>
-                                                <p>Level:{level}</p>
+                                                <p>
+                                                    <span>Level: {level}</span>
+                                                    <span id="about_me_xp">XP: {userXp}</span>
+                                                </p>
+                                                
                                                 <div id="level_part">
                                                     <div style={{width:levelWidth+"%"}}></div>
                                                 </div>
+                                                
                                         </div>
                                         </div>
                                         <div id="about_info">

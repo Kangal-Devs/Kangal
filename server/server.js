@@ -5,6 +5,9 @@ const cookieParser = require("cookie-parser")
 const app = express()
 
 //ROTAS V
+
+
+
 const solicitationRoutes = require("./routes/solicitationRoutes.js")
 const collectionRoutes = require("./routes/collectionRoutes.js")
 const complaintRoutes = require("./routes/complaintRoutes.js")
@@ -18,6 +21,7 @@ const reportRoutes = require("./routes/reportRoutes.js")
 const subjectRoutes = require("./routes/subjectRoutes.js")
 const documentRoutes = require("./routes/documentRoutes.js")
 const userGroupRoutes = require("./routes/userGroupRoutes.js")
+const commonTaskRoutes = require("./routes/commonTaskRoutes.js")
 const commonLessonRoutes = require("./routes/commonLessonRoutes.js")
 const userCommonLessonRoutes = require("./routes/userCommonLessonRoutes.js")
 require('dotenv').config();
@@ -37,9 +41,11 @@ mongoose.connect(process.env.MONGODB_URI)
     console.log(err)
 })
 
+
 app.use('/api',userCommonLessonRoutes.router)
 app.use('/api',commonLessonRoutes.router)
 app.use('/api',collectionRoutes.router)
+app.use('/api',commonTaskRoutes.router)
 app.use('/api',documentRoutes.router)
 app.use('/api',messageRoutes.router)
 app.use('/api',moduleRoutes.router)
