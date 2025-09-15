@@ -21,8 +21,7 @@ color: white;
     flex-direction: column;
     display: flex;
     align-items: center;
-    justify-content: start;
-     background-color: rgba(20, 20, 20, 0.637);
+    justify-content: center;
     top:0;
     position: fixed;
     width:100vw;
@@ -64,27 +63,28 @@ overflow: hidden;
 }
 
 #bar_update{
-
+    box-shadow: 0px 0px 10px rgb(26, 26, 26);
     /* max-height: 800px; */
     max-width: 1000px;
     width:70vw;
-    background:linear-gradient(30deg, rgb(48, 48, 48),rgb(31, 31, 31));
+    background:rgb(37, 37, 37);
     gap:1px;
     padding-inline: 15px;
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 9fr 1fr;
+    border-radius: 0px 0px 10px 10px;
 }
 #bar_decoration_update{
-    margin-top :50px;;
+   
     max-width: 1000px;
     display: flex;
     justify-content: end;
-    padding:15px;
+    padding:10px 15px 10px 15px;
     width:70vw;
     border-radius:10px 10px 00px 0px;
-    background-color: #AACE1C;
+    background-color: #1b1b1b;
 }
 #bar_decoration_update button{
     cursor: pointer;
@@ -119,21 +119,32 @@ column-gap: 20px;
 }
 #bar_update_part_bottom button{
     cursor: pointer;
-    padding:8px;
-    font-size:20px;
+    padding:10px;
+    font-size:15px;
     background-color: transparent;
-    font-family: Silkscreen;
-    color:rgb(230, 230, 230);
+    font-family: Signika Negative;
+    transition: all 0.17s ease-in-out;
 }
-#bar_update_part_bottom button:hover{
-   color:white;
-}
+
 #btn_cancel{
-    border:transparent;
+    color: rgb(207, 207, 207);
+    border:1px solid;
+    border-radius: 10px;
+}
+#btn_cancel:hover{
+     background-color:rgb(209, 209, 209);
+    color: #1b1b1b;
+    font-weight: 500;
 }
 #btn_apply{
-    border:2px solid rgb(230, 230, 230);
+    color: rgb(0, 217, 255);
+    border:1px solid;
     border-radius: 10px;
+}
+#btn_apply:hover{
+    background-color:rgb(0, 191, 224);
+    color: #1b1b1b;
+    font-weight: 500;
 }
 #bar_update_part_title{
     margin-top: 10px;
@@ -245,6 +256,7 @@ box-shadow: 0px 0px 5px black;
 }
 
 #enhanced_nav_top_principal{
+
     display: flex;
    height:100%;
    justify-content: space-between;
@@ -282,11 +294,12 @@ box-shadow: 0px 0px 5px black;
 #left_part{
     margin-left: 30px;
     column-gap: 20px;
- 
+
     align-items: center;
     justify-content: space-between;
     display: flex;
-    width: 30%;
+    width: auto;
+    min-width: 20%;
     height:100%;
 
 }
@@ -340,6 +353,7 @@ min-height: 30px;
     text-shadow: 0px 0px 5px rgba(255, 250, 250, 0.692);
 }
 .nav_top_icons{
+
     cursor: pointer;
     transition: all 0.09s ease-in-out;
 }

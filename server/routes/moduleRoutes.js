@@ -4,6 +4,7 @@ const router = express.Router()
 const upload = require("../middleware/upload.js").upload
 
 router.post("/create_module",moduleController.create_module)
+router.get("/get_module/:module_id",moduleController.get_module)
 router.get("/get_all_modules",moduleController.get_all_modules)
 
 module.exports.router = router

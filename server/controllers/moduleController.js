@@ -32,3 +32,17 @@ module.exports.get_all_modules = async(req,res)=>{
         res.status(500).json({message:err.message})
     }
 }
+module.exports.get_module = async(req,res)=>{
+     try{
+
+        const {module_id:moduleId} = req.params
+
+        const module = await moduleModel.findOne({_id:moduleId})
+       
+
+        res.status(200).json({message:module})
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    }
+}

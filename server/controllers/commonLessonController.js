@@ -8,7 +8,7 @@ module.exports.create_common_lesson = async(req,res)=>{
          
         
         
-        const module1 = await moduleModel.findOne({name:"JavaScript"})
+        const module1 = await moduleModel.findOne({name:"HTML"})
 
         const folder = path.join(__dirname,"..","assets","CommonLessons")
 
@@ -31,7 +31,7 @@ module.exports.create_common_lesson = async(req,res)=>{
 
         const images2White = imagesWhite.map((image)=>{return fs.readFileSync(path.join(__dirname,"..","assets","CommonLessons",image))})
 
-        const commonLesson = await commonLessonModel.create({name:name,introduction:introduction,color:color,points:points,image:images2Cyan[2],module:module1._id})
+        const commonLesson = await commonLessonModel.create({name:name,introduction:introduction,color:color,points:points,image:images2Purple[5],module:module1._id})
 
 
         res.status(200).json({message:"Criado: "+name})

@@ -7,120 +7,77 @@ export function Upgrade({exitFunction}){
 
 
 return(
-    <div id="upgrade">
-        <button id="upgrade_exit_button" onClick={()=>{exitFunction('upgrade_background_inactive')}}>
-            X
-        </button>
-
-        <div id="upgrade_list">
-            <div className="upgrade_item">
-                <h1>Básico</h1>
-                <div className="upgrade_bar" style={{ backgroundColor:" rgba(255, 255, 255, 0.12)",border: "2px solid rgba(255, 255, 255, 0.12)"}}>
-                    <div className="upgrade_bar_top">
-                    <div className="upgrade_bar_top_insignia">
-                  
-                    </div>
-                    <h3>Grátis</h3>
-                    </div>
-
-                    <div className="upgrade_bar_bottom">
-                        <div>
-                            <h4>Criar até</h4>
-                            <p>5 Grupos</p>
-                        </div>
-                        <div>
-                            <h4>Módulo liberado</h4>
-                            <p>Sem</p>
-                        </div>
-                          <div>
-                            <h4>Jogos</h4>
-                            <p>Limitados</p>
-                        </div>
-                        <div>
-                            <h4>Insígnia</h4>
-                            <p>Sem</p>
-                        </div>
-                         <div>
-                            <h4>Sugestões</h4>
-                             <p>Bloqueada</p>
-                        </div>
-                        
-                    </div>
-                </div>
+ <div id="upgrade" onClick={()=>{exitFunction("upgrade_background_inactive")}}>
+    <div id="upgrade_principal" onClick={(e)=>{e.stopPropagation()}}>
+            <div id="upgrade_about">
+                
+                <div><h1>Planos</h1><button onClick={()=>{exitFunction("upgrade_background_inactive")}}>X</button></div>
+                <p>Conheça os benefícios dos nossos planos </p>
             </div>
-            <div className="upgrade_item">
-                <h1>Pro</h1>
-                <div className="upgrade_bar" style={{ backgroundColor:" rgb(207, 207, 207)",border: "2px solid rgb(207, 207, 207)"}}>
-                    <div className="upgrade_bar_top">
-                    <div className="upgrade_bar_top_insignia">
-                    <img src={pro}/>
+             <div id="upgrade_list">
+                <div className="upgrade_item_background">
+                    <div className="upgrade_item_bar">
+                            <div className="upgrade_item_bar_top">
+                                <h4>Básico</h4>
+                                <h3>Grátis</h3>
+                            </div>
+                            <div className="upgrade_item_bar_bottom">
+                                    <ul>
+                                            <li>Criar até <span>5 Grupos</span></li>
+                                            <li>Módulo liberado <span>Sem</span></li>
+                                            <li>Jogos <span>Limitados</span></li>
+                                            <li>Insígnia <span>Sem</span></li>
+                                            <li>Sugestões<span>Bloqueada</span></li>
+                                        </ul>
+                            </div>
                     </div>
-                    <h3>R$15<span>/mês</span></h3>
-                    </div>
-
-                    <div className="upgrade_bar_bottom">
-                        <div>
-                            <h4>Criar até</h4>
-                            <p>15 Grupos</p>
-                        </div>
-                        <div>
-                            <h4>Módulo liberado</h4>
-                            <p>PYTHON</p>
-                        </div>
-                          <div>
-                            <h4>Jogos</h4>
-                            <p>Ilimitados</p>
-                        </div>
-                        <div>
-                            <h4>Insígnia</h4>
-                            <img src={pro}/>
-                        </div>
-                         <div>
-                            <h4>Sugestões</h4>
-                             <p>Liberado</p>
-                        </div>
-                        <button>Inscrever-se</button>
-                    </div>
+                    
                 </div>
-            </div>
-            
-           
-            <div className="upgrade_item">
-                <h1>Master</h1>
-                <div className="upgrade_bar" style={{ backgroundColor:" rgb(128, 90, 197)",border: "2px solid rgb(128, 90, 197)"}}>
-                    <div className="upgrade_bar_top">
-                    <div className="upgrade_bar_top_insignia">
-                    <img src={pro}/>
+                <div className="upgrade_item_background">
+                    <div className="upgrade_item_bar_main">
+                        <p>Mais popular</p>
+                            <div className="upgrade_item_bar_top">
+                                 <div className="insignia_part"><img src={pro}/></div>
+                                <h4>Pro</h4>
+                                <h3>R$15<span>/mês</span></h3>
+                            </div>
+                            <div className="upgrade_item_bar_bottom">
+                                    <ul>
+                                            <li>Criar até <span>15 Grupos</span></li>
+                                            <li>Módulo liberado <span>Python</span></li>
+                                               <li>Jogos<span>Ilimitados</span></li>
+                                            <li>Insígnia <span>Pro</span></li>
+                                            <li>Segestões <span>Liberada</span></li>
+                                           
+                                        </ul>
+                                        <button>Inscreva-se</button>
+                            </div>
                     </div>
-                    <h3>R$30<span>/mês</span></h3>
-                    </div>
-
-                    <div className="upgrade_bar_bottom">
-                        <div>
-                            <h4>Criar até</h4>
-                            <p>40 Grupos</p>
-                        </div>
-                        <div>
-                            <h4>Módulo liberado</h4>
-                            <p>TODOS</p>
-                        </div>
-                          <div>
-                            <h4>Jogos</h4>
-                            <p>Ilimitados</p>
-                        </div>
-                        <div>
-                            <h4>Insígnia</h4>
-                            <img src={master}/>
-                        </div>
-                         <div>
-                            <h4>Sugestões</h4>
-                             <p>Liberado</p>
-                        </div>
-                        <button>Inscrever-se</button>
-                    </div>
+                    
                 </div>
-            </div>
-        </div>
+                <div className="upgrade_item_background">
+                    <div className="upgrade_item_bar">
+                            <div className="upgrade_item_bar_top">
+                                <div className="insignia_part"><img src={master}/></div>
+                                <h4>Master</h4>
+                               
+                                <h3>R$30<span>/mês</span></h3>
+                            </div>
+                            <div className="upgrade_item_bar_bottom">
+                                    <ul>
+                                            <li>Criar até <span>40 Grupos</span></li>
+                                            <li>Módulo liberado <span>Todos</span></li>
+                                             <li>Jogos<span>Ilimitados</span></li>
+                                            <li>Insígnia <span>Master</span></li>
+                                            <li>Sugestões<span>Liberada</span></li>
+                                        </ul>
+                                        <button>Inscreva-se</button>
+                            </div>
+                    </div>
+                    
+                </div>
+                
+             </div>
     </div>
-)
-}
+ </div>   
+)}

@@ -34,11 +34,20 @@
   display: grid;
   grid-template-columns: 0.8fr 1fr 1fr;
 }
+#introduction_part h1{
+  color: rgb(185, 185, 185);
+  font-family: Signika Negative;
+  font-weight: 500;
+}
+#introduction_part h1:hover{
+  color: rgb(219, 219, 219);
+}
 #introduction_part{
+
   padding: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 #introduction_part button{
@@ -67,6 +76,12 @@
   font-family: Signika Negative;
 }
 #introduction_part div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#introduction_part div div{
+   align-items: start;
   border: 2px solid rgba(255, 255, 255, 0.322);
 
   padding: 13px;
@@ -85,7 +100,7 @@
   min-height: 0;
   height: 100%;
   width: 100%;
-
+  
 }
 #ad_part{
   display: flex;

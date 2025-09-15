@@ -19,7 +19,12 @@
     
 }
 .common_lesson{
-    filter: hue-rotate(20deg) opacity(0.8);
+    filter: hue-rotate(20deg) opacity(0.8) saturate(1.4);
+}
+
+.common_lesson:hover{
+    filter: hue-rotate(20deg) opacity(1) saturate(1.4);
+    background-color: rgba(0, 0, 0, 0.199);
 }
 
 .common_lesson img{

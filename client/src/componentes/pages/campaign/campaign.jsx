@@ -30,7 +30,7 @@ export function Campaign(){
     const [tokenError, setTokenError] = useState("")
 
     const [currentModuleId,setCurrentModuleId] = useState()
-
+    const [currentModuleName,setCurrentModuleName] = useState()
     
 
 
@@ -45,8 +45,11 @@ export function Campaign(){
     },[])
 
     const [ad,setAd] = useState()
+
     useEffect(()=>{
         if(currentModuleId){
+
+        setCurrentCommonLessonId(null)
         if((Math.random()*10) >5){
             setAd(ad1)
         }
@@ -60,7 +63,7 @@ export function Campaign(){
         .then((res)=>{
       
             setLessons(res.data.message.map((common_lesson,i)=>{
-                if(i<8){
+                if(i<30){
                 return <CommonLesson 
                 funcAlter={[setCurrentCommonLessonId]}
                 itemId={common_lesson._id}
@@ -87,6 +90,23 @@ export function Campaign(){
         }
     }
     },[currentModuleId])
+
+    useEffect(()=>{
+        if(currentModuleId){
+            axios.get(`http://localhost:5000/api/get_module/${currentModuleId}`)
+            .then((res)=>{
+                console.log(res)
+                setCurrentModuleName(res.data.message.name)
+            })
+            .catch((err)=>{console.log(err)})
+        }
+    },[currentModuleId ])
+
+    useEffect(()=>{
+        if(currentModuleName){
+            console.log(currentModuleName)
+        }
+    },[currentModuleName])
     useEffect(() => {
         axios.post("http://localhost:5000/api/authorization", {}, { withCredentials: true })
             .then((res) => {
@@ -160,18 +180,21 @@ export function Campaign(){
                             </div>)
                             :
                             (<div id="campaign_content_principal">
-                                {
-                                    currentCommonLessonId?
+                                
+                                    
                                     <div id="introduction_part">
+                                        <h1>{currentModuleName}</h1>
+                                        {currentCommonLessonId?<div>
                                         <div>
                                             <h2>Introdução</h2>
                                             <p>{currentCommonLessonIntroduction}</p>
                                         </div>
                                         <button>Começar</button>
+                                       
+                                            </div>:<div></div>}
+                                            <div></div>
                                     </div>
-                                    :
-                                    <div></div>
-                                }
+                                
                                 <div id="lessons_part" onClick={()=>{
                                     setCurrentCommonLessonId(null)
                                 }}>

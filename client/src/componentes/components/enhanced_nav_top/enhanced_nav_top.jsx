@@ -189,15 +189,15 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
             <div id="enhanced_nav_top_principal">
                 <div id="left_part">
 
-              
+              {home == true ?
+                    <img src={home_img} onClick={() => { navigate("/home") }} className="nav_top_icons" id="home_part" />
+                    : ""
+                }
                     <div id="page_part">
                         <img src={sign_img} />
                         <p>{page}</p>
                     </div>
-                    {home == true ?
-                    <img src={home_img} onClick={() => { navigate("/home") }} className="nav_top_icons" id="home_part" />
-                    : ""
-                }
+                    
                       </div>
                       <div id="right_part">
                         <div id="nav_top_icon_buttons">
@@ -229,8 +229,8 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
             {/* ------------------------------------------------------------------------- */}
             {/* ------------------------------------------------------------------------- */}
 
-            <div id={backgroundUpdate}  >
-                <div id="bar_decoration_update">
+            <div id={backgroundUpdate} onClick={()=>{setBackgroundUpdate("background_update_inactive")}} >
+                <div id="bar_decoration_update" onClick={(e)=>{e.stopPropagation()}}>
                     <button onClick={() => { resetUpdate() }}>X</button>
                 </div>
                 <div id="bar_update" onClick={(e) => { e.stopPropagation() }}>

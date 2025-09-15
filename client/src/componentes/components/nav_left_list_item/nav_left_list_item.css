@@ -13,7 +13,10 @@
     height:100%;
     width:4px;
     border-radius:2px;
-    
+    background-color: rgb(12, 12, 12);
+}
+.nav_left_list_item_principal:hover{
+    background-color: rgba(0, 0, 0, 0.301);
 }
 .nav_left_list_item_principal{
     cursor: pointer;
@@ -42,9 +45,20 @@ font-size: 20px;
  place-self: center;
 }
 .nav_left_list_item_principal img{
-     place-self: center;
+     
+}
+.nav_left_list_item_image_part{
+    place-self: center;
     height:50px;
+    width:50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     aspect-ratio: 1/1;
     border-radius: 20%;
-    background-color: rgba(0, 0, 0, 0.185);
+    background-color: rgba(0, 0, 0, 0.329);
+    overflow: hidden;
+}
+.nav_left_list_item_image_part img{
+    height: 100%;
 }

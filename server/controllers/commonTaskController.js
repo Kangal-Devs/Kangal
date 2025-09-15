@@ -1,9 +1,13 @@
 const {commonTaskModel} = require("../models/commonTaskModel.js")
+const {commonLessonModel} = require("../models/commonLessonModel.js")
 
 module.exports.create_common_task = async (req,res)=>{
     try{
+
+        const commonLesson = await commonLessonModel.findOne({name:"O que é JavaScript?"})
+
         const {
-            commonLessonId,
+            // commonLessonId,
             type,
             text1,
             text2,
@@ -17,7 +21,7 @@ module.exports.create_common_task = async (req,res)=>{
             possibleAnswers,
         correctAnswers,
         code,
-        commonLesson:commonLessonId})
+        commonLesson:commonLesson._id})
 
         res.status(200).json({message:"exercicio criado"})
     }

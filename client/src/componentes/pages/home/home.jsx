@@ -125,10 +125,12 @@ export function Home() {
         generateLevelTable().forEach((item,i) => {
             if (userXp >= item.xpMin && userXp <= item.xpMax) {
                 setLevel(item.level)
-                console.log("passar de level: "+item.xpMax)
                 console.log("seu xp: "+userXp)
-                if((userXp-item.xpMin/item.xpMax-item.xpMin)>=0){
-                setLevelWidth((userXp-item.xpMin/item.xpMax-item.xpMin))
+                console.log("minXpLevel:"+item.xpMin)
+                console.log("maxXpLevel:"+item.xpMax)
+                // console.log("seu xp no intervalo:"+ userXp-item.xpMin)
+                if(((userXp-item.xpMin)/(item.xpMax-item.xpMin))>=0){
+                setLevelWidth(((userXp-item.xpMin)/(item.xpMax-item.xpMin))*100)
                 }
                 else{
                     setLevelWidth(0)

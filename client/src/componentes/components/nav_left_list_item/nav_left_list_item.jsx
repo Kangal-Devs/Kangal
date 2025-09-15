@@ -49,7 +49,10 @@ export function NavLeftListItem({ userId, image, title, itemId, requestLocal, va
         }}>
             <div className="nav_left_list_item_decoration"></div>
             <div className="nav_left_list_item_principal">
-                <img src={`data:image/png;base64,${image}`} />
+                <div className="nav_left_list_item_image_part">
+                          <img src={`data:image/png;base64,${image}`} />
+                </div>
+          
                 <p>{title.length >= 10 ? title.slice(0, 10) + "..." : title}</p>
 
             </div>
