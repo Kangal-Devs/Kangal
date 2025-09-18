@@ -13,7 +13,7 @@ const userNotificationSchema = mongoose.Schema({
     },
      isRead:{
         type:Boolean,
-        required:[true,"notificationError4"]
+        required:[true,"userNotificationError3"]
     }
 },
 {
