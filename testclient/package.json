@@ -5,6 +5,7 @@
 ,
  "type":"commonjs"
   ,"scripts": {
-      "create":"node create_lesson.js"
+      "lesson":"node create_lesson.js",
+      "task":"node create_task.js"
   }
 }

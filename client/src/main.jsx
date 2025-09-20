@@ -6,6 +6,7 @@ import { PingPong } from './componentes/pages/all_games/ping_pong/ping_pong.jsx'
 import {TicTacToe} from './componentes/pages/all_games/tic_tac_toe/tic_tac_toe.jsx'
 import { MemoryGame } from './componentes/pages/all_games/memory_game/memory_game.jsx'
 
+import { Task } from './componentes/pages/task/task.jsx'
 import { Campaign } from './componentes/pages/campaign/campaign.jsx'
 import { Groups } from './componentes/pages/groups/groups2.jsx'
 import { Games } from './componentes/pages/games/games.jsx'
@@ -29,6 +30,10 @@ const route = createBrowserRouter([{
 {
   path:"/login",
   element:<Login/>
+},
+{
+ path:"/task",
+  element:<Task/>
 },
 {
   path:"/home",

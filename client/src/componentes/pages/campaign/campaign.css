@@ -51,6 +51,9 @@
   align-items: center;
 }
 #introduction_part button{
+  display: flex;
+  justify-content:center;
+  column-gap: 8px;
   padding:10px 10px 10px 10px;
   font-size: 15px;
   width: 70%;

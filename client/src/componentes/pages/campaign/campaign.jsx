@@ -31,12 +31,16 @@ export function Campaign(){
 
     const [currentModuleId,setCurrentModuleId] = useState()
     const [currentModuleName,setCurrentModuleName] = useState()
-    
 
 
-    
+    const [currentCommonLessonPoints,setCurrentCommonLessonPoints] = useState()
     const [currentCommonLessonId,setCurrentCommonLessonId] = useState()
     const [currentCommonLessonIntroduction,setCurrentCommonLessonIntroduction] = useState()
+
+    const startingLesson = useCallback(()=>{
+        localStorage.setItem("currentCommonLesson",JSON.stringify(currentCommonLessonId))
+        navigate("/task")
+    },[currentCommonLessonId])
 
     useEffect(()=>{
         if(localStorage.getItem("currentModule")){
@@ -108,6 +112,7 @@ export function Campaign(){
         }
     },[currentModuleName])
     useEffect(() => {
+        localStorage.removeItem("currentCommonLesson")
         axios.post("http://localhost:5000/api/authorization", {}, { withCredentials: true })
             .then((res) => {
 
@@ -136,6 +141,7 @@ export function Campaign(){
             axios.post("http://localhost:5000/api/get_common_lesson",{commonLesson:currentCommonLessonId})
             .then((res)=>{
                 setCurrentCommonLessonIntroduction(res.data.message.introduction)
+                setCurrentCommonLessonPoints(res.data.message.points)
             })
             .catch((err)=>{console.log(err)})
         }
@@ -189,7 +195,7 @@ export function Campaign(){
                                             <h2>Introdução</h2>
                                             <p>{currentCommonLessonIntroduction}</p>
                                         </div>
-                                        <button>Começar</button>
+                                        <button onClick={()=>{startingLesson()}}>Começar <span>+{currentCommonLessonPoints}XP</span></button>
                                        
                                             </div>:<div></div>}
                                             <div></div>

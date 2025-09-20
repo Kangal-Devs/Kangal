@@ -1,0 +1,38 @@
+#task_principal {
+  display: grid;
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 1fr;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: rgb(34, 34, 34);
+}
+
+#task_content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#task_content div{
+  padding: 40px;;
+  min-height: 80%;
+   width: 50%;
+   max-width: 800px;
+  background-color: rgb(22, 22, 22);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: start;
+}
+#task_content div img{
+  margin-left: 100px;
+  width: 70%;
+  max-width: 400px;
+}
+#task_content div h1{
+  font-family: Signika Negative;
+  color: rgba(255, 255, 255, 0.884);
+  margin: 10px;
+}

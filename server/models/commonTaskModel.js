@@ -8,7 +8,7 @@ const commonTaskSchema = mongoose.Schema({
     },
     type:{
         type:String,
-        enum:["select","toComplete","explanation","toCorrect"],
+        enum:["select","toComplete","explanation","toCorrect","advertising"],
         required:[true,"commonTaskError2"]
     },
     text1:{
@@ -26,6 +26,12 @@ const commonTaskSchema = mongoose.Schema({
         type:[String]
     },
      code:{
+        type:String
+    },
+    link:{
+        type:String
+    },
+    note:{
         type:String
     },
  

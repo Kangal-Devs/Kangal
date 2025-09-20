@@ -13,7 +13,11 @@ module.exports.create_common_task = async (req,res)=>{
             text2,
             possibleAnswers,
         correctAnswers,
-        code} = req.body
+        code,
+        note,
+        link,
+        image
+            } = req.body
 
         const commonTask = await commonTaskModel.create({type,
             text1,
@@ -21,9 +25,11 @@ module.exports.create_common_task = async (req,res)=>{
             possibleAnswers,
         correctAnswers,
         code,
+        link,
+        note,
         commonLesson:commonLesson._id})
 
-        res.status(200).json({message:"exercicio criado"})
+        res.status(200).json({message:` exercicio criado: \n ${text1.slice(0,10)}...`})
     }
     catch(err){
         res.status(500).json({message:err.message})
