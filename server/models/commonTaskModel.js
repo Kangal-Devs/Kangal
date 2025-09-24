@@ -34,6 +34,9 @@ const commonTaskSchema = mongoose.Schema({
     note:{
         type:String
     },
+    image:{
+        type:Buffer
+    },
  
     
 })

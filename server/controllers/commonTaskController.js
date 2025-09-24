@@ -27,6 +27,7 @@ module.exports.create_common_task = async (req,res)=>{
         code,
         link,
         note,
+        image,
         commonLesson:commonLesson._id})
 
         res.status(200).json({message:` exercicio criado: \n ${text1.slice(0,10)}...`})

@@ -1,0 +1,32 @@
+.common_task_button_unselected{
+  border: 1px solid rgb(75, 75, 75);
+  background-color: rgb(43, 43, 43);
+}
+.common_task_button_selected,.common_task_button_unselected,.common_task_button_wrong,.common_task_button_right{
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 17px;
+  color:white;
+  border-radius: 5px;
+}
+.common_task_button_selected{
+  border: 1px solid rgb(25, 105, 179);
+  background-color: rgba(25, 105, 179, 0.589);
+}
+.common_task_button_right{
+  border: 1px solid rgba(99, 179, 25, 0.664);
+  background-color: rgba(74, 179, 25, 0.5);
+}
+.common_task_button_wrong{
+  border: 1px solid rgba(179, 25, 25, 0.459);
+  background-color: rgba(179, 25, 25, 0.418);
+}
+.common_task_button_selected:hover{
+  background-color: rgba(42, 129, 230, 0.589);
+}
+.common_task_button_unselected:hover{
+ 
+  background-color: rgb(63, 63, 63);
+}
