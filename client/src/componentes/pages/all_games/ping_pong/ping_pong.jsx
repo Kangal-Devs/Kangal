@@ -115,7 +115,8 @@ export function PingPong() {
 
   return (
     <div className="site-background">
-       <GameNavTop/>
+       <GameNavTop
+       gameName={"Ping Pong"}/>
       <div className="game-container" ref={gameRef}>
         <div className="paddle player" style={{ top: playerY.current }} />
         <div className="paddle enemy" style={{ top: enemyY.current }} />

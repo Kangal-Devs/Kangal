@@ -80,7 +80,8 @@ export function Hangman() {
 
   return (
     <div id="hangman">
-      <GameNavTop/>
+      <GameNavTop
+      gameName={"Jogo da forca"}/>
       <div id="hangman_principal">
       <img src={images[wrongGuesses]} alt="forca" className="image" />
       <div className="word">{renderWord()}</div>

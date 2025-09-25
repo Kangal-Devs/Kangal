@@ -90,7 +90,8 @@ export function MemoryGame() {
 
   return (
     <div className="memory-game">
-         <GameNavTop/>
+         <GameNavTop
+         gameName={"Jogo da memória"}/>
         <h1> JOGO DA MEMÓRIA</h1>
         <h2>Países</h2>
       <div className="card-grid">

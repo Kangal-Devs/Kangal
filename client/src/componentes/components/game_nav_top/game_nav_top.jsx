@@ -1,13 +1,13 @@
 import "./game_nav_top.css"
 import axios from "axios"
-export function GameNavTop(){
+export function GameNavTop({gameName}){
     return(
         <div id="game_nav_top">
             <button onClick={()=>{
-                axios.post("http://localhost:5000/api/create_game")
-                .then((res)=>{console.log(res)})
-                .catch((err)=>{console.log(err)})
-            }}>mandar</button>
+            
+            }}>Voltar</button>
+            <h1>{gameName}</h1>
+            <div></div>
         </div>
     )
 }

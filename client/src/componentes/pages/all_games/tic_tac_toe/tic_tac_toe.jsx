@@ -75,7 +75,8 @@ export function TicTacToe() {
 
   return (
     <div className="tic_tac_toe">
-       <GameNavTop/>
+       <GameNavTop
+       gameName={"Jogo da velha"}/>
       <h1>Tic Tac Toe</h1>
       <div className="board">
         {board.map((cell, i) => (
