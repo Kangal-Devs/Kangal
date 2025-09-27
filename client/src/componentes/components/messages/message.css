@@ -1,5 +1,40 @@
 .message{
+    cursor:pointer;
+    display: flex;
     max-width: 60%;
     border-radius: 5px;
     padding: 10px;
+    transition: all 0.5s ease-in-out;
+}
+.edited_message{
+    color: rgba(255, 255, 255, 0.562);
+    font-size: 10px;
+    margin-left: 5px;
+}
+.edited_white{
+color: rgba(255, 255, 255, 0.562);
+}
+.edited_black{
+color: rgba(27, 27, 27, 0.562);
+}
+.show_more img{
+
+    height:3px;
+    filter: opacity(0.4);
+}
+.show_more img:hover{
+
+   filter: opacity(1);
+}
+.show_more{
+    margin-left: 3px;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+.deleted_or_blocked_message{
+ 
+          font-style: italic;
+        opacity: 0.9;
+        
 }

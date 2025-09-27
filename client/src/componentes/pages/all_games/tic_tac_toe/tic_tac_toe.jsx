@@ -63,6 +63,8 @@ export function TicTacToe() {
   if (!mode) {
     return (
       <div className="tic_tac_toe">
+        <GameNavTop
+       gameName={"Jogo da velha"}/>
         <h1>Tic Tac Toe</h1>
         <p>Escolha o modo de jogo:</p>
         <div className="mode-buttons">

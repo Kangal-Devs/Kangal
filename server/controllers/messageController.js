@@ -23,3 +23,27 @@ module.exports.get_all_message = async (req,res)=>{
         res.status(500).json({message:err.message})
     } 
 }
+
+module.exports.delete_message = async (req,res)=>{
+    try{
+        const {message_id:messageId} = req.params
+
+        const message = await messageModel.findByIdAndUpdate(messageId,{status:"D"})
+        res.status(200).json({message:"mensagem deletada"})
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    } 
+}
+module.exports.update_message = async (req,res)=>{
+    try{
+        const {message_id:messageId} = req.params
+        const {value} = req.body
+
+        const message = await messageModel.findByIdAndUpdate(messageId,{status:"E",value},{runValidators:true})
+        res.status(200).json({message:"mensagem atualizada"})
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    } 
+}

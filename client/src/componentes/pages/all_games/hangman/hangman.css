@@ -79,7 +79,9 @@
     margin-top: 10px;
     font-family: Silkscreen;
     padding:5px 15px 5px 15px;
-    background-color: white;
+    background-color: rgb(24, 24, 24);
     border: 1px solid black;
+    color: white;
+    cursor: pointer;
     border-radius: 5px;
 }

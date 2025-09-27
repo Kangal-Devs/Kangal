@@ -68,8 +68,10 @@ export function Groups() {
 
     const [reportReason, setReportReason] = useState()
 
-    const [leaveGroupStatus, setLeaveGroupStatus] = useState()
-    const [updateGroupStatus, setUpdateGroupStatus] = useState()
+    const [currentMessageCreatAt, setCurrentMessageCreatAt] = useState("")
+
+    const [leaveGroupStatus, setLeaveGroupStatus] = useState(false)
+    const [updateGroupStatus, setUpdateGroupStatus] = useState(false)
 
     const [userName, setUserName] = useState()
     const [userEmail, setUserEmail] = useState()
@@ -127,8 +129,13 @@ export function Groups() {
     const [aboutGroupStatus, setAboutGroupStatus] = useState()
     const [chatColorStatus, setChatColorStatus] = useState()
 
+    const [updateMessageStatus, setUpdateMessageStatus] = useState(false)
+
+    const [currentMessageValue,setCurrentMessageValue] = useState("")
 
     const [inputMessage, setInputMessage] = useState("")
+
+    const [currentMessageId, setCurrentMessageId] = useState()
 
     const [createGroupName, setCreateGroupName] = useState("")
     const [createGroupDescription, setCreateGroupDescription] = useState("")
@@ -143,7 +150,20 @@ export function Groups() {
     const [updateGroupTitleLink2, setUpdateGroupTitleLink2] = useState("")
     const [updateGroupLink2, setUpdateGroupLink2] = useState("")
 
+    const [showMoreCoordinates, setShowMoreCoordinates] = useState([])
+
     const updateAlterImageRef = useRef()
+
+    const deleteMessage = useCallback(() => {
+        axios.delete(`http://localhost:5000/api/delete_message/${currentMessageId}`)
+            .then((res) => {
+                console.log(res)
+                window.location.reload()
+            })
+            .catch((err) => {
+                console.log(res)
+            })
+    }, [currentMessageId])
 
     useEffect(() => {
         console.log(updateGroupTitleLink1)
@@ -232,7 +252,7 @@ export function Groups() {
                 setInputMessage("")
                 axios.post("http://localhost:5000/api/get_all_messages", { groupId: currentGroupId })
                     .then((res) => {
-                        setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} /> }))
+                        setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} status={message.status} itemId={message._id} funcAlter={[setCurrentMessageId, setShowMoreCoordinates,setCurrentMessageValue]} /> }))
                     })
                     .catch((err) => { console.log(err) })
 
@@ -268,13 +288,40 @@ export function Groups() {
 
         axios.put(`http://localhost:5000/api/update_group/${currentGroupId}`, formData)
             .then((res) => {
-                console.log(res)
+
+                window.location.reload()
             })
             .catch((err) => {
                 console.log(err)
             })
 
     }, [updateGroupDescription, updateGroupImage, updateGroupLink1, updateGroupLink2, updateGroupName, updateGroupTitleLink1, updateGroupTitleLink2, updateGroupImageFile, currentGroupId])
+
+    const cancelUpdateGroup = useCallback(() => {
+        setUpdateGroupStatus(false)
+        setUpdateGroupDescription(currentGroupDescription)
+        setUpdateGroupName(currentGroupName)
+        setUpdateGroupImage(`data:image/png;base64,${currentGroupImage}`)
+        setUpdateGroupLink1(currentGroupLink1)
+        setUpdateGroupTitleLink1(currentGroupTitleLink1)
+        setUpdateGroupLink2(currentGroupLink2)
+        setUpdateGroupTitleLink2(currentGroupTitleLink2)
+    }, [currentGroupDescription,
+        currentGroupName,
+        currentGroupImage,
+        currentGroupLink1,
+        currentGroupLink2,
+        currentGroupTitleLink1,
+        currentGroupTitleLink2
+    ])
+
+    const updateMessage = useCallback(()=>{
+        axios.put(`http://localhost:5000/api/update_message/${currentMessageId}`,{value:currentMessageValue})
+        .then((res)=>{
+            window.location.reload()
+        })
+        .catch((err)=>{console.log(err)})
+    },[currentMessageId,currentMessageValue])
 
     const createGroup = useCallback(() => {
         if (createGroupName.length >= 3 && createGroupDescription.length >= 3) {
@@ -432,7 +479,7 @@ export function Groups() {
                         .then((res) => {
                             if (res.data.message.length) {
                                 console.log(res.data.message.length)
-                                setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} /> }))
+                                setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} status={message.status} itemId={message._id} funcAlter={[setCurrentMessageId, setShowMoreCoordinates,setCurrentMessageValue]} /> }))
                             }
                         })
                         .catch((err) => { console.log(err) })
@@ -793,7 +840,7 @@ export function Groups() {
                                             (<div id="link_part">
                                                 {
                                                     !((currentGroupLink1 == "" || currentGroupLink1 == " ")) ?
-                                                        (<p>{currentGroupTitleLink1}: <span onClick={()=>{ window.location.href = currentGroupLink1}}>{currentGroupLink1}</span></p>)
+                                                        (<p>{currentGroupTitleLink1}: <span onClick={() => { window.location.href = currentGroupLink1 }}>{currentGroupLink1}</span></p>)
                                                         : null
 
 
@@ -801,7 +848,7 @@ export function Groups() {
 
                                                 {
                                                     !((currentGroupLink2 == "" || currentGroupLink2 == " ")) ?
-                                                        (<p>{currentGroupTitleLink2}: <span onClick={()=>{ window.location.href = currentGroupLink2}}>{currentGroupLink2}</span></p>)
+                                                        (<p>{currentGroupTitleLink2}: <span onClick={() => { window.location.href = currentGroupLink2 }}>{currentGroupLink2}</span></p>)
                                                         : null
                                                 }
                                             </div>) :
@@ -850,8 +897,8 @@ export function Groups() {
                                         <input placeholder="https://github.com/googleapis/..." value={updateGroupLink2} onChange={(e) => { setUpdateGroupLink2(e.target.value) }} />
                                     </div>
                                     <div id="update_group_apply_part">
-                                        <button>Cancelar</button>
-                                        <button onClick={() => { updateGroup() }}>Aplicar</button>
+                                        <button onClick={() => { cancelUpdateGroup() }} id="update_cancel">Cancelar</button>
+                                        <button onClick={() => { updateGroup() }} id="update_apply">Aplicar</button>
                                     </div>
                                 </div>
                             </div>
@@ -929,7 +976,37 @@ export function Groups() {
                             </div>
                         ) : null
                     }
+                    {
+                        currentMessageId ? (
+                            <div id="show_more_background" onClick={() => { setCurrentMessageId(null) }}>
+                                <div id="show_more_bar" style={{ top: showMoreCoordinates[1] - 14, left: showMoreCoordinates[0] + 14 }} onClick={(e) => { e.stopPropagation() }}>
+                                    <button onClick={() => { setUpdateMessageStatus(true) }}>Editar</button>
+                                    <button onClick={() => { deleteMessage() }}>Deletar</button>
 
+                                </div>
+                            </div>
+                        ) : null
+                    }
+                    {
+                        updateMessageStatus ?
+                            <div id="update_message_background" onClick={()=>{setUpdateMessageStatus(false)}}>
+                                <div id="update_message_bar" onClick={(e)=>{e.stopPropagation()}}>
+                                    <div id="update_message_bar_top"><p>Editar mensagem</p><button
+                                    onClick={()=>{setUpdateMessageStatus(false);setCurrentMessageId(null)}}>X</button></div>
+                                    <div id="update_message_bar_middle">
+                                        
+                                        <textarea type="text" onChange={(e)=>{setCurrentMessageValue(e.target.value)}} value={currentMessageValue}/>
+                                    </div>
+                                    <div id="update_message_bar_bottom">
+                                        <button id="cancel_update_message" onClick={()=>{
+                                            setUpdateMessageStatus(false)
+                                            setCurrentMessageId(null)
+                                        }}>Cancelar</button>
+                                        <button id="apply_update_message" onClick={()=>{updateMessage()}}>Editar</button>
+                                    </div>
+                                </div>
+                            </div> : null
+                    }
 
                 </div>)
             }

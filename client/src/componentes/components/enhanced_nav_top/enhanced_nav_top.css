@@ -262,6 +262,7 @@ box-shadow: 0px 0px 5px black;
    justify-content: space-between;
 }
 #kangal_part{
+  
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -269,6 +270,7 @@ box-shadow: 0px 0px 5px black;
     height:100%;
 }
 #kangal_part img{
+
     width:80%;
     max-width: 220px;
 }
@@ -292,6 +294,7 @@ box-shadow: 0px 0px 5px black;
     font-family: Signika Negative;
 }
 #left_part{
+
     margin-left: 30px;
     column-gap: 20px;
 
@@ -299,7 +302,7 @@ box-shadow: 0px 0px 5px black;
     justify-content: space-between;
     display: flex;
     width: auto;
-    min-width: 20%;
+    
     height:100%;
 
 }
@@ -309,6 +312,7 @@ box-shadow: 0px 0px 5px black;
      height:2vw;
 }
 #right_part{
+   
     margin-right: 30px;
     display: flex;
 

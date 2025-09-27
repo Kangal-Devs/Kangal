@@ -23,7 +23,7 @@ const messageSchema = mongoose.Schema({
     },
      status:{
         type:String,
-        enum:["A","B","D"], // A = Ativa, B = Bloqueada, D = Deletada
+        enum:["A","B","D","E"], // A = Ativa, B = Bloqueada, D = Deletada, E = Editado
         required:[true,"messageError6"]
     },
     backgroundColor:{
