@@ -9,12 +9,14 @@ exports.create_common_task_report = async (req, res) => {
             reason
         } = req.body;
         
-
+        console.log("user:"+userId)
+        console.log("reason:"+reason)
+        console.log("task:"+commonTaskId)
         const commonTaskReport = await commonTaskReportModel.create({ 
             user:userId,
             commonTask:commonTaskId,
             reason })
-        res.status(201).json({ message: "common task report criada" })
+        res.status(200).json({ message: "common task report criada" })
     }
     catch (err) {
         res.status(500).json({ message: err.message })

@@ -6,7 +6,10 @@ const app = express()
 
 //ROTAS V
 
+
+
 const commonTaskReportRoutes = require("./routes/commonTaskReportRoutes.js")
+const messageReportRoutes = require("./routes/messageReportRoutes.js")
 const solicitationRoutes = require("./routes/solicitationRoutes.js")
 const collectionRoutes = require("./routes/collectionRoutes.js")
 const complaintRoutes = require("./routes/complaintRoutes.js")
@@ -43,6 +46,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 
 app.use('/api',userCommonLessonRoutes.router)
+app.use('/api',messageReportRoutes.router)
 app.use('/api',commonLessonRoutes.router)
 app.use('/api',collectionRoutes.router)
 app.use('/api',commonTaskRoutes.router)

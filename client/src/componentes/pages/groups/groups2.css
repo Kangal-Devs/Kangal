@@ -1072,7 +1072,7 @@ color: #ffffff;
 #show_more_background div button:hover{
     color: #ffffff;
 }
-#update_message_background{
+#update_message_background,#report_message_background{
   height: 100vh;
   width: 100vw;
   top:0;
@@ -1082,18 +1082,18 @@ color: #ffffff;
   align-items: center;
   justify-content: center;
 }
-#update_message_bar{
+#update_message_bar,#report_message_bar{
   padding:10px;
   background-color: #2F2F2F;
   border-radius: 10px;
 }
-#update_message_bar_top{
+#update_message_bar_top,#report_message_bar_top{
 
   width: 100%;
   display: flex;
   justify-content: space-between
 }
-#update_message_bar_top button{
+#update_message_bar_top button,#report_message_bar_top button{
   cursor: pointer;
   height: 25px;
   width: 25px;
@@ -1102,7 +1102,7 @@ color: #ffffff;
   background-color: rgb(27, 27, 27);
   color: white;
 }
-#update_message_bar_middle textarea{
+#update_message_bar_middle textarea,#report_message_bar_middle textarea{
     width: 80%;
   height: 50%;
   max-width: 300px;
@@ -1115,31 +1115,40 @@ color: #ffffff;
     transition: all 0.5s ease-in-out;
     scrollbar-color: transparent transparent;
 }
-#update_message_bar_bottom{
+#update_message_bar_bottom,#report_message_bar_bottom{
   display: flex;
   justify-content: end;
   column-gap: 10px;
   margin-top: 10px;
 }
-#update_message_bar_bottom button{
+#update_message_bar_bottom button,#report_message_bar_bottom button{
   cursor: pointer;
   padding:5px;
   border-radius: 5px;
   background-color: transparent;
   border:1px solid;
 }
-#cancel_update_message{
+#cancel_update_message,#cancel_report_message{
   color: rgb(214, 214, 214);
 }
 #apply_update_message{
   color: rgb(0, 212, 250);
 }
-#cancel_update_message:hover{
+#cancel_update_message:hover,#cancel_report_message:hover{
   color: #242424;
   background-color:  rgb(214, 214, 214);
 }
 #apply_update_message:hover{
   color: #242424;
   background-color: rgb(0, 212, 250);
+ 
+}
+#apply_report_message{
+  color: rgb(250, 0, 0);
+ 
+}
+#apply_report_message:hover{
+  color: #242424;
+  background-color: rgb(238, 0, 0);
  
 }

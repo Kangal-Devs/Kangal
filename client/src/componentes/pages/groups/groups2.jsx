@@ -91,6 +91,8 @@ export function Groups() {
     const [currentGroupOwner, setCurrentGroupOwner] = useState()
     const [currentGroupMembers, setCurrentGroupMembers] = useState()
 
+    const [reportMessageReason,setReportMessageReason] = useState()
+
     const [currentGroupCreatedAt, setCurrentGroupCreatedAt] = useState()
     const [currentGroupName, setCurrentGroupName] = useState()
     const [currentGroupId, setCurrentGroupId] = useState()
@@ -103,6 +105,8 @@ export function Groups() {
 
     const [groupMembers, setGroupMembers] = useState()
     const [groupOwner, setGroupOwner] = useState()
+
+    const [reportMessageStatus,setReportMessageStatus] = useState(false)
 
     const [currentMemberId, setCurrentMemberId] = useState()
     const [currentMemberName, setCurrentMemberName] = useState()
@@ -153,6 +157,14 @@ export function Groups() {
     const [showMoreCoordinates, setShowMoreCoordinates] = useState([])
 
     const updateAlterImageRef = useRef()
+
+    const reportMessage = useCallback(()=>{
+        axios.post("http://localhost:5000/api/create_message_report",{userId,messageId:currentMessageId,reason:reportMessageReason})
+        .then((res)=>{
+            window.location.reload()
+        })
+        .catch((err)=>{console.log(err)})
+    },[reportMessageReason,userId,currentMessageId])
 
     const deleteMessage = useCallback(() => {
         axios.delete(`http://localhost:5000/api/delete_message/${currentMessageId}`)
@@ -980,9 +992,14 @@ export function Groups() {
                         currentMessageId ? (
                             <div id="show_more_background" onClick={() => { setCurrentMessageId(null) }}>
                                 <div id="show_more_bar" style={{ top: showMoreCoordinates[1] - 14, left: showMoreCoordinates[0] + 14 }} onClick={(e) => { e.stopPropagation() }}>
+                                    
+                                    {amIOwner?
+                                    (<>
                                     <button onClick={() => { setUpdateMessageStatus(true) }}>Editar</button>
                                     <button onClick={() => { deleteMessage() }}>Deletar</button>
-
+                                    </>):
+                                    <button onClick={()=>{setReportMessageStatus(true)}}>Reportar</button>
+                                    }
                                 </div>
                             </div>
                         ) : null
@@ -1006,6 +1023,27 @@ export function Groups() {
                                     </div>
                                 </div>
                             </div> : null
+                    }
+                    {
+                        reportMessageStatus?
+                        <div id="report_message_background" onClick={()=>{setReportMessageStatus(false)}}>
+                                <div id="report_message_bar" onClick={(e)=>{e.stopPropagation()}}>
+                                    <div id="report_message_bar_top"><p>Reportar Messagem</p><button
+                                    onClick={()=>{setReportMessageStatus(false);setCurrentMessageId(null)}}>X</button></div>
+                                    <div id="report_message_bar_middle">
+                                        
+                                        <textarea type="text" onChange={(e)=>{setReportMessageReason(e.target.value)}} value={reportMessageReason}/>
+                                    </div>
+                                    <div id="report_message_bar_bottom">
+                                        <button id="cancel_report_message" onClick={()=>{
+                                            setReportMessageStatus(false)
+                                            setCurrentMessageId(null)
+                                        }}>Cancelar</button>
+                                        <button id="apply_report_message" onClick={()=>{reportMessage()}}>Reportar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        :null
                     }
 
                 </div>)
