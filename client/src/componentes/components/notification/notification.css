@@ -1,0 +1,7 @@
+.notification_not_read{
+    width: 100%;
+    height: 100px;
+    background-color: rgba(0, 217, 255, 0.048);
+   outline: 1px solid rgba(0, 217, 255, 0.103);
+    min-height: 100px;
+}

@@ -6,8 +6,7 @@ const app = express()
 
 //ROTAS V
 
-
-
+const userNotificationRoutes = require("./routes/userNotificationRoutes.js")
 const solicitationRoutes = require("./routes/solicitationRoutes.js")
 const collectionRoutes = require("./routes/collectionRoutes.js")
 const complaintRoutes = require("./routes/complaintRoutes.js")
@@ -58,5 +57,6 @@ app.use('/api',subjectRoutes.router)
 app.use('/api',userGroupRoutes.router)
 app.use('/api',complaintRoutes.router)
 app.use('/api',solicitationRoutes.router)
+app.use('/api',userNotificationRoutes.router)
 
 app.listen(5000)
