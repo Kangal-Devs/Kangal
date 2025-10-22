@@ -1,17 +1,27 @@
 const { userCommonLessonModel } = require("../models/userCommonLessonModel.js")
+const { commonLessonModel } = require("../models/commonLessonModel.js")
+const {get_all_user_common_lesson,create_user_common_lesson} = require("../services/userCommonLessonService.js")
 
 exports.create_user_common_lesson = async (req, res) => {
     try {
-        const { userId, commonLessonId } = req.body
+        const { userId, commonLessonId,moduleId } = req.body
 
-        const userCommonLesson = await userCommonLessonModel.create({
+        if(moduleId){
+            const commonLesson = await commonLessonModel.findOne({module:moduleId})
+
+            const userCommonLesson = await userCommonLessonModel.create({
             user: userId,
-            commonLesson: commonLessonId,
-            points: 0,
+            commonLesson: commonLesson._id,
+            points: null,
             status: "toDo"
-        })
+        }) 
 
-        res.status(200).json({ message: "usercommonlesson atualizado" })
+            res.status(200).json({ message: commonLesson })
+        }
+
+   
+        create_user_common_lesson({userId,commonLessonId})
+        res.status(200).json({message:"atualizado"})
 
     } catch (err) {
         res.status(500).json({ message: err.message })
@@ -20,10 +30,12 @@ exports.create_user_common_lesson = async (req, res) => {
 
 exports.update_user_common_lesson = async (req, res) => {
     try {
-        const {userCommonLessonId, points } = req.body
+        const {user_common_lesson_id:userCommonLessonId} = req.params
+        const {points} = req.body
 
-        const userCommonLesson = await userCommonLessonModel.findByIdAndUpdate({
-            _id: userCommonLessonId,
+        const userCommonLesson = await userCommonLessonModel.findByIdAndUpdate(
+            userCommonLessonId,
+            {
             points:points,
             status:"did"
         })
@@ -43,6 +55,19 @@ exports.delete_user_common_lesson = async (req, res) => {
             _id: userCommonLessonId
         })
         res.status(200).json({ message: "usercommonlesson deletado" })
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+}
+
+exports.get_all_user_common_lesson = async(req,res)=>{
+    try {
+        var {moduleId:module_id,userId:user_id} = req.params
+
+        var response1 = await get_all_user_common_lesson({module_id,user_id})
+        console.log("bu"+response1)
+        res.status(200).json({message:response1})
     }
     catch (err) {
         res.status(500).json({ message: err.message })

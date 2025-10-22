@@ -112,7 +112,7 @@ exports.email_verification = async (req, res) => {
                     gender: user.gender,
                     createdAt:user.createdAt
                 },
-                TOKEN_KEY, { expiresIn: "30m" })
+                TOKEN_KEY, { expiresIn: "1h" })
             res.cookie("token", token, { httpOnly: true })
             return res.status(200).json({ message: "email already used", image: user.image.toString('base64') })
         }
@@ -142,7 +142,7 @@ exports.signin = async (req, res) => {
                     gender: user.gender,
                     createdAt:user.createdAt
                 },
-                TOKEN_KEY, { expiresIn: "30m" })
+                TOKEN_KEY, { expiresIn: "1h" })
             res.cookie("token", token, { httpOnly: true })
             
             return res.status(200).json({ message: "achado", image: user.image.toString('base64') })
@@ -181,7 +181,7 @@ exports.signup = async (req, res) => {
             createdAt:user.createdAt
         },
             TOKEN_KEY,
-            { expiresIn: "30m" })
+            { expiresIn: "1h" })
         res.cookie("token", token, { httpOnly: true })
         res.status(200).json({ message: "Conta criada", image: user.image.toString('base64') })
     }
@@ -217,9 +217,37 @@ exports.clear_cookie = (req, res) => {
 exports.user_update = async (req, res) => {
     try {
         const image = req?.file?.buffer
-        console.log(typeof(image))
-        const { email, password, gender, github } = req.body
+        // console.log(typeof(image))
+        const { email, password, gender, github ,xp} = req.body
         let { _id } = req.params;
+        // console.log(email)
+        // console.log("xp"+xp)
+        if(xp){
+            
+            var user = await userModel.findByIdAndUpdate(_id, {xp}, { new: true, runValidators: true })
+
+            const token = jwt.sign({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            xp: user.xp,
+            date: user.date.toISOString().slice(0, 10),
+            accountType: user.accountType,
+            github: user.github,
+            gender: user.gender,
+            createdAt:user.createdAt
+        },
+            TOKEN_KEY,
+            { expiresIn: "1h" })
+        res.cookie("token", token, { httpOnly: true })
+
+
+
+            return res.status(200).json({ message: "Conta atualizada xp"})
+        }
+
+        
         const date = new Date(req.body.date)
 
         _id = _id.replace(/[^\da-f]/gi, "");
@@ -252,7 +280,7 @@ exports.user_update = async (req, res) => {
             createdAt:user.createdAt
         },
             TOKEN_KEY,
-            { expiresIn: "30m" })
+            { expiresIn: "1h" })
         res.cookie("token", token, { httpOnly: true })
         res.status(200).json({ message: "Conta atualizada", image: user.image.toString('base64') })
 

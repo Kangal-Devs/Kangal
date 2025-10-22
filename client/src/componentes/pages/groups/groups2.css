@@ -663,6 +663,7 @@ transition: all 0.04s ease-in-out;
 background-color: transparent;;
 }
 #leave_group_background{
+  z-index: 3;
   width: 100vw;
   height: 100vh;
   display: flex;

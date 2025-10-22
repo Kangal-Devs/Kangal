@@ -22,7 +22,6 @@ export function Collection({documentId,date,itemId,message,funcAlter}){
     useEffect(()=>{
         axios.post("http://localhost:5000/api/get_document",{documentId})
         .then((res)=>{
-            console.log(res.data.message)
             setDocumentTitle(res.data.message.title)
             setSubjectId(res.data.message.subject)
             axios.post("http://localhost:5000/api/get_subject",{subjectId:res.data.message.subject})

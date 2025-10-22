@@ -7,7 +7,7 @@ import { Footer } from "../../components/footer/footer.jsx"
 import { NavLeft } from "../../components/nav_left/nav_left.jsx"
 import "./home.css"
 import { Collection } from "../../components/collection/collection.jsx"
-import add from "../../../assets/specific_page/home/add.jpg"
+import add from "../../../assets/specific_page/home/add3.jpg"
 import { generateLevelTable } from "../../../levelGenerator.js"
 
 import statistic_icon from "../../../assets/specific_page/home/statistic_icon.png"
@@ -125,9 +125,9 @@ export function Home() {
         generateLevelTable().forEach((item,i) => {
             if (userXp >= item.xpMin && userXp <= item.xpMax) {
                 setLevel(item.level)
-                console.log("seu xp: "+userXp)
-                console.log("minXpLevel:"+item.xpMin)
-                console.log("maxXpLevel:"+item.xpMax)
+                // console.log("seu xp: "+userXp)
+                // console.log("minXpLevel:"+item.xpMin)
+                // console.log("maxXpLevel:"+item.xpMax)
                 // console.log("seu xp no intervalo:"+ userXp-item.xpMin)
                 if(((userXp-item.xpMin)/(item.xpMax-item.xpMin))>=0){
                 setLevelWidth(((userXp-item.xpMin)/(item.xpMax-item.xpMin))*100)
@@ -135,22 +135,18 @@ export function Home() {
                 else{
                     setLevelWidth(0)
                 }
-                console.log(levelWidth)
                 setXpNeeded(generateLevelTable()[i+1].xpMin-userXp)
             }
         })
 
     }, [userXp])
 
-    useEffect(()=>{
-        console.log(levelWidth)
-    },[levelWidth])
+    
 
     useEffect(() => {
         if (collectionStatus) {
             axios.post("http://localhost:5000/api/get_all_collections", { userId })
                 .then((res) => {
-                    console.log(res)
                     if (res.data.message.length) {
                         setCollections(res.data.message.map((collection) => {
                             return <Collection
@@ -184,7 +180,7 @@ export function Home() {
     useEffect(() => {
         axios.post("http://localhost:5000/api/authorization", {}, { withCredentials: true })
             .then((res) => {
-                console.log(res.data.message);
+                // console.log(res.data.message);
                 setConnected(true)
                 setUserName(res.data.message.name)
                 setUserXp(res.data.message.xp)

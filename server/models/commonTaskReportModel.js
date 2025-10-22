@@ -21,6 +21,6 @@ const commonTaskReportSchema = mongoose.Schema({
     timestamps:true
 })
 
-const commonTaskReportModel = mongoose.model("commonTaskReportModel",commonTaskReportSchema)
+const commonTaskReportModel = mongoose.model("commonTaskReport",commonTaskReportSchema)
 
 module.exports.commonTaskReportModel = commonTaskReportModel

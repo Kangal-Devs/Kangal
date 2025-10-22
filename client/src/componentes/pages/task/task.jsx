@@ -11,6 +11,9 @@ import clouds from "../../../assets/specific_page/task/clouds.png"
 import report from "../../../assets/specific_page/task/report.png"
 import copy_code from "../../../assets/specific_page/task/copy_code.png"
 import { wrongAnswerMessage, rightAnswerMessage } from "./task_response_messages.js"
+import ad from "../../../assets/specific_page/task/ad.jpg"
+import confetti from "../../../assets/specific_page/task/confetti.gif"
+import return_img from "../../../assets/specific_page/task/return.png"
 export function Task() {
 
 
@@ -28,7 +31,11 @@ export function Task() {
 
     const [taskResponseMessage, setTaskResponseMessage] = useState("")
 
+    const [isCorrect,setIsCorrect] = useState()
 
+    const [time,setTime] = useState(0)
+
+    
 
     const [userName, setUserName] = useState()
     const [userEmail, setUserEmail] = useState()
@@ -57,6 +64,21 @@ export function Task() {
     const [allTaskCount,setAllTaskCount] = useState()
     const [correctTaskCount,setCorrectTaskCount] = useState()
 
+    const [pageName,setPageName] = useState("")
+
+    useEffect(()=>{
+        if(localStorage.getItem("currentCommonLesson")){
+            
+    
+        axios.post("http://localhost:5000/api/get_common_lesson",{commonLesson:JSON.parse(localStorage.getItem("currentCommonLesson"))})
+    .then((res)=>{
+        setCurrentCommonLessonPoints(res.data.message.points)
+        setPageName(`Campanha/${res.data.message.name}`)
+    })
+    .catch((err)=>{console.log(err)})
+        }
+    },[])
+    
     const [connected, setConnected] = useState(false)
     const [tokenError, setTokenError] = useState("")
 
@@ -65,6 +87,7 @@ export function Task() {
 
     const [currentCommonTaskId, setCurrentCommonTaskId] = useState()
     const [currentCommonLessonId, setCurrentCommonLessonId] = useState()
+    const [currentCommonLessonPoints, setCurrentCommonLessonPoints] = useState()
 
     const [userResponse, setUserResponse] = useState()
     const [saveUserResponse, setSaveUserResponse] = useState()
@@ -74,42 +97,126 @@ export function Task() {
     const [reportTaskReason,setReportTaskReason] = useState("")
 
     const [currentCommonTaskText1, setCurrentCommonTaskText1] = useState(
-        // "JavaScript é a linguagem que faz os sites deixarem de ser apenas páginas estáticas cheias de texto e imagens, e se transformarem em ambientes interativos onde você pode clicar, digitar e ver mudanças instantâneas sem precisar recarregar a página.<br><br><span class='wrong_context '>Com ele, é possível criar menus que se abrem ao clicar, animações suaves, validações de formulários enquanto você digita e até jogos completos que rodam direto no navegador.</span><br><span class='note_context'>Antes do JavaScript, sites eram lentos, estáticos e qualquer alteração exigia recarregar a página inteira, tornando a navegação pouco prática.</span><br><span class='right_context'>Aprender JavaScript é essencial para quem quer trabalhar com web moderna.</span><br><span class='idea_context'>Aprender JavaScript é essencial para quem quer trabalhar com web moderna.</span>JavaScript é a linguagem que faz os sites deixarem de ser apenas páginas estáticas cheias de texto e imagens, e se transformarem em ambientes interativos onde você pode clicar, digitar e ver mudanças instantâneas sem precisar recarregar a página.<br><br><span class='wrong_context '>Com ele, é possível criar menus que se abrem ao clicar, animações suaves, validações de formulários enquanto você digita e até jogos completos que rodam direto no navegador.</span>"
+        ""
 
-    )
-    const [currentCommonTaskText2, setCurrentCommonTaskText2] = useState("")
-    const [currentCommonTaskType, setCurrentCommonTaskType] = useState("toComplete")
+    )//Mas o que isso significa na prática?
+    const [currentCommonTaskText2, setCurrentCommonTaskText2] = useState(
+        ""
+        )
+    const [currentCommonTaskType, setCurrentCommonTaskType] = useState("")
     const [currentCommonTaskCode, setCurrentCommonTaskCode] = useState(
-        `XXX 
-    `
+        ``
     )
     const [currentCommonTaskImage, setCurrentCommonTaskImage] = useState()
-    const [currentCommonTaskNote, setCurrentCommonTaskNote] = useState()
     const [currentCommonTaskLink, setCurrentCommonTaskLink] = useState()
-    const [currentCommonTaskCorrectAnswers, setCurrentCommonTaskCorrectAnswers] = useState([`const palavra = "A"
-function write(palavra){
-console.log(palavra)
-}
+    const [currentCommonTaskCorrectAnswers, setCurrentCommonTaskCorrectAnswers] = useState([])
+    const [currentCommonTaskPossibleAnswers, setCurrentCommonTaskPossibleAnswers] = useState([])
 
-write(palavra)`,
-`B
-B
-B`,"TTT","BNA","A","B","L","Z"])
-    const [currentCommonTaskPossibleAnswers, setCurrentCommonTaskPossibleAnswers] = useState(
-        [
-            "console.log(`Olá mundo!`)",
-            "console.log(Olá mundo!)",
-            "print.log(`Olá mundo!`)",
-            "console(`Olá mundo!`)",
-            "Console.log(Olá mundo!)"
-        ]
-    )
+    const [countCorrectUserAnswer,setCountCorrectUserAnswer] = useState(0)
 
-    useEffect(() => {
-        console.log(userResponse)
+    const [isFinished,setIsFinished] = useState(false)
+
+    useEffect(()=>{
+        const interval = setInterval(()=>{
+            if(!isFinished){
+                
+            setTime(time=>time+100);
+            }
+        },100)
+        return ()=> clearInterval(interval)
+    },[isFinished])
+
+    const [allCommonTask,setAllCommonTask] = useState([])
+    const [countAllCommonTask,setCountAllCommonTask] = useState("")
+    const [currentCountCommonTask,setCurrentCountCommonTask] = useState(0)
+
+    const finishLesson = useCallback(()=>{
+        const newUserXp = Number(userXp)+Number((countCorrectUserAnswer/countAllCommonTask * currentCommonLessonPoints).toFixed(0))
+        console.log(newUserXp)
+        axios.put(`http://localhost:5000/api/user_update/${userId}`,{xp:newUserXp},{ withCredentials: true })
+        .then((res)=>{
+            axios.post("http://localhost:5000/api/create_user_common_lesson",{userId,currentCommonLessonId})
+            .then((res)=>{console.log(res)})
+            .catch((err)=>{console.log(err)})
+        })
+        .catch((err)=>{console.log(err)})
+    },[userXp,countCorrectUserAnswer,countAllCommonTask,currentCommonLessonPoints,userId])
+
+    useEffect(()=>{
+        if(localStorage.getItem("currentCommonLesson")){
+            console.log(localStorage.getItem("currentCommonLesson"))
+        axios.get(`http://localhost:5000/api/get_all_common_task/${JSON.parse(localStorage.getItem("currentCommonLesson"))}`)
+        .then((res)=>{
+            if(res.data.message.length){
+           
+            setAllCommonTask(res.data.message)
+            setCountAllCommonTask(res.data.message.length)
+            }
+        })
+        .catch((err)=>{console.log(err)})
+        }
+    },[])
+
+    useEffect(()=>{
+        if(allCommonTask.length){
+       
+            setCurrentCommonTaskCode(allCommonTask[0]?.code)
+            setCurrentCommonTaskText1(allCommonTask[0]?.text1)
+            setCurrentCommonTaskText2(allCommonTask[0]?.text2)
+            setCurrentCommonTaskType(allCommonTask[0]?.type)
+            setCurrentCommonTaskLink(allCommonTask[0]?.link)
+            setCurrentCommonTaskImage(allCommonTask[0]?.image)
+            setCurrentCommonTaskPossibleAnswers(allCommonTask[0]?.possibleAnswer)
+            setCurrentCommonTaskCorrectAnswers(allCommonTask[0]?.correctAnswers)
+        }
+    },[allCommonTask])
 
 
-    }, [userResponse])
+    const nextTask = useCallback((isCorrect1)=>{
+        if(isCorrect1){
+            console.log("acertei")
+            setCountCorrectUserAnswer(count=> count+1 )
+            setCurrentCountCommonTask(count => count+1)
+        }else{
+            console.log("perdi")
+            setCurrentCountCommonTask(count => count+1)
+        }
+    },[countCorrectUserAnswer,currentCountCommonTask])
+
+    useEffect(()=>{
+        
+        if(currentCountCommonTask){
+            console.log(currentCountCommonTask)
+            if(allCommonTask[currentCountCommonTask]){
+                setSaveUserResponse()
+                setVerified(false)
+                setUserResponse()
+                setTaskResponseMessage("")
+                setButtonActive([])
+
+                console.log(allCommonTask[currentCountCommonTask])
+                setCurrentCommonTaskCode(allCommonTask[currentCountCommonTask]?.code)
+            setCurrentCommonTaskText1(allCommonTask[currentCountCommonTask]?.text1)
+            setCurrentCommonTaskText2(allCommonTask[currentCountCommonTask]?.text2)
+            setCurrentCommonTaskType(allCommonTask[currentCountCommonTask]?.type)
+            setCurrentCommonTaskLink(allCommonTask[currentCountCommonTask]?.link)
+            setCurrentCommonTaskImage(allCommonTask[currentCountCommonTask]?.image)
+                 setCurrentCommonTaskPossibleAnswers(allCommonTask[currentCountCommonTask]?.possibleAnswer)
+            setCurrentCommonTaskCorrectAnswers(allCommonTask[currentCountCommonTask]?.correctAnswer)
+            }
+            else{
+                console.log("Quantidade de exercícios:"+countAllCommonTask)
+                console.log("Quantidade de exercícios corretos:"+countCorrectUserAnswer)
+                setIsFinished(true)
+            }
+        }
+    },[currentCountCommonTask])
+
+    // useEffect(() => {
+    //     console.log(userResponse)
+
+
+    // }, [userResponse])
 
     useEffect(() => {
         if (!(localStorage.getItem("currentCommonLesson"))) {
@@ -157,7 +264,7 @@ B`,"TTT","BNA","A","B","L","Z"])
 
     useEffect(()=>{
         if(saveUserResponse){
-            console.log("EII"+saveUserResponse)
+            console.log(""+saveUserResponse)
         }
     },[saveUserResponse])
 
@@ -173,13 +280,15 @@ B`,"TTT","BNA","A","B","L","Z"])
             if (userResponse == currentCommonTaskCorrectAnswers[0]) {
                 const randomNumber = Math.floor(Math.random() * rightAnswerMessage.length);
                 setTaskResponseMessage(rightAnswerMessage[randomNumber])
-                console.log(rightAnswerMessage[randomNumber])
+                // console.log(rightAnswerMessage[randomNumber])
+                setIsCorrect(true)
             }
             else {
                 const randomNumber = Math.floor(Math.random() * wrongAnswerMessage.length);
                 setTaskResponseMessage(wrongAnswerMessage[randomNumber])
-                console.log(randomNumber)
-                console.log(wrongAnswerMessage[randomNumber])
+                
+                // console.log(wrongAnswerMessage[randomNumber])
+                setIsCorrect(false)
             }
         }
         else {
@@ -191,11 +300,13 @@ B`,"TTT","BNA","A","B","L","Z"])
                     const randomNumber = Math.floor(Math.random() * rightAnswerMessage.length);
                     console.log(rightAnswerMessage[randomNumber])
                     setTaskResponseMessage(rightAnswerMessage[randomNumber])
+                    setIsCorrect(true)
                     return;
                 }
             }
              const randomNumber = Math.floor(Math.random() * wrongAnswerMessage.length);
             setTaskResponseMessage(wrongAnswerMessage[randomNumber])
+            setIsCorrect(false)
             // console.log(randomNumber)
             // console.log(wrongAnswerMessage[randomNumber])
             
@@ -233,7 +344,7 @@ B`,"TTT","BNA","A","B","L","Z"])
             {connected == false ? <TokenInvalid token_error={tokenError} /> : (
                 <div id="task_principal">
                     <EnhancedNavTop
-                        page="Campanha"
+                        page={pageName}
                         home={true}
                         group={false}
                         userName={userName}
@@ -250,8 +361,9 @@ B`,"TTT","BNA","A","B","L","Z"])
                     <div id="task_content">
 
 
-
-                        <div id="task_content_principal">
+                        {!isFinished?
+                        (
+                            <div id="task_content_principal">
                             <div id="task_part_top">
                                 <h1>{taskTitle}</h1>
 
@@ -350,7 +462,7 @@ B`,"TTT","BNA","A","B","L","Z"])
                                 }
                                 {
                                     currentCommonTaskText2 ?
-                                        (<p dangerouslySetInnerHTML={{ __html: currentCommonTaskText2 }} />) : null
+                                        (<p className="text2"dangerouslySetInnerHTML={{ __html: currentCommonTaskText2 }} />) : null
                                 }
                                 {
                                     currentCommonTaskType=="toCorrect"?
@@ -368,6 +480,16 @@ B`,"TTT","BNA","A","B","L","Z"])
                                         value={userResponse}
                                         />
                                     </div>):null
+
+                                    
+                                    
+                                
+                                }
+                                {
+                                    currentCommonTaskLink?
+                                    (<a className="link_context" href={currentCommonTaskLink} target="_blank">
+                                        {currentCommonTaskLink}
+                                    </a>):null
                                 }
                             </div>
 
@@ -379,8 +501,10 @@ B`,"TTT","BNA","A","B","L","Z"])
                                         <button id="report_button_1" onClick={()=>{setReportTaskStatus(true);}}>
                                             <img src={report} />
                                         </button>
-                                        <button id="continue_button_1">Continuar</button>
-                                    </div>) : (
+                                        <button id="continue_button_1" onClick={()=>{nextTask(true)}}>Continuar</button>
+                                    </div>) 
+                                    :
+                                     (
                                         <div className="task_part_bottom">
                                             <button id="report_button_2" onClick={()=>{setReportTaskStatus(true);}}>
                                                 <img src={report} />
@@ -394,7 +518,7 @@ B`,"TTT","BNA","A","B","L","Z"])
                                                         }
                                                     }
                                                     else {
-
+                                                        nextTask(isCorrect)
                                                     }
                                                 }}>
                                                 {
@@ -405,6 +529,45 @@ B`,"TTT","BNA","A","B","L","Z"])
                                     )
                             }
                         </div>
+                        )
+                        :
+                        (
+                            <>
+                            <img id="confetti" src={confetti}/>  
+                            <h1 id="finished_lesson_message">Lição terminada</h1>
+                                <div id="task_content_finished">
+                                <img src={ad}/>
+                                <div id="task_finished_buttons">
+                                    <button onClick={()=>{window.location.reload()}}> <img src={return_img}/></button>
+                                    <button id="finish_lesson" onClick={()=>{
+                                        finishLesson()
+                                    }}>Terminar +{(countCorrectUserAnswer/countAllCommonTask * currentCommonLessonPoints).toFixed(0)}XP</button>
+                                </div>
+                                
+                                   {/* {time} {countCorrectUserAnswer}{countAllCommonTask}{countCorrectUserAnswer/countAllCommonTask*100} */}
+                                   <div id="task_statistic">
+                                    <div>
+                                        <h2>Tempo</h2>
+                                        {time/1000}s
+                                    </div>
+                                    <div>
+                                        <h2>Total</h2>
+                                        {countAllCommonTask}
+                                    </div>
+                                    <div>
+                                        <h2>Acertos</h2>
+                                        {countCorrectUserAnswer}
+                                    </div>
+                                    <div>
+                                        <h2>Porcentagem de acertos</h2>
+                                        {(countCorrectUserAnswer/countAllCommonTask*100).toFixed(0)}%
+                                    </div>
+                                    </div>
+                            </div>
+                            </>
+                            
+                        )}
+                        
                         {
                             reportTaskStatus?
                             <div id="report_task_background" onClick={()=>{setReportTaskStatus(false)}}>

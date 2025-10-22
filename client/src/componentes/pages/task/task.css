@@ -56,8 +56,158 @@
   display: grid;
   grid-template-rows: 8fr 1fr;
 }
+#task_content_finished{
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y:auto;
+  scrollbar-color: rgba(56, 56, 56, 0.219) transparent;
+  height: min-content;
+   width: 55%;
+   max-width: 800px;
+  background-color: rgb(22, 22, 22);
+  border-radius: 10px;
+  opacity: 1;
+  box-shadow: 0px 0px 10px rgba(255, 0, 170, 0.075);
+  animation-name: task_content;
+  animation-delay: 0s;
+  animation-duration: 2.7s;
+  animation-iteration-count: 1;
+  z-index: 10;
+}
+#task_statistic{
+  margin-top: 10px;
+  display: flex;
+  color: rgb(199, 199, 199);
+  column-gap: 5px;
+  font-family: Signika Negative;
+}
+#task_statistic h2{
+  font-family: Signika Negative;
+
+}
+#task_statistic div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 10px 5px 10px;
+  border-radius: 5px;
+  background-color: rgb(31, 32, 31);
+}
+@keyframes task_content{
+  0%{
+    
+    opacity: 0;
+    
+  }
+  50%{
+  scale: 0.1;
+  opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+#task_finished_buttons{
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  column-gap: 10px;
+  
+}
+#task_finished_buttons button{
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 10px 20px 10px 20px;
+  height: 40px;
+ color: rgba(224, 224, 224, 0.568);
+  background-color: rgba(255, 255, 255, 0.062);
+  border: none;
+}
+#task_finished_buttons button:hover{
+  background-color: rgba(123, 255, 0, 0.212);
+}
+#task_finished_buttons button img{
+  height: 100%;
+  opacity: 0.5;
+}
+#finish_lesson{
+  flex-grow: 1;
+}
+#task_content_finished img{
+  width: 100%;
+
+  border-radius: 20px 20px 0px 0px;
+  box-sizing: border-box;
+}
 #task_part_top button{
   cursor: pointer;
+}
+#finished_lesson_message{
+  color: white;
+  font-size: 40px;
+  font-family: Signika Negative;
+ position: absolute;
+  animation-name: message_lesson;
+  animation-duration: 2.5s;
+  animation-delay: 0;
+  opacity: 0;
+  animation-iteration-count: 1;
+  transition: all 1s ease-in-out;
+  display: flex;
+}
+#confetti{
+  position: absolute;
+  width: 60vw;
+
+
+}
+#confetti{
+  opacity: 0.5;
+  transition: all 1s ease-in-out;
+  animation-duration: 2.5s;
+  animation-delay: 0;
+  animation-name: confetti_lesson;
+  animation-iteration-count: 1;
+  opacity: 0;
+  max-height: 80vh;
+}
+@keyframes confetti_lesson {
+  0%{
+width: 0vw;
+  opacity: 0.6;
+  }
+  50%{
+     opacity: 0.6;
+    width: 66vw;
+
+  }
+  100%{
+     opacity: 0.6;
+    width: 66vw;
+    
+  }
+}
+@keyframes message_lesson {
+  0%{
+     opacity: 1;
+  }
+  50%{
+    font-size: 50px;
+    color: white;
+     opacity: 1;
+  }
+ 
+  80%{
+     opacity: 1;
+    color: white;
+    font-size: 20px;
+     color: #14141400;
+  }
+  80%{
+    opacity: 0;
+    color: #14141400;
+    
+  }
 }
 #task_part_top{
   display: flex;
@@ -109,6 +259,7 @@
   border-radius: 5px;
   border: 2px solid rgba(255, 0, 0, 0.24);
   height: 100%;
+  padding: 5px;
   aspect-ratio: 1/1;
 }
 #report_button_1 img{
@@ -139,6 +290,7 @@
 #report_button_2{
   background-color: rgba(128, 0, 0, 0);
   border-radius: 5px;
+  padding: 5px;
   border: 2px solid rgba(255, 0, 0, 0.24);
   height: 100%;
   aspect-ratio: 1/1;
@@ -162,7 +314,7 @@
 }
 /* aa */
 
-.wrong_context,.note_context,.right_context,.idea_context{
+.wrong_context,.note_context,.right_context,.idea_context,.link_context{
   display: flex;
    width:fit-content;
    padding: 8px;
@@ -175,6 +327,7 @@
   
 
 }
+
 .idea_context::before{
   content: "🧠";
   
@@ -193,6 +346,9 @@
   outline: 1px solid rgb(22, 87, 49);
   border-top: 3px solid rgb(21, 92, 50);
 
+}
+.text2{
+  margin-top: 10px
 }
 .right_context::before{
   content: "✅";
@@ -213,10 +369,19 @@
  
 
 }
+
+.link_context{
+  color: rgb(40, 116, 202);
+  cursor: pointer;
+  font-family:Signika Negative;
+}
+.link_context:hover{
+  color: rgb(72, 137, 211);
+}
 #to_correct_title,#common_code_title,#to_correct_response_title{
   align-items: end;
 display: flex;
-margin-top: 15px;
+
 width: 100%;
 justify-content:space-between ;
 }

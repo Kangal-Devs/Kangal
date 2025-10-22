@@ -2,10 +2,10 @@ const axios = require("axios")
 const js_common_lessons = require("./javascript_common_lessons.json")
 
 axios.post("http://localhost:5000/api/create_common_lesson",{
-     "name":"Usando tag de áudio",
-    "introduction": "Agora é sua vez de praticar. A tag <audio> permite inserir sons e músicas em uma página, tornando o conteúdo mais envolvente. Neste exercício, você vai aplicar essa tag no código e experimentar atributos que controlam a forma como o áudio é reproduzido.",
-    "color": "#AD51EA",
-    "points": 100
+     "name":"Usando oper. matemáticos",
+    "introduction": "Agora que você conhece os operadores matemáticos, chegou a hora de usá-los de verdade. Com eles, você pode somar, subtrair, multiplicar e dividir números dentro do seu programa, criando cálculos que respondem às suas instruções e permitem que o computador execute tarefas como um verdadeiro assistente inteligente.",
+    "color": "#BEFF55",
+    "points": 130
 })
 .then((res)=>{console.log(res.data.message)})
 .catch((err)=>{console.log(err)})

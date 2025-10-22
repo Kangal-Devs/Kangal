@@ -177,9 +177,7 @@ export function Groups() {
             })
     }, [currentMessageId])
 
-    useEffect(() => {
-        console.log(updateGroupTitleLink1)
-    }, [updateGroupTitleLink1])
+  
 
     useEffect(() => {
 
@@ -231,6 +229,7 @@ export function Groups() {
                 window.location.reload()
             })
             .catch((err) => {
+                localStorage.setItem("currentGroup", null)
                 console.log(err)
             })
     }, [userId, currentGroupId])
@@ -467,6 +466,7 @@ export function Groups() {
                 .then((res) => {
                     setGroupMembers()
                     setGroupOwner()
+                    setMessages()
 
                     localStorage.setItem("currentGroup", JSON.stringify(currentGroupId))
                     setEmogiBarStatus(false)
@@ -490,7 +490,6 @@ export function Groups() {
                     axios.post("http://localhost:5000/api/get_all_messages", { groupId: currentGroupId })
                         .then((res) => {
                             if (res.data.message.length) {
-                                console.log(res.data.message.length)
                                 setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} status={message.status} itemId={message._id} funcAlter={[setCurrentMessageId, setShowMoreCoordinates,setCurrentMessageValue]} /> }))
                             }
                         })
@@ -514,9 +513,9 @@ export function Groups() {
                         .then((res3) => {
 
                             setGroupMembers(res3.map((member2, i) => {
-                                console.log("DONO:" + currentGroupOwner)
+                               
                                 if (member2.data.message._id != currentGroupOwner) {
-                                    console.log("MEMBROS:" + member2.data.message._id)
+                                  
 
                                     return <Member
                                         funcAlter={[setCurrentMemberId]}
@@ -879,7 +878,7 @@ export function Groups() {
                             <div id="update_group_background" onClick={() => { setUpdateGroupStatus(false) }}>
                                 <div id="update_group_bar" onClick={(e) => { e.stopPropagation() }}>
                                     <div id="update_group_exit_part">
-                                        <button id="update_group_leave" onClick={() => { setLeaveGroupStatus(true) }}>Sair e deletar</button>
+                                        <button id="update_group_leave" onClick={() => { setLeaveGroupStatus(true); }}>Sair e deletar</button>
                                         <button id="update_group_exit" onClick={() => { setUpdateGroupStatus(false) }}>X</button>
                                     </div>
                                     <div id="update_group_left">

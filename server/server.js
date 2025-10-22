@@ -8,6 +8,7 @@ const app = express()
 
 
 
+const userNotificationRoutes = require("./routes/userNotificationRoutes.js")
 const commonTaskReportRoutes = require("./routes/commonTaskReportRoutes.js")
 const messageReportRoutes = require("./routes/messageReportRoutes.js")
 const solicitationRoutes = require("./routes/solicitationRoutes.js")
@@ -25,6 +26,7 @@ const documentRoutes = require("./routes/documentRoutes.js")
 const userGroupRoutes = require("./routes/userGroupRoutes.js")
 const commonTaskRoutes = require("./routes/commonTaskRoutes.js")
 const commonLessonRoutes = require("./routes/commonLessonRoutes.js")
+const notificationRoutes = require("./routes/notificationRoutes.js")
 const userCommonLessonRoutes = require("./routes/userCommonLessonRoutes.js")
 require('dotenv').config();
 
@@ -35,6 +37,8 @@ app.use(cors({
 }))
 app.use(express.json())
 
+app.use(express.json({ limit: "1mb" }));
+
 mongoose.connect(process.env.MONGODB_URI)
 .then((res)=>{
     console.log("Servidor rodando")
@@ -44,9 +48,10 @@ mongoose.connect(process.env.MONGODB_URI)
 })
 
 
-
+app.use('/api',userNotificationRoutes.router)
 app.use('/api',userCommonLessonRoutes.router)
 app.use('/api',messageReportRoutes.router)
+app.use('/api',notificationRoutes.router)
 app.use('/api',commonLessonRoutes.router)
 app.use('/api',collectionRoutes.router)
 app.use('/api',commonTaskRoutes.router)

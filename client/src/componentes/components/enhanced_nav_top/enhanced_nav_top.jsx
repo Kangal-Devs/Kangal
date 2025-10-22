@@ -2,12 +2,15 @@ import { useEffect, useState, useCallback, useRef } from "react"
 import kangal from "../../../assets/all_pages/kangal2.png"
 import sign_img from "../../../assets/all_pages/nav_top_icons/sign.png"
 import home_img from "../../../assets/all_pages/nav_top_icons/house.png"
-import bell_img from "../../../assets/all_pages/nav_top_icons/bell.png"
+import default_bell_img from "../../../assets/all_pages/nav_top_icons/bell.png"
+import notification_bell_img from "../../../assets/all_pages/nav_top_icons/bellNotification.png"
 import group_img from "../../../assets/specific_page/group/group.png"
 import config_img from "../../../assets/specific_page/update/config.png"
+import { Notification } from "../notification/notification.jsx"
 import { genders } from "./genders.js"
 import { Alert } from "../alert/alert.jsx"
 import { useNavigate } from "react-router-dom"
+import empty_notification from "../../../assets/all_pages/nav_top_icons/empty_notification.png"
 import axios from "axios"
 import "./enhanced_nav_top.css"
 
@@ -15,7 +18,16 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
 
     const navigate = useNavigate()
 
+    const [bellImage,setBellImage] = useState()
+
+    
+    const [notificationStatus,setNotificationStatus] = useState(false)
+    const [notificationNotRead,setNotificatioNotRead] = useState()
     const [gendersOpt, setGendersOpt] = useState()
+
+    const [readNotifications,setReadNotifications] = useState([])
+    const [notReadNotifications,setNotReadNotifications] = useState([])
+
 
     const [modifiedName, setModifiedName] = useState(null)
     const [updateName, setUpdateName] = useState(userName)
@@ -28,7 +40,7 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
 
     const [inputImage, setInputImage] = useState("")
 
-
+    const [notificationMessageStatus,setNotificationMessageStatus] = useState(false)
 
     const [backgroundUpdate, setBackgroundUpdate] = useState("background_update_inactive")
     const [backgroundOptions, setBackgroundOptions] = useState("background_options_inactive")
@@ -55,9 +67,55 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
             .catch((err) => { console.log("erro ao desconectar") })
     })
 
+    useEffect(()=>{
+        if(notificationStatus){
+            axios.get(`http://localhost:5000/api/get_all_user_notifications/${userId}`)
+            .then((res)=>{
+                setNotReadNotifications(res.data.message.map((userNotification)=>{
+                    if(userNotification.isRead == false){
+                    return <Notification isRead={false} notificationId={userNotification.notification} page={page}/>
+                    }
+                }))
+                setReadNotifications(res.data.message.map((userNotification)=>{
+                    if(userNotification.isRead == true){
+                    return <Notification isRead={true} notificationId={userNotification.notification} page={page}/>
+                    }
+                }))
+            })
+            .catch((err)=>{console.log(err)})
+        }
+    },[notificationStatus])
 
+    useEffect(()=>{ 
+        if(notificationStatus){
+            axios.put(`http://localhost:5000/api/read_notifications/${userId}`)
+            .then((res)=>{console.log("mensagens serão lidas")})
+            .catch((err)=>{console.log(err)})
+        }
+    },[notificationStatus])
 
-
+    useEffect(()=>{
+        if(userId){
+        axios.get(`http://localhost:5000/api/get_count_user_notification/${userId}`)
+        .then((res)=>{
+            if(res.data.message>0){
+                setNotificatioNotRead(res.data.message)
+                setBellImage(notification_bell_img)
+                if(page=="Home"){
+                setNotificationMessageStatus(true)
+                setTimeout(()=>{
+                    setNotificationMessageStatus(false)
+                },2500)
+                }
+            }
+            else{
+                setBellImage(default_bell_img)
+            }
+        })
+        .catch((err)=>{console.log(err)})
+        }
+    },[userId])
+    
     // useEffect(() => {
     //     console.log(updateImage)
     // }, [])
@@ -200,10 +258,20 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
                     
                       </div>
                       <div id="right_part">
+                        {notificationMessageStatus?<p id="notification_message">Você possui notificação</p>
+                        
+                        
+                        :null}
                         <div id="nav_top_icon_buttons">
 
-                     
-                        <img src={bell_img} className="nav_top_icons"/>
+                        {
+                        notificationNotRead>0?
+                        <img src={bellImage} className="nav_top_icons" id="bell" onClick={()=>{setNotificationStatus(true);setNotificatioNotRead(0)}}/>
+                        :
+                        <img src={bellImage} className="nav_top_icons" onClick={()=>{setNotificationStatus(true);setNotificatioNotRead(0);setBellImage(default_bell_img)}}/>
+                        }
+
+
                         {
                             group?<img src={group_img} className="nav_top_icons" onClick={()=>{funcAlter[0](true)}}/>:""
                         }
@@ -301,6 +369,34 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
             <div id={alertStatus}>
             <Alert error={isError} message={alertMessage} />
             </div>
+            {
+                notificationStatus?
+                <div onClick={()=>{setNotificationStatus(false)}} id="notification_background">
+                    <div onClick={(e)=>{e.stopPropagation()}} id="notification_bar">
+                    <div id="notification_bar_top">
+                        <h1>Notificações</h1>
+                        <button>X</button>
+                    </div>
+                    {(readNotifications.length>0 || notReadNotifications.length>0)?
+                    <div id="notification_bar_bottom">
+                        <div id="notification_list_not_read">
+                            {notificationNotRead>0?<h2>Novas notificações</h2>:null}
+                            
+                            {notReadNotifications}
+                        </div>
+                        <div id="notification_list_read">
+                            {readNotifications.length>0?<h2>Notificações visualizadas</h2>:null}
+                            {readNotifications}
+                        </div>
+                    </div>:
+                    <div id="empty_notification">
+                        <img src={empty_notification}/>
+                    </div>
+                    }
+                </div>
+                </div>
+                :null
+            }
         </div>
     )
 }

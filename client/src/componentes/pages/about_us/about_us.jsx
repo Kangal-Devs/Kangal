@@ -13,14 +13,6 @@ import {Link,useNavigate} from "react-router-dom"
 
 export function AboutUs() {
 
-    // const about_us = useRef()
-    // const id1 = useRef()
-    // const id2 = useRef()
-    // const id3 = useRef()
-    // const id4 = useRef()
-    // useEffect(()=>{
-    //     about_us.current.addEventListener("scroll",()=>{console.log("ESCROLOU")})
-    // },[])
 
     return (
         <div id="about_us"  >

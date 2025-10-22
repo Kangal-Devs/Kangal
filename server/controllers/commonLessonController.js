@@ -8,7 +8,7 @@ module.exports.create_common_lesson = async(req,res)=>{
          
         
         
-        const module1 = await moduleModel.findOne({name:"HTML"})
+        const module1 = await moduleModel.findOne({name:"Java"})
 
         const folder = path.join(__dirname,"..","assets","CommonLessons")
 
@@ -31,7 +31,7 @@ module.exports.create_common_lesson = async(req,res)=>{
 
         const images2White = imagesWhite.map((image)=>{return fs.readFileSync(path.join(__dirname,"..","assets","CommonLessons",image))})
 
-        const commonLesson = await commonLessonModel.create({name:name,introduction:introduction,color:color,points:points,image:images2Purple[5],module:module1._id})
+        const commonLesson = await commonLessonModel.create({name:name,introduction:introduction,color:color,points:points,image:images2Green[3],module:module1._id})
 
 
         res.status(200).json({message:"Criado: "+name})
@@ -58,10 +58,23 @@ module.exports.get_all_common_lessons = async (req,res)=>{
          res.status(500).json({message:err.message})
     }
 }
+//Encontra a questão pelo id
 module.exports.get_common_lesson = async (req,res)=>{
     try{
         const {commonLesson} = req.body
         const common_lesson = await commonLessonModel.findOne({_id:commonLesson})
+
+        return res.status(200).json({message:common_lesson})
+    }
+    catch(err){
+         res.status(500).json({message:err.message})
+    }
+}
+//Encontra a questão pelo título
+module.exports.get_common_lesson2 = async (req,res)=>{
+    try{
+        const {commonLesson} = req.body
+        const common_lesson = await commonLessonModel.findOne({name:commonLesson})
 
         return res.status(200).json({message:common_lesson})
     }

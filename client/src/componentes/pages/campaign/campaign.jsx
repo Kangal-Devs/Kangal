@@ -32,6 +32,7 @@ export function Campaign(){
     const [currentModuleId,setCurrentModuleId] = useState()
     const [currentModuleName,setCurrentModuleName] = useState()
 
+    const [userCommonLessons,setUserCommonLessons] = useState()
 
     const [currentCommonLessonPoints,setCurrentCommonLessonPoints] = useState()
     const [currentCommonLessonId,setCurrentCommonLessonId] = useState()
@@ -48,10 +49,38 @@ export function Campaign(){
         }
     },[])
 
+    useEffect(()=>{
+        
+        if(userId && currentModuleId){
+            
+            axios.get(`http://localhost:5000/api/get_all_user_common_lesson/${currentModuleId}/${userId}`)
+        .then((res)=>{
+           
+            if(res.data.message.length==0 || res.data.message.length==undefined){
+                axios.post("http://localhost:5000/api/create_user_common_lesson",{userId,moduleId:currentModuleId})
+                .then((res)=>{window.location.reload()})
+                .catch((err)=>{console.log(err)})
+            }
+            else{
+             
+                setUserCommonLessons(res.data.message)
+            }
+
+            // axios.get(`http://localhost:5000/api/get_all_user_common_lesson/${currentModuleId}/${userId}`)
+            // .then((res)=>{setUserCommonLessons(res.data.message)})
+            // .catch((err)=>{console.log(err)})
+
+        })
+        .catch((err)=>{console.log(err)})}
+    },[userId,currentModuleId])
+
+
+
     const [ad,setAd] = useState()
 
     useEffect(()=>{
-        if(currentModuleId){
+        console.log(userCommonLessons)
+        if(currentModuleId && userCommonLessons){
 
         setCurrentCommonLessonId(null)
         if((Math.random()*10) >5){
@@ -65,9 +94,9 @@ export function Campaign(){
         localStorage.setItem("currentModule",JSON.stringify(currentModuleId))
         axios.post("http://localhost:5000/api/get_all_common_lessons",{moduleId:currentModuleId})
         .then((res)=>{
-      
+            console.log(res.data)
             setLessons(res.data.message.map((common_lesson,i)=>{
-                if(i<30){
+                if(userCommonLessons[0].commonLesson == common_lesson._id){
                 return <CommonLesson 
                 funcAlter={[setCurrentCommonLessonId]}
                 itemId={common_lesson._id}
@@ -87,19 +116,20 @@ export function Campaign(){
                 color={common_lesson.color}
                 blocked={true}/>
                 }
+
+                
               
             }))
         })
         .catch((err)=>{console.log(err)})
         }
     }
-    },[currentModuleId])
+    },[currentModuleId,userCommonLessons])
 
     useEffect(()=>{
         if(currentModuleId){
             axios.get(`http://localhost:5000/api/get_module/${currentModuleId}`)
             .then((res)=>{
-                console.log(res)
                 setCurrentModuleName(res.data.message.name)
             })
             .catch((err)=>{console.log(err)})
@@ -108,7 +138,6 @@ export function Campaign(){
 
     useEffect(()=>{
         if(currentModuleName){
-            console.log(currentModuleName)
         }
     },[currentModuleName])
     useEffect(() => {

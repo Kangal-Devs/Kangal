@@ -17,6 +17,7 @@ import { Home } from './componentes/pages/home/home.jsx'
 import { Support } from './componentes/pages/support/support.jsx'
 import {createBrowserRouter,RouterProvider} from "react-router-dom"
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import { TaskTest } from './componentes/pages/task/task_test.jsx'
 
 
 const route = createBrowserRouter([{
@@ -34,6 +35,10 @@ const route = createBrowserRouter([{
 {
  path:"/task",
   element:<Task/>
+},
+{
+ path:"/task_test",
+  element:<TaskTest/>
 },
 {
   path:"/home",

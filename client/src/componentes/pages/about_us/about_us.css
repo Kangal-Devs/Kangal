@@ -21,7 +21,7 @@ body{
     height:100vh;
     overflow: hidden;
     overflow-y: scroll;
- background-color: rgb(21, 21, 21);
+ background-color: rgb(10, 10, 10);
 }
 
 #about_us_page1{
@@ -99,14 +99,14 @@ body{
 #slogan_button_start{
     
     padding:10px;
-    background-color: #AACE1C;
+    background:linear-gradient(222deg,rgb(255, 0, 221),rgb(204, 0, 255),rgb(140, 0, 255),rgb(38, 0, 255));
     color:black;
-    border:1px solid #AACE1C;
+    border:1px black solid;
     border-radius: 10px;
 }
 #slogan_button_start:hover{
-    background-color: #29292900;
-    color:#AACE1C;
+    background: #000000;
+    color:#8d1cce;
     border:1px solid ;
     
 }
@@ -156,7 +156,7 @@ body{
 }
 
 #about_us_text_green{
-    color: #AACE1C;
+    color: #6f1cce;
     font-size: 40px;
     font-family: 'Signika Negative';
 }

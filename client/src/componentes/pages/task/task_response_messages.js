@@ -17,5 +17,8 @@ export const wrongAnswerMessage = [
     "Não desista, quase lá!",
     "Continue tentando",
     "Que pena, não desista!",
-    "Passou perto!"
+    "Passou perto!",
+    "Por pouco!",
+    "Não foi dessa vez!",
+    "Errar faz parte!",
 ]

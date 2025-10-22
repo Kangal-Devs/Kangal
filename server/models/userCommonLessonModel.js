@@ -8,17 +8,17 @@ const userCommonLessonSchema = mongoose.Schema({
     },
     points:{
         type:Number,
-        required:[true,"userCommonLessonError2"]
+        // required:[true,"userCommonLessonError2"]
     },
     commonLesson:{
         type:mongoose.Schema.Types.ObjectId,
-        required:[true,"userCommonLessonError3"],
+        required:[true,"userCommonLessonError2"],
         ref:"CommonLesson"
 
     },
      user:{
         type:mongoose.Schema.Types.ObjectId,
-        required:[true,"userCommonLessonError4"],
+        required:[true,"userCommonLessonError3"],
         ref:"User"
 
     }

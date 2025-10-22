@@ -2,6 +2,9 @@ const {userGroupModel} = require("../models/userGroupModel.js")
 const {solicitationModel} = require("../models/solicitationModel.js")
 const {userModel} = require("../models/userModel.js")
 
+const {notificationModel} = require("../models/notificationModel.js")
+const {userNotification, userNotificationModel} = require("../models/userNotificationModel.js")
+
 const {groupModel} = require("../models/groupModel.js")
 const {messageModel} = require("../models/messageModel.js")
 // const {solicitationModel} = require("../models/solicitationModel.js")
@@ -70,14 +73,37 @@ exports.delete_user_group = async (req,res)=>{
 
             if(group.owner == userId){
             
-            const solictation = await solicitationModel.deleteMany({group:groupId})
-            const message = await messageModel.deleteMany({group:groupId})
-            const userGroup = await userGroupModel.deleteMany({group:groupId})
+                const notifications = await notificationModel.find({group:groupId})
+            //Deletando todas as relações com o grupo
+            // notifications.forEach(async(notification)=>{
+            //     await userNotificationModel.deleteMany({notification:notification._id})
+            // })
+            if(notifications.length){
+            const res = await Promise.all(notifications.map(async(notification)=>{
+                return await userNotificationModel.deleteMany({notification:notification._id})
+            }))
+            
+            const notificationsToDelete = await notificationModel.deleteMany({group:groupId})
+            }
+            const solictations = await solicitationModel.deleteMany({group:groupId})
+            const messages = await messageModel.deleteMany({group:groupId})
+            const userGroups = await userGroupModel.deleteMany({group:groupId})
+
+
             const group = await groupModel.findOneAndDelete({_id:groupId})
             return res.status(200).json({message:"dono?!"})
             }
             else{
                 const userGroup = await userGroupModel.findOneAndDelete({user:userId,group:groupId})
+
+                const notifications = await notificationModel.find({group:groupId})
+
+                if(notifications.length){
+                const res = await Promise.all(notifications.map(async(notification)=>{
+                return await userNotificationModel.deleteMany({notification:notification._id,user:userId})
+                }))
+                }
+
             return res.status(200).json({message:"deleted!!"})
             }
             

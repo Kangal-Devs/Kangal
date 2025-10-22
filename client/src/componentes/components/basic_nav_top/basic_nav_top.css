@@ -7,7 +7,7 @@
     top: 0;
     left: 0;
     position: absolute;
-    border-bottom: 1px solid #AACE1C;
+    border-bottom: 1px solid #ce1c93;
     width:100%;
 
     display: flex;
@@ -20,7 +20,7 @@
     column-gap: 10px;
     color: white;
     align-items: center;
-    background-color: #AACE1C;
+    background:linear-gradient(140deg,rgb(204, 0, 255),rgb(89, 0, 255));
     padding:10px 6% 10px 6%
 }
 #kangal_logo{
@@ -61,12 +61,12 @@
 }
 #basic_nav_top_button_login{
    
-    color: #AACE1C;
-    border:1px solid #AACE1C;
+    color: #6a5cec;
+    border:1px solid #6a5cec;
 }
 #basic_nav_top_button_login:hover{
     color: black;
-    background-color: #AACE1C;
+    background-color: #6a5cec;
 }
 #basic_nav_top_left{
     display: flex;

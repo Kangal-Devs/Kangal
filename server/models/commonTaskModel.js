@@ -31,9 +31,9 @@ const commonTaskSchema = mongoose.Schema({
     link:{
         type:String
     },
-    note:{
-        type:String
-    },
+    // note:{
+    //     type:String
+    // },
     image:{
         type:Buffer
     },
@@ -43,4 +43,4 @@ const commonTaskSchema = mongoose.Schema({
 
 const commonTaskModel = mongoose.model("CommonTask",commonTaskSchema)
 
-module.exports = commonTaskModel
+module.exports.commonTaskModel = commonTaskModel
