@@ -5,7 +5,6 @@ const {get_all_user_common_lesson,create_user_common_lesson} = require("../servi
 exports.create_user_common_lesson = async (req, res) => {
     try {
         const { userId, commonLessonId,moduleId } = req.body
-
         if(moduleId){
             const commonLesson = await commonLessonModel.findOne({module:moduleId})
 
@@ -16,10 +15,10 @@ exports.create_user_common_lesson = async (req, res) => {
             status: "toDo"
         }) 
 
-            res.status(200).json({ message: commonLesson })
+            return res.status(200).json({ message: commonLesson })
         }
 
-   
+     
         create_user_common_lesson({userId,commonLessonId})
         res.status(200).json({message:"atualizado"})
 
@@ -63,13 +62,25 @@ exports.delete_user_common_lesson = async (req, res) => {
 
 exports.get_all_user_common_lesson = async(req,res)=>{
     try {
-        var {moduleId:module_id,userId:user_id} = req.params
+        const {moduleId:module_id,userId:user_id} = req.params
 
-        var response1 = await get_all_user_common_lesson({module_id,user_id})
-        console.log("bu"+response1)
+        const response1 = await get_all_user_common_lesson({module_id,user_id})
+      
         res.status(200).json({message:response1})
     }
     catch (err) {
         res.status(500).json({ message: err.message })
+    }
+}
+
+exports.get_user_common_lesson = async(req,res)=>{
+    try{
+        const {commonLessonId:common_lesson_id} = req.params
+        const {userId:user_id} = req.params
+        const userCommonLesson = await userCommonLessonModel.findOne({commonLesson:common_lesson_id,user:user_id})
+        return res.status(200).json({message:userCommonLesson})
+    }
+    catch(err){
+         res.status(500).json({ message: err.message })
     }
 }

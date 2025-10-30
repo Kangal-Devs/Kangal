@@ -89,6 +89,10 @@ export function Task() {
     const [currentCommonLessonId, setCurrentCommonLessonId] = useState()
     const [currentCommonLessonPoints, setCurrentCommonLessonPoints] = useState()
 
+    useEffect(()=>{
+        setCurrentCommonLessonId(JSON.parse(localStorage.getItem("currentCommonLesson")))
+    },[])
+
     const [userResponse, setUserResponse] = useState()
     const [saveUserResponse, setSaveUserResponse] = useState()
     // commonTaskTypes : select,toComplete,explanation,toCorrect,advertising
@@ -130,17 +134,42 @@ export function Task() {
     const [countAllCommonTask,setCountAllCommonTask] = useState("")
     const [currentCountCommonTask,setCurrentCountCommonTask] = useState(0)
 
+    const [isCommonLessonAlreadyDid,setIsCommonLessonAlreadyDid] = useState()
+
+    useEffect(()=>{
+        if(currentCommonLessonId){
+        axios.get(`http://localhost:5000/api/get_user_common_lesson/${currentCommonLessonId}/${userId}`)
+        .then((res)=>{
+            console.log(res.data.message.status)
+            if(res.data.message.status == "did"){
+                setIsCommonLessonAlreadyDid(true)
+            }
+            else{
+                setIsCommonLessonAlreadyDid(false)
+            }
+        })
+        .catch((err)=>{console.log(err)})
+        }
+    },[currentCommonLessonId,userId])
+
     const finishLesson = useCallback(()=>{
+
+        if(isCommonLessonAlreadyDid){
+            return navigate("/campaign")
+        }
+
         const newUserXp = Number(userXp)+Number((countCorrectUserAnswer/countAllCommonTask * currentCommonLessonPoints).toFixed(0))
         console.log(newUserXp)
         axios.put(`http://localhost:5000/api/user_update/${userId}`,{xp:newUserXp},{ withCredentials: true })
         .then((res)=>{
-            axios.post("http://localhost:5000/api/create_user_common_lesson",{userId,currentCommonLessonId})
-            .then((res)=>{console.log(res)})
+            axios.post("http://localhost:5000/api/create_user_common_lesson",{userId,commonLessonId:currentCommonLessonId})
+            .then((res)=>{
+                navigate("/campaign")
+            })
             .catch((err)=>{console.log(err)})
         })
         .catch((err)=>{console.log(err)})
-    },[userXp,countCorrectUserAnswer,countAllCommonTask,currentCommonLessonPoints,userId])
+    },[userXp,countCorrectUserAnswer,countAllCommonTask,currentCommonLessonPoints,userId,currentCommonLessonId])
 
     useEffect(()=>{
         if(localStorage.getItem("currentCommonLesson")){
@@ -541,7 +570,19 @@ export function Task() {
                                     <button onClick={()=>{window.location.reload()}}> <img src={return_img}/></button>
                                     <button id="finish_lesson" onClick={()=>{
                                         finishLesson()
-                                    }}>Terminar +{(countCorrectUserAnswer/countAllCommonTask * currentCommonLessonPoints).toFixed(0)}XP</button>
+                                    }}>
+                                        Terminar 
+                                        {isCommonLessonAlreadyDid?
+                                        null
+                                        :
+                                        " +"+
+                                        (countCorrectUserAnswer/countAllCommonTask * currentCommonLessonPoints).toFixed(0)
+                                        +
+                                        " XP"}
+                                        
+                                        
+                                        
+                                        </button>
                                 </div>
                                 
                                    {/* {time} {countCorrectUserAnswer}{countAllCommonTask}{countCorrectUserAnswer/countAllCommonTask*100} */}

@@ -158,7 +158,7 @@
 #confetti{
   position: absolute;
   width: 60vw;
-
+  display: none;
 
 }
 #confetti{

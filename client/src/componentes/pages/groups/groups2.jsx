@@ -13,7 +13,7 @@ import { Member } from "../../components/member/member.jsx"
 import { Invited } from "../../components/invited/invited.jsx"
 import arrow from "../../../assets/specific_page/group/arrow.png"
 import submit from "../../../assets/specific_page/group/submit.png"
-import more from "../../../assets/specific_page/group/more.png"
+import more from "../../../assets/specific_page/group/more1.png"
 import emogi from "../../../assets/specific_page/group/emogi.png"
 import report from "../../../assets/specific_page/group/report.png"
 import remove from "../../../assets/specific_page/group/remove.png"
@@ -32,6 +32,12 @@ import lup from "../../../assets/specific_page/group/lup.png"
 import copy_github from "../../../assets/specific_page/group/copy_github.png"
 import paper_error from "../../../assets/all_pages/error/paper_error.png"
 import select_group from "../../../assets/specific_page/group/select_group.png"
+import default_lesson from "../../../assets/specific_page/group/default_lesson_picture.jpg"
+import ajuda from "../../../assets/specific_page/group/help.png"
+import select from "../../../assets/specific_page/group/select.png"
+import explanation from "../../../assets/specific_page/group/explanation.png"
+import code from "../../../assets/specific_page/group/free.png"
+import task_image from "../../../assets/specific_page/group/task_image1.png"
 export function Groups() {
 
     const navigate = useNavigate()
@@ -130,9 +136,14 @@ export function Groups() {
 
     const [emogiBarStatus, setEmogiBarStatus] = useState(false)
     const [createGroupStatus, setCreateGroupStatus] = useState(false)
-    const [aboutGroupStatus, setAboutGroupStatus] = useState()
-    const [chatColorStatus, setChatColorStatus] = useState()
-
+    const [aboutGroupStatus, setAboutGroupStatus] = useState(false)
+    const [chatColorStatus, setChatColorStatus] = useState(false)
+    const [createLessonStatus,setCreateLessonStatus] = useState(false)
+    const [createTaskStatus,setCreateTaskStatus] = useState(false)
+    const [helpTaskStatus,setHelpTaskStatus] = useState(false)
+    const createLessonImageRef = useRef()
+    const createTaskImageRef = useRef()
+    
     const [updateMessageStatus, setUpdateMessageStatus] = useState(false)
 
     const [currentMessageValue,setCurrentMessageValue] = useState("")
@@ -158,6 +169,41 @@ export function Groups() {
 
     const updateAlterImageRef = useRef()
 
+    const [createTaskDescription2,setCreateTaskDescription2] = useState("")
+    const [createTaskDescription1,setCreateTaskDescription1] = useState("")
+    const [createTaskImageInput,setCreateTaskImageInput] = useState()
+    const [createTaskImage,setCreateTaskImage] = useState()
+    const [createTaskType,setCreateTaskType] = useState()
+
+    const [createLessonName,setCreateLessonName] = useState()
+    const [createLessonDescription,setCreateLessonDescription] = useState()
+    // createLessonImageInput é a o valor no qual que o usuario põe no campo file de imagem para criar a lissão, e createLessonImage é a imagem a mostra para o usuario, se a createLessonImageInput for vazia createLessonImage recebera uma imagem default para aparecer
+
+    const [createLessonImageInput,setCreateLessonImageInput] = useState()
+    const [createLessonImage,setCreateLessonImage] = useState()
+
+    useEffect(()=>{
+        
+        if(createLessonStatus){
+            setCreateLessonName("")
+            setCreateLessonDescription("")
+            setCreateLessonImageInput()
+            setCreateLessonImage(default_lesson)
+         
+        }
+    },[createLessonStatus])
+
+    useEffect(()=>{
+        if(createLessonStatus){
+            if(createLessonImageInput){
+                setCreateLessonImage(URL.createObjectURL(createLessonImageInput)) 
+            }
+            else{
+                setCreateLessonImage(default_lesson)
+            }
+        }
+    },[createLessonImageInput,createLessonStatus])
+
     const reportMessage = useCallback(()=>{
         axios.post("http://localhost:5000/api/create_message_report",{userId,messageId:currentMessageId,reason:reportMessageReason})
         .then((res)=>{
@@ -177,7 +223,13 @@ export function Groups() {
             })
     }, [currentMessageId])
 
-  
+    useEffect(()=>{
+        if(createTaskStatus){
+            setCreateTaskType("explanation")
+        }
+    },[createTaskStatus])
+
+
 
     useEffect(() => {
 
@@ -631,7 +683,7 @@ export function Groups() {
                                             <div id="group_input_bar">
 
                                                 <div id="group_input_bar_principal">
-                                                    <button id="input_add" className="inputs_chat"><img src={more} /></button>
+                                                    <button id="input_add" onClick={()=>{setCreateLessonStatus(true)}} className="inputs_chat"><img src={more} /></button>
                                                     <div id="input_part">
                                                         <button id="input_emogi" onClick={() => { setEmogiBarStatus(true) }}>
                                                             <img src={emogi} />
@@ -1042,6 +1094,104 @@ export function Groups() {
                                     </div>
                                 </div>
                             </div>
+                        :null
+                    }
+                    {
+                        createLessonStatus?
+                        (<div id="create_lesson_background" onClick={()=>{setCreateLessonStatus(false)}}>
+                            <div id="create_lesson_bar" onClick={(e)=>{e.stopPropagation()}}>
+                                <div id="create_lesson_bar_title">
+                                    <h1>Criar lição</h1>
+                                    <button onClick={()=>{setCreateLessonStatus(false)}}>X</button>
+                                </div>
+                                <div id="create_lesson_bar_info">
+                                    <label> Título da lição</label>
+                                    <input placeholder="Lição de..." type="text" onChange={(e)=>{setCreateLessonName(e.target.value)}}/>
+                                    <label>Descrição</label>
+                                    <textarea placeholder="Essa lição..." onChange={(e)=>{setCreateLessonDescription(e.target.value)}}/>
+                                </div>
+                                <div id="create_lesson_bar_thumbnail">
+                                    <div id="create_lesson_bar_thumbnail_title">
+                                    <label>Thumbnail</label>
+                                    </div>
+                                    <div id="create_lesson_bar_thumbnail_principal">
+                                    <img src={createLessonImage}/>
+                                    </div>
+                                    <button onClick={()=>{createLessonImageRef.current.click()}}>Mudar thumbnail</button>
+                                    <input id="create_lesson_bar_thumbnail_input"type="file" ref={createLessonImageRef} onChange={(e)=>{setCreateLessonImageInput(e.target.files[0])}}/>
+                                </div>
+                                <div id="create_lesson_bar_tasks_title">
+                                    <p id="create_tasks_button" onClick={()=>{setCreateTaskStatus(true)}}>+ Criar exercício</p>
+                                    <p id="create_tasks_type">Tipo</p>
+                                    <div></div>
+                                </div>
+                                <div id="create_lesson_bar_tasks"></div>
+                                <div id="create_lesson_bar_buttons">
+                               
+                                    <button onClick={()=>{setCreateLessonStatus(false)}} id="cancel_lesson_button">Cancelar</button>
+                                    <button onClick={()=>{}} id="create_lesson_button">Criar lição</button>
+                                </div>
+                            </div>
+
+                        </div>)
+                        :null
+                    }
+                    {
+                        createTaskStatus?
+                        (<div id="create_task_background" onClick={()=>{setCreateTaskStatus(false)}}>
+                            <div id="create_task_bar" onClick={(e)=>{e.stopPropagation()}}>
+                                <div id="create_task_bar_title">
+                                    <h1>Criar exercício</h1>
+                                    <button onClick={()=>{setCreateTaskStatus(false)}}>X</button>
+                                </div>
+                                <div id="create_task_bar_type_title">
+                                   <p>Tipo:</p> <button onClick={()=>{setHelpTaskStatus(true)}}><img src={ajuda}/>Ajuda</button>
+                                </div>
+                                <div id="create_task_bar_type">
+                                    <button onClick={()=>{setCreateTaskType("explanation")}}>Explicação
+                                        <div><img src={explanation}/></div>
+                                    </button>
+                                    <button onClick={()=>{setCreateTaskType("select")}}>Selecionar
+                                        <div><img src={select}/></div>
+                                    </button>
+                                    <button onClick={()=>{setCreateTaskType("free")}}>Código
+                                        <div><img src={code}/></div>
+                                    </button>
+                                </div>
+                                {
+                                    createTaskType=="explanation"?
+                                    <div id="bar_task_explanation">
+                                        <h1>Explicação</h1>
+                                        <label>Título</label>
+                                        <input type="text"/>
+                                        <label>Descrição 1</label>
+                                        <textarea/>
+                                        <button onClick={()=>{createTaskImageRef.current.click()}}><img src={task_image}/></button>
+                                        <input type="file" ref={createTaskImageRef}/>
+                                         <label>Descrição 2</label>
+                                        <textarea/>
+                                        </div>
+                                    :
+                                    createTaskType=="select"?
+                                    <div>Seleção</div>:
+                                    createTaskType=="free"?
+                                    <div>Código</div>:null
+                                }
+                                <div id="create_task_bar_buttons">
+                                    <button id="cancel_task_button">Cancelar</button>
+                                    <button id="create_task_button">Criar</button>
+                                </div>
+                            </div>
+                        </div>)
+                        :null
+                    }
+                    {
+                        helpTaskStatus?
+                        (<div id="help_task_background" onClick={()=>{setHelpTaskStatus(false)}}>
+                            <div id="help_task_bar" onCanPlay={(e)=>{e.stopPropagation()}}>
+                                
+                            </div>
+                        </div>)
                         :null
                     }
 

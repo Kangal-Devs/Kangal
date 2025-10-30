@@ -6,4 +6,5 @@ router.post("/create_user_common_lesson",userCommonLessonController.create_user_
 router.put("/update_user_common_lesson",userCommonLessonController.update_user_common_lesson)
 router.delete("/delete_user_common_lesson/:userCommonLessonId",userCommonLessonController.delete_user_common_lesson)
 router.get("/get_all_user_common_lesson/:moduleId/:userId",userCommonLessonController.get_all_user_common_lesson)
+router.get("/get_user_common_lesson/:commonLessonId/:userId",userCommonLessonController.get_user_common_lesson)
 module.exports.router = router

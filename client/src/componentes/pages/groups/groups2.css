@@ -1153,3 +1153,346 @@ color: #ffffff;
   background-color: rgb(238, 0, 0);
  
 }
+#create_lesson_background,#create_task_background,#help_task_background{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top:0;
+  background-color: #ffffff00;
+  z-index: 2;
+
+}
+#create_lesson_bar{
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.295);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows:0.5fr 3fr 0.5fr 1fr 0.6fr;
+  padding:5px;
+  height: 50%;
+  width: 50%;
+  max-width: 800px;
+  padding: 10px;
+  background-color: #242424;
+  border-radius: 10px;
+}
+#create_lesson_bar_title{
+  display: flex;
+  color: white;
+  font-family: Signika Negative;
+  justify-content: space-between;
+
+grid-column: span 2;
+  width: 100%;
+  height: 100%;
+}
+#create_lesson_bar_title button{
+  height: 25px;
+  aspect-ratio: 1/1;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #0e0e0e;
+  color: white;
+}
+#create_lesson_bar_info{
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 5px;
+}
+#create_lesson_bar_info label,#create_lesson_bar_thumbnail_title label{
+  margin-top: 5px;
+  font-family: Signika Negative;
+  color: rgb(206, 206, 206);
+}
+#create_lesson_bar_info input,#create_lesson_bar_info textarea{
+  color:white;
+  font-family: Signika Negative;
+    font-size: 20px;
+    padding:10px;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    border-radius: 5px;
+    transition: all 0.5s ease-in-out;
+}
+#create_lesson_bar_info textarea{
+flex-grow: 1;
+}
+#create_lesson_bar_thumbnail{
+  justify-content: space-between;
+  border:10px solid #242424;
+  padding: 5px;
+  border-radius: 0px;
+  display:flex;
+flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: rgb(27, 27, 27);
+}
+#create_lesson_bar_thumbnail button{
+  cursor: pointer;
+  padding: 7px 15px 7px 15px; 
+  background-color: transparent;
+  border: 1px solid;
+  color: white;
+  border-radius: 5px;
+}
+#create_lesson_bar_thumbnail button:hover{
+  color: rgb(32, 32, 32);
+  background-color: rgb(218, 218, 218);
+}
+#create_lesson_bar_tasks{
+  background-color:rgba(0, 0, 0, 0.178);
+  grid-column: span 2;
+}
+#create_lesson_bar_tasks_title{
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.3fr;
+
+  grid-column: span 2;
+}
+#create_lesson_bar_tasks_title p{
+
+  display: flex;
+  align-items: center;
+}
+#create_tasks_button{
+  color: rgb(0, 153, 255);
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+#create_tasks_button:hover{
+  background-color: rgba(0, 0, 0, 0.205);
+}
+#create_lesson_bar_buttons{
+
+  grid-column: span 2;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  box-sizing: border-box;
+  padding: 5px;
+  column-gap: 5px;
+}
+#create_lesson_bar_buttons button{
+  cursor: pointer;
+  padding: 5px 10px 5px 10px;  
+  background-color: transparent;
+  border: 1px solid;
+  border-radius: 5px;
+  font-size: 15px;
+}
+#cancel_lesson_button{
+  color: rgb(187, 187, 187);
+}
+#cancel_lesson_button:hover{
+ color: rgb(224, 224, 224);
+}
+#create_lesson_button{
+  color: rgba(187, 255, 0, 0.719);
+}
+#create_lesson_button:hover{
+  color: rgba(39, 39, 39, 0.719);
+  background-color: rgba(187, 255, 0, 0.719);
+
+}
+#create_lesson_bar_thumbnail_title{
+  width: 100%;
+  /* background-color: blue; */
+}
+#create_lesson_bar_thumbnail_input,#create_task_bar input[type="file"]{
+  display: none;
+}
+#create_lesson_bar_thumbnail_principal{
+  width: 15vw;
+  overflow: hidden;
+  aspect-ratio: 3/2;
+  max-width: 190px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.219);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+#create_lesson_bar_thumbnail_principal img{
+  height: 100%;
+}
+#create_task_bar_title{
+  display: flex;
+  width: 100%;
+}
+#create_task_bar{
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.295);
+
+
+  padding:5px;
+  min-height: 50%;
+  width: 50%;
+  max-width: 800px;
+  padding: 10px;
+  background-color: #242424;
+  border-radius: 10px;
+}
+#create_task_bar_title{
+color: white;
+  font-family: Signika Negative;
+  justify-content: space-between;
+}
+#create_task_bar_title button{
+  height: 25px;
+  aspect-ratio: 1/1;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #0e0e0e;
+  color: white;
+}
+#create_task_bar_type_title{
+  align-items: end;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+#create_task_bar_type_title p{
+  color: #c7c5c5;
+}
+#create_task_bar_type_title button{
+  transition: 0.17s ease-in-out;
+  opacity: 0.4;
+  cursor: pointer;
+  padding: 5px 8px 5px 8px;
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: rgb(163, 163, 163);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 5px;
+}
+#create_task_bar_type_title button:hover{
+  opacity: 1;
+}
+#create_task_bar_type_title button img{
+  height: 15px;
+}
+#create_task_bar_type{
+  margin-top: 5px;
+  background-color: rgb(29, 29, 29);
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  box-sizing: border-box;
+  padding: 5px;
+  column-gap: 10px;
+}
+#create_task_bar_type button{
+  opacity: 0.4;
+  color: white;
+ background-color: transparent;
+ border: none;
+ font-family: Signika Negative;
+}
+#create_task_bar_type button div{
+  cursor: pointer;
+  margin-top: 5px;
+  border: 2px solid white;
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 7px;
+}
+#create_task_bar_type button div img{
+  height: 30px;
+}
+#bar_task_explanation{
+  display: flex;
+  align-items: baseline;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 5px;
+  margin-top: 5px;
+  overflow-y: auto;
+  max-height: 300px;
+  background-color: rgb(41, 41, 41);
+  height: 300px;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(29, 29, 29) rgba(0, 0, 255, 0);
+}
+#bar_task_explanation h1{
+  color: rgb(207, 207, 207);
+  font-size: 25px;
+  font-family: Signika Negative;
+  
+}
+#bar_task_explanation label{
+  margin-top: 10px;
+  color: rgb(207, 207, 207);
+
+  font-family: Signika Negative;
+  
+}
+#create_task_bar_buttons{
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  column-gap: 10px;
+}
+#create_task_bar_buttons button{
+  margin-top: 10px;
+  cursor: pointer;
+  padding: 5px 10px 5px 10px;
+  border: 1px solid;
+  font-size: 15px;
+  border-radius: 5px;
+  background-color: transparent;
+}
+#create_task_button{
+  color: rgb(31, 165, 255);
+}
+#create_task_button:hover{
+  background-color:rgb(31, 165, 255);
+  color: rgb(27, 27, 27);
+}
+#cancel_task_button{
+  color: rgb(179, 179, 179);
+}
+#cancel_task_button:hover{
+  color: rgb(226, 226, 226);
+}
+#bar_task_explanation textarea,#bar_task_explanation input{
+color:white;
+  font-family: Signika Negative;
+    font-size: 20px;
+    padding:10px;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    border-radius: 5px;
+    transition: all 0.5s ease-in-out;
+}
+#bar_task_explanation textarea{
+  min-height: 80px;
+  width: 400px;
+}
+#bar_task_explanation button{
+  transition: 0.16s ease-in-out;
+  opacity: 0.6;
+  cursor: pointer;
+  margin-top: 10px;
+  background-color: transparent;
+  border: none;
+}
+#bar_task_explanation button img{
+  height: 70px;
+  background-color: rgb(43, 43, 43);
+  border: 2px dashed #0066cc;
+  background:linear-gradient(225deg,rgb(43, 43, 43),rgb(34, 34, 34));
+}
+#bar_task_explanation button:hover{
+  opacity: 1;
+}

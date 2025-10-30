@@ -32,7 +32,8 @@ export function Campaign(){
     const [currentModuleId,setCurrentModuleId] = useState()
     const [currentModuleName,setCurrentModuleName] = useState()
 
-    const [userCommonLessons,setUserCommonLessons] = useState()
+    const [userCommonLessons,setUserCommonLessons] = useState([])
+    const [countUserCommonLessons,setCountUserCommonLessons] = useState(0)
 
     const [currentCommonLessonPoints,setCurrentCommonLessonPoints] = useState()
     const [currentCommonLessonId,setCurrentCommonLessonId] = useState()
@@ -74,12 +75,22 @@ export function Campaign(){
         .catch((err)=>{console.log(err)})}
     },[userId,currentModuleId])
 
+    useEffect(()=>{
+        if(userCommonLessons.length){
+            setCountUserCommonLessons(userCommonLessons.length)
+        }
+    },[userCommonLessons])
 
+    useEffect(()=>{
+        if(countUserCommonLessons){
+            console.log(countUserCommonLessons)
+        }
+    },[countUserCommonLessons])
 
     const [ad,setAd] = useState()
 
     useEffect(()=>{
-        console.log(userCommonLessons)
+     
         if(currentModuleId && userCommonLessons){
 
         setCurrentCommonLessonId(null)
@@ -96,7 +107,7 @@ export function Campaign(){
         .then((res)=>{
             console.log(res.data)
             setLessons(res.data.message.map((common_lesson,i)=>{
-                if(userCommonLessons[0].commonLesson == common_lesson._id){
+                if(i<=countUserCommonLessons-1){
                 return <CommonLesson 
                 funcAlter={[setCurrentCommonLessonId]}
                 itemId={common_lesson._id}
@@ -124,7 +135,7 @@ export function Campaign(){
         .catch((err)=>{console.log(err)})
         }
     }
-    },[currentModuleId,userCommonLessons])
+    },[currentModuleId,countUserCommonLessons])
 
     useEffect(()=>{
         if(currentModuleId){
