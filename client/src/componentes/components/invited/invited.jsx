@@ -29,11 +29,11 @@ export function Invited({id,image,name,toInvite,currentGroupId,userId,loadUsersI
         
          {  
          userId!=id?
-            toInvite?<button className="button_to_invite" onClick={()=>{createSolicitation()}}>Convidar</button>:<button className="button_invited" onClick={()=>{removeSolicitation()}}>Cancelar Solic.</button>:<label></label>
+            toInvite?<button className="button_to_invite" onClick={()=>{createSolicitation()}}>Convidar</button>:<button className="button_invited" onClick={()=>{removeSolicitation()}}>Cancelar</button>:<label></label>
         }
    
     
         </div>
-        <div className="invited_decoration"></div>
+     
     </div>)
 }

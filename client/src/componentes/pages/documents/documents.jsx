@@ -7,11 +7,11 @@ import { NavLeft } from "../../components/nav_left/nav_left.jsx"
 import axios from "axios"
 import { Upgrade } from "../../components/upgrade/upgrade.jsx"
 import { Alert } from "../../components/alert/alert.jsx"
-import select_theme from "../../../assets/specific_page/documents/select_theme.png"
-import select_topic from "../../../assets/specific_page/documents/select_topic.png"
+import select_theme from "../../../assets/specific_page/documents/select_theme.webp"
+import select_topic from "../../../assets/specific_page/documents/select_topic1.webp"
 import { Document } from "../../components/document/document.jsx"
 import note3 from "../../../assets/specific_page/documents/note.png"
-import collection from "../../../assets/specific_page/documents/collection1.png"
+import collection from "../../../assets/specific_page/documents/collection2.png"
 import collection_note from "../../../assets/specific_page/documents/collection_note.png"
 export function Documents() {
 
@@ -164,19 +164,22 @@ export function Documents() {
                         {!currentSubjectId ?
                             <div id="documents_content_empty">
                                 <img src={select_theme} />
+                                <p>Selecione algum módulo</p>
                             </div>
                             :
                             <div id="documents_content_principal">
                                 {!currentDocumentId ?
                                     <div id="about_document_empty">
                                         <img src={select_topic} />
+                                        <p>Selecione algum tópico</p>
                                     </div> :
                                     <div id="about_document">
                                         <div id="collection_part">
 
                                             <button onClick={()=>{setCreateCollectionStatus(true)}}>
-
+                                                
                                                 <img src={collection} />
+                                                Salvar documento
                                             </button>
                                         </div>
                                         <h1>{currentDocumentTitle}</h1>

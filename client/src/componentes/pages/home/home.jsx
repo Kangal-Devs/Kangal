@@ -11,7 +11,7 @@ import add from "../../../assets/specific_page/home/add3.jpg"
 import { generateLevelTable } from "../../../levelGenerator.js"
 
 import statistic_icon from "../../../assets/specific_page/home/statistic_icon.png"
-import collection from "../../../assets/specific_page/home/collection.png"
+import collection from "../../../assets/specific_page/home/collection2.png"
 import { useNavigate } from "react-router-dom"
 
 import games_icon from "../../../assets/specific_page/home/games_icon.png"
@@ -21,7 +21,7 @@ import groups_icon from "../../../assets/specific_page/home/groups_icon.png"
 
 import { Upgrade } from "../../components/upgrade/upgrade.jsx"
 import { Alert } from "../../components/alert/alert.jsx"
-import empty_collections from "../../../assets/specific_page/home/empty_collections1.png"
+import empty_collections from "../../../assets/specific_page/home/empty_collection.webp"
 export function Home() {
 
     // const resetar = useCallback(()=>{
@@ -36,6 +36,7 @@ export function Home() {
      const [userCreated, setUserCreated] = useState(0)
      const [countCollection,setCountCollection] = useState(0)
     const [countOwner,setCountOwner] = useState(0)
+    const [commonLessonsDid,setCommonLessonsDid] = useState(0)
 
     const navigate = useNavigate()
     const [levelWidth, setLevelWidth] = useState()
@@ -91,6 +92,9 @@ export function Home() {
         .then((res)=>{setCountOwner(res.data.message)})
         .catch((err)=>{console.log(err)})
     
+        axios.get(`http://localhost:5000/api/get_count_common_lesson_did/${userId}`)
+        .then((res)=>{setCommonLessonsDid(res.data.message)})
+        .catch((err)=>{console.log(err)})
     }
     },[userId])
 
@@ -329,7 +333,7 @@ export function Home() {
                                                 <img src={statistic_icon}/>
                                                 Estatística:</div>
                                                 <div id="statistics">
-                                                    <div><h2>--</h2><p>Lições feitas</p></div>
+                                                    <div><h2>{commonLessonsDid}</h2><p>Lições feitas</p></div>
                                                     <div><h2>--</h2><p>Lições criadas</p></div>
                                                     <div><h2>{joinedGroups}</h2><p>Grupos que participa</p></div>
                                                     <div><h2>{countOwner}</h2><p>Grupos criados</p></div>
@@ -412,6 +416,7 @@ export function Home() {
                                         que você acha ser importantes aqui.</p>
                                     {!collections ? <div id="collection_bar_bottom_empty">
                                         <img src={empty_collections} />
+                                        <p>Sem documentos salvo</p>
                                         <button onClick={() => { navigate("/documents") }}>Salvar documentos</button>
                                     </div> :
                                         <div id="collection_bar_bottom">

@@ -99,7 +99,7 @@ body{
 #slogan_button_start{
     
     padding:10px;
-    background:linear-gradient(222deg,rgb(255, 0, 221),rgb(204, 0, 255),rgb(140, 0, 255),rgb(38, 0, 255));
+    background:linear-gradient(222deg,#D0FE1D);
     color:black;
     border:1px black solid;
     border-radius: 10px;

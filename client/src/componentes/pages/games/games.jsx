@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, use } from "react"
 import { useNavigate } from "react-router-dom"
 import { TokenInvalid } from "../../components/token_invalid/token_invalid.jsx"
 import { EnhancedNavTop } from "../../components/enhanced_nav_top/enhanced_nav_top.jsx"
+import background from "../../../assets/specific_page/game/background1.jpg"
 import { NavLeft } from "../../components/nav_left/nav_left.jsx"
 import axios from "axios"
 import { Upgrade } from "../../components/upgrade/upgrade.jsx"
@@ -170,12 +171,24 @@ export function Games() {
                         <div id="games_content_principal">
 
                             {!currentGameId ?
-                                (<div id="list_games">
+                                (<>
+                                
+                                <div id="list_games">
+                                    
+                                       
+                                        <div id="decoration_games_background">
+                                             <img src={background}/>
+                                        </div>
+                                        <div id="decoration_games_principal">
+                                            <h1>Jogos</h1>
+                                            <p>Aprenda conceitos de programação com simples jogos</p>
+                                        </div>
+                                    
                                     {
                                         games
                                     }
 
-                                </div>) :
+                                </div></>) :
 
                                 !currentSkillId?(<div id="about_game">
                                     <div>

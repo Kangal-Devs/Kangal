@@ -8,7 +8,7 @@
   height: 100vh;
   width: 100vw;
  
-  background-color: rgb(34, 34, 34);
+  background-color: rgb(31, 31, 34);
 }
 
 #groups_content {
@@ -53,14 +53,21 @@
   }
 }
 #groups_content_empty{
-
+  
+  background: linear-gradient(0deg,rgb(22, 22, 24),rgb(31, 32, 34));
+  flex-direction: column;
   display: flex;
+
   align-items: center;
   justify-content: center;
 }
+#groups_content_empty p{
+  color: rgb(97, 97, 97);
+}
 #groups_content_empty img{
-  width: 70%;
-  max-width: 700px;
+  width: 40%;
+  max-width: 500px;
+  opacity: 0.5;
 }
 #groups_content_principal_chat_part{
   display: grid;
@@ -72,11 +79,11 @@
 }
 #groups_content_principal_members_part{
   padding:10px;
-background-color: #2F2F2F;
+background-color: #27272b;
 }
 #groups_content_principal_member_part{
   padding:10px;
-  background-color: #2F2F2F;
+  background-color: #27272b;
   display: grid;
   grid-template-rows: 2fr 8fr;
 }
@@ -114,6 +121,7 @@ background-color: #2F2F2F;
   height:20px;
 }
 #invite_user_background,#remove_user_background,#report_user_background{
+  overflow: hidden;
   width: 100vw;
   height:100vh;
   z-index: 1;
@@ -124,18 +132,29 @@ background-color: #2F2F2F;
   display: flex;
 }
 #invite_user_bar{
+  
+  animation-name: invite_animation;
+    animation-duration: 0.4s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
   overflow: hidden;
   display: grid;
   grid-template-columns: 3fr 2fr;
   max-width: 800px;
   height:50%;
   width:50%;
-  background-color: #2F2F2F;
-  border: 2px;
+  background-color: #2f2f2f;
+  border: 1px solid rgba(17, 0, 255, 0);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.363);
   border-radius: 10px;
 }
-
+@keyframes invite_animation {
+    0%{
+        opacity: 0;
+       margin-top: 100vh;
+       transform: scale(0.2);
+    }
+}
 #invited_users_part {
   height: 100%;
   width: 100%;
@@ -149,13 +168,16 @@ background-color: #2F2F2F;
 #invited_users_bottom {
   height: 100%;
   width: 100%;
-  
+  background: linear-gradient(0deg,rgba(255, 140, 0, 0.068),rgba(22, 22, 105, 0.048));
   display: flex;
   justify-content: center;
   overflow: hidden; /* impede deformações */
 }
 
 #invited_users_bottom_list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   overflow-y: auto; /* melhor que scroll direto */
   height: 95%; /* ocupa toda a altura do grid */
   width: 95%;
@@ -200,10 +222,13 @@ background-color: #2F2F2F;
   width: 100%;
   display: grid;
   grid-template-rows: 1fr 3fr;
-  background-color: rgb(31, 31, 31);
+  background-color: rgb(31, 31, 34);
 }
 #invite_user_bottom{
-
+align-items: center;
+justify-content: start;
+display: flex;
+flex-direction: column;
 }
 
 #invite_user_top{
@@ -283,7 +308,7 @@ height: 20px;
 }
   /* ITEM SOBRE O CHAT ---------------------------------------------------------------------------*/
 #group_chat{
-  scrollbar-color: rgb(54, 52, 52) transparent;
+  scrollbar-color: rgb(52, 52, 54) transparent;
   padding: 20px;
   min-height: 100%;
   max-height: 0;
@@ -436,6 +461,7 @@ background-color: rgb(14, 14, 14);
   height: 80%;
 }
 #create_group_background{
+  overflow: hidden;
   width:100vw;
   height: 100vh;
   position: absolute;
@@ -444,6 +470,11 @@ background-color: rgb(14, 14, 14);
 }
 
 #create_group_bar{
+  animation-name: create-group-animation;
+  animation-delay:0s;
+  animation-duration: 0.25s;
+  animation-iteration-count: 1;
+  border: 1px solid rgba(255, 255, 255, 0.062);
   border-radius: 10px;
   overflow: hidden;
   width: fit-content;
@@ -455,13 +486,21 @@ background-color: rgb(14, 14, 14);
   width: fit-content;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.288);
   width:fit-content;
-  background-color: rgb(59, 59, 59);
+  background-color: rgb(46, 48, 53);
+}
+@keyframes create-group-animation{
+  0%{
+     opacity: 0;
+       margin-left: -40vh;
+       margin-top: -200px;
+       transform: scale(0.1);
+  }
 }
 #create_group_bar_top{
   font-family: Signika Negative;
   color: aqua;
   column-gap: 10px;
-  background-color: rgba(0, 255, 213, 0.055);
+  background-color: rgba(0, 20, 17, 0.212);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -504,16 +543,16 @@ background-color: rgb(14, 14, 14);
   margin-top: 10px;
   padding: 5px;
   width: 30%;
-  border-radius:7px;
-  color: white ;
+  border-radius:5px;
+  color: rgba(255, 255, 255, 0.651) ;
   background-color: transparent;
-  border: 2px solid ;
-  font-family: Silkscreen;
+  border: 1px solid ;
+ 
   cursor: pointer;
 }
 #create_group_bar button:hover{
    color: rgb(58, 58, 58) ;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.918);
 }
 /* @media (min-width:1290px){
   #create_group_bar{
@@ -552,6 +591,7 @@ background-color: rgb(14, 14, 14);
   background-color:rgba(255, 145, 0, 0.226);
 }
 #about_group_background{
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -561,14 +601,24 @@ background-color: rgb(14, 14, 14);
   top:0;
 }
 #about_group_bar{
-  /* width:50%;
-  max-width: 700px; */
+  border: 1px solid rgba(255, 255, 255, 0.062);
+  animation-name: about-group-animation;
+    animation-duration: 0.4s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
   min-width: 600px;
   width: fit-content;
   padding:20px;
-  background-color: #2F2F2F;
+  background-color: #28292c;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.288);
   border-radius: 10px;
+}
+@keyframes about-group-animation {
+  0%{
+        opacity: 0;
+       margin-top: -100vh;
+       transform: scale(0.2);
+    }
 }
 #about_group_bar_top{
   column-gap: 15px;
@@ -674,9 +724,10 @@ background-color: transparent;;
 
 }
 #leave_group_bar{
+  border: 1px solid rgba(255, 255, 255, 0.062);
   width: 30%;
   max-width: 450px;
-  background-color: #2F2F2F;
+  background-color: #232429;
   padding:10px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.267);
@@ -738,6 +789,7 @@ color: #ffffff;
   top:0;
 }
 #update_group_bar{
+  border: 1px solid rgba(255, 255, 255, 0.062);
   z-index: 3;
   height: fit-content;
   width: 50%;
@@ -747,12 +799,13 @@ color: #ffffff;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 9fr 2fr 1.5fr;
   padding:20px;
-  background-color: #2F2F2F;
+  background-color: #232427;
   border-radius:10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.295);
 
 }
 #update_group_image_part{
+  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -843,7 +896,7 @@ color: #ffffff;
 }
 #update_group_left{
   row-gap: 10px;
- 
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -862,7 +915,6 @@ color: #ffffff;
   
 }
 #update_group_exit_part button{
-
   margin-top: 0px;
 }
 #update_group_apply_part{
@@ -897,7 +949,7 @@ color: #ffffff;
 }
 #update_group_exit{
     cursor: pointer;
-  background-color: #242424;
+  background-color: #0e0e0e;
   color: white;
   height:25px;
   border-radius: 4px;
@@ -915,9 +967,11 @@ color: #ffffff;
       color: rgb(31, 159, 245);
 }
 #report_user_bar,#remove_user_bar{
+  border: 1px solid rgba(255, 255, 255, 0.062);
   padding:15px;
   border-radius: 15px;
-  background-color: #2F2F2F;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.192);
+  background-color: #2a2a2e;
 }
 
 #report_user_bar h2,#remove_user_bar h2{
@@ -944,6 +998,7 @@ color: #ffffff;
 #report_user_bottom_right textarea{
    color:white;
    min-height: 70px;
+   font-family: Signika Negative;
     font-size: 20px;
     padding:10px;
     background-color: rgb(20, 20, 20);
@@ -1000,14 +1055,22 @@ color: #ffffff;
   margin-top: 10px;
 }
 #not_invited{
-  margin: 20px;
-  height: 7vw;
-  width: 17vw;
-  max-height: 100px;
-  max-width: 200px;
+  margin-top: 60px;
+  width:160px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
 
-  filter:drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.363));
-
+  aspect-ratio:5/3;
+}
+#not_invited p{
+  color: #c7c5c57a;
+  width: 100%;
+  text-align:center;
+}
+#not_invited img{
+  height: 100%;
+  opacity: 0.6;
 }
 #member_github{
   width: 100%;
@@ -1085,11 +1148,12 @@ color: #ffffff;
 }
 #update_message_bar,#report_message_bar{
   padding:10px;
-  background-color: #2F2F2F;
+  background-color: #27282b;
   border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.096);
 }
 #update_message_bar_top,#report_message_bar_top{
-
+  
   width: 100%;
   display: flex;
   justify-content: space-between
@@ -1166,7 +1230,7 @@ color: #ffffff;
 
 }
 #create_lesson_bar{
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.295);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.322);
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows:0.5fr 3fr 0.5fr 1fr 0.6fr;
@@ -1175,7 +1239,7 @@ color: #ffffff;
   width: 50%;
   max-width: 800px;
   padding: 10px;
-  background-color: #242424;
+  background-color: #212124;
   border-radius: 10px;
 }
 #create_lesson_bar_title{
@@ -1223,15 +1287,16 @@ grid-column: span 2;
 flex-grow: 1;
 }
 #create_lesson_bar_thumbnail{
+  border-radius: 5px;
   justify-content: space-between;
-  border:10px solid #242424;
+  border:10px solid #16161b0a;
   padding: 5px;
-  border-radius: 0px;
+
   display:flex;
 flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  background-color: rgb(27, 27, 27);
+  background-color: #16161b8e;
 }
 #create_lesson_bar_thumbnail button{
   cursor: pointer;
@@ -1268,7 +1333,7 @@ flex-direction: column;
 }
 
 #create_tasks_button:hover{
-  background-color: rgba(0, 0, 0, 0.205);
+  color: rgb(70, 181, 255);
 }
 #create_lesson_bar_buttons{
 
@@ -1336,7 +1401,7 @@ flex-direction: column;
   width: 50%;
   max-width: 800px;
   padding: 10px;
-  background-color: #242424;
+   background-color: #212124;
   border-radius: 10px;
 }
 #create_task_bar_title{
@@ -1384,7 +1449,8 @@ color: white;
 }
 #create_task_bar_type{
   margin-top: 5px;
-  background-color: rgb(29, 29, 29);
+  border-radius: 10px 10px 0px 0px;
+  background-color: rgba(0, 0, 0, 0.233);
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -1411,18 +1477,36 @@ color: white;
   height: 30px;
 }
 #bar_task_explanation{
-  display: flex;
-  align-items: baseline;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+
   box-sizing: border-box;
   padding: 5px;
   margin-top: 5px;
   overflow-y: auto;
   max-height: 300px;
-  background-color: rgb(41, 41, 41);
+  background-color: rgba(252, 252, 252, 0.034);
   height: 300px;
   scrollbar-width: thin;
   scrollbar-color: rgb(29, 29, 29) rgba(0, 0, 255, 0);
+}
+#bar_task_explanation_left{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  
+
+}
+#bar_task_explanation_right{
+
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+
 }
 #bar_task_explanation h1{
   color: rgb(207, 207, 207);
@@ -1456,7 +1540,7 @@ color: white;
   color: rgb(31, 165, 255);
 }
 #create_task_button:hover{
-  background-color:rgb(31, 165, 255);
+  background-color:rgb(0, 153, 255);
   color: rgb(27, 27, 27);
 }
 #cancel_task_button{
@@ -1477,18 +1561,19 @@ color:white;
 }
 #bar_task_explanation textarea{
   min-height: 80px;
-  width: 400px;
+  
 }
 #bar_task_explanation button{
   transition: 0.16s ease-in-out;
   opacity: 0.6;
   cursor: pointer;
+  width: 60%;
   margin-top: 10px;
   background-color: transparent;
   border: none;
 }
 #bar_task_explanation button img{
-  height: 70px;
+ width: 100%;
   background-color: rgb(43, 43, 43);
   border: 2px dashed #0066cc;
   background:linear-gradient(225deg,rgb(43, 43, 43),rgb(34, 34, 34));

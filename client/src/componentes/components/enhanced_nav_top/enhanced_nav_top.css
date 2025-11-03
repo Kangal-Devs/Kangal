@@ -26,7 +26,10 @@ color: white;
     position: fixed;
     width:100vw;
     height:100vh;
-   
+    animation-name: bar-update-animation;
+    animation-duration: 0.4s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
 }
 #background_options_active{
     background-color: rgba(0, 0, 0, 0);
@@ -51,7 +54,7 @@ overflow: hidden;
 #options_nav_top button{
     padding:15px 25px 15px 25px;
     border: none;
-    background: rgb(58, 58, 58);
+    background: rgb(49, 49, 54);
     font-size: 15px;
     color: white;
     font-family: Signika negative;
@@ -63,11 +66,12 @@ overflow: hidden;
 }
 
 #bar_update{
+   
     box-shadow: 0px 0px 10px rgb(26, 26, 26);
     /* max-height: 800px; */
     max-width: 1000px;
     width:70vw;
-    background:rgb(37, 37, 37);
+    background:rgb(36, 37, 41);
     gap:1px;
     padding-inline: 15px;
     position: relative;
@@ -75,6 +79,13 @@ overflow: hidden;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 9fr 1fr;
     border-radius: 0px 0px 10px 10px;
+}
+@keyframes bar-update-animation {
+    0%{
+        opacity: 0;
+        transform: scale(0.4);
+    }
+    
 }
 #bar_decoration_update{
    
@@ -84,7 +95,7 @@ overflow: hidden;
     padding:10px 15px 10px 15px;
     width:70vw;
     border-radius:10px 10px 00px 0px;
-    background-color: #1b1b1b;
+    background-color: #17171b;
 }
 #bar_decoration_update button{
     cursor: pointer;
@@ -162,7 +173,7 @@ column-gap: 20px;
     min-height: 20px;
 }
 #bar_update_part_image{
-    background-color: rgb(32, 32, 32);
+    background-color: rgb(30, 31, 34);
     row-gap: 20px;
     width:80%;
     padding-block: 20px;
@@ -276,7 +287,7 @@ box-shadow: 0px 0px 5px black;
 }
 #page_part{
 
-    
+   
     column-gap: 10px;
     
     width: fit-content;
@@ -294,7 +305,7 @@ box-shadow: 0px 0px 5px black;
     font-family: Signika Negative;
 }
 #left_part{
-
+    
     margin-left: 30px;
     column-gap: 20px;
 
@@ -307,12 +318,13 @@ box-shadow: 0px 0px 5px black;
 
 }
 #left_part img{
+
      min-height: 30px;
     max-height: 30px;
      height:2vw;
 }
 #right_part{
-   
+  
     margin-right: 30px;
     display: flex;
 
@@ -322,8 +334,9 @@ box-shadow: 0px 0px 5px black;
 }
 
 #nav_top_icon_buttons img{
-min-height: 30px;
-    height: 30px;
+   
+min-height: 22px;
+    height: 22px;
      
 }
 #nav_top_icon_buttons{
@@ -362,9 +375,13 @@ min-height: 30px;
     transition: all 0.09s ease-in-out;
 }
 .nav_top_icons:hover{
-    filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.596));
+    /* filter:invert(1); */
+    
+    filter: drop-shadow(0px 0px 6px rgba(228, 228, 228, 0.596));
+    transform: scale(1.06);
 }
 #notification_background{
+    overflow: hidden;
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -374,17 +391,29 @@ min-height: 30px;
 
 }
 #notification_bar{
+     border: 1px solid rgba(255, 255, 255, 0.062);
+    animation-name: notification_animation;
+    animation-duration: 0.4s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
     z-index: 10;
     display: flex;
     flex-direction: column;
    padding:10px;
   border-radius: 15px;
-  background-color: rgb(31, 31, 31);
+ background-color:#212225;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.39);
   width: 50%;
   min-width: 60px;
   max-width: 700px;
   aspect-ratio: 2/1;
+}
+@keyframes notification_animation {
+    0%{
+        opacity: 0;
+       margin-top: -100vh;
+       transform: scale(0.2);
+    }
 }
 #notification_bar_top{
     display: flex;
@@ -459,12 +488,12 @@ min-height: 30px;
 
 #bell{
     animation-iteration-count: infinite;
-     animation-name: ola;
+     animation-name: bell_animation;
     animation-duration: 1s;
     animation-timing-function: ease-out;
     animation-delay: 2s;
 }
-@keyframes ola{
+@keyframes bell_animation{
     0%{
 
     }
@@ -484,7 +513,13 @@ min-height: 30px;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+    flex-direction: column;
 }
+
 #empty_notification img{
-    width: 60%;;
+    width: 30%;;
+    opacity: 0.4;
+}
+#empty_notification_note{
+    color: rgb(83, 83, 83);
 }

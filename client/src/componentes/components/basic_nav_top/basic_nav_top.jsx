@@ -33,7 +33,7 @@ export function BasicNavTop({title,contact,login}){
             <div id="basic_nav_top_buttons">
                 { contact==true?
             
-                    <Link to="/support"><button  id="basic_nav_top_button_support" className="basic_nav_top_button">Contante-nos</button></Link>
+                    <Link to="/support"><button  id="basic_nav_top_button_support" className="basic_nav_top_button">Contate-nos</button></Link>
             
                 :""}
 

@@ -1,7 +1,7 @@
 #token_invalid{
     width:100vw;
     height:100vh;
-     background:linear-gradient(30deg,rgb(20, 20, 20),rgb(44, 44, 44));
+     background: linear-gradient(30deg,rgb(22, 22, 24),rgb(31, 32, 34));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,6 +41,7 @@
     width:100px;
 }
 #token_invalid_paper_error{
+    opacity: 0.6;
 width:200px;
 margin-top: -200px;
 }

@@ -84,3 +84,13 @@ exports.get_user_common_lesson = async(req,res)=>{
          res.status(500).json({ message: err.message })
     }
 }
+exports.get_count_common_lesson_did = async(req,res) =>{
+try{
+    const {userId:user_id} = req.params
+    const countCommonLessonDid = await userCommonLessonModel.countDocuments({user:user_id,status:"did"})
+    res.status(200).json({message:countCommonLessonDid})
+}
+catch(err){
+          res.status(500).json({ message: err.message })
+}
+}

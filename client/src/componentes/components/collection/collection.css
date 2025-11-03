@@ -3,37 +3,72 @@
     justify-content: space-around;
     display: flex;
     width:100%;
-    height:100px;
-    background-color: rgb(34, 34, 34);
-    min-height: 100px;
+    height:70px;
+    background-color: rgba(44, 44, 44, 0.233);
+    min-height: 70px;
+    border-radius: 10px;
+    outline: 1px solid rgba(255, 255, 255, 0.062);
+    box-sizing: border-box;
 }
 .delete_collection{
     height: 40px;
     width: 40px;
     aspect-ratio: 1/1;
     padding:5px;
-    background-color: rgb(63, 63, 63);
+    background-color: rgb(44, 46, 56);
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
+
 .see_document{
     background-color: transparent;
     color: rgb(0, 152, 253);
     border: none;
     cursor: pointer;
     text-decoration: underline;
+    
 }
 .delete_collection img{
   
     height:80%;
 }
+.delete_collection img:hover{
+    animation: delete-collection-animation;
+    animation-duration: 0.5s;
+    animation-delay: 0s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+@keyframes delete-collection-animation {
+    0%{
+        
+    }
+    100%{
+        transform: rotate(-40deg);
+    }
+}
 .collection_increased{
+    animation-name: collection-increased-animation;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-duration: 0.5s;
+    
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.062);
     width:100%;
+    border-radius: 10px;
     height: fit-content;
-    background-color: rgb(34, 34, 34);
+    background-color: rgba(34, 34, 34, 0);
    
 }
+@keyframes collection-increased-animation {
+    0%{
+        background-color: rgb(43, 43, 43);
+    }
+}
+
 .document_image{
       cursor: pointer;
     margin-left: 20px;
@@ -41,24 +76,33 @@
     height:50%;
 }
 .my_collection_description{
+ 
     padding:5px;
     background-color: transparent;
-    border: 1px solid;
-    color: rgb(216, 216, 216);
+    border: 1px solid rgba(255, 255, 255, 0.171);
+    color: rgba(255, 255, 255, 0.486);
     font-family: Signika Negative;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.1s ease-in-out;
 }
 .my_collection_description:hover{
+    border: 1px solid rgb(36, 36, 36);
     color: rgb(36, 36, 36);
-    background-color: rgb(216, 216, 216);
+    background-color: rgba(255, 255, 255, 0.486);
 }
 .collection_description_title,.collection_description{
     margin-left: 10px;
-    padding-bottom: 5px;
-    
+
+
     max-width: 100%;
     overflow: hidden;
     height:min-content;
+}
+.collection_description{
+    padding-bottom: 10px;
+    color: rgb(221, 221, 221);
+}
+.collection_description_title{
+    margin-top: 10px;
 }

@@ -6,7 +6,7 @@
     
     height:100%;
     display: flex;
-    background-color: rgb(32, 32, 32);
+    background-color: rgb(25, 25, 27);
     width: 100%;
     justify-content: space-between;
    
@@ -40,7 +40,7 @@ width:100%;
     padding:10px;
     width:80%;
     max-height: 35px;
-    background-color:#1b1b1b;
+    background-color:#121213;
 
     display: flex;
     justify-content: space-around;
@@ -131,14 +131,15 @@ height:50%;
 }
 
 #button_create_group{
+    filter: saturate(0.2);
     display: flex;
     column-gap: 10px;
     justify-content: center;
     align-items: center;
     font-family: Silkscreen;
     background-color: transparent;
-    border: 1px solid;
-    color: #15cfcf;
+    border: 1px solid ;
+    color: #15cfcf8f;
     width:90%;
     padding-block: 8px;
     margin-top: 10px;
@@ -150,7 +151,7 @@ height:50%;
 height: 20px;;
 }
 #button_create_group:hover{
-    background-color:rgba(0, 255, 255, 0.267);
-   
+    background-color:rgba(0, 0, 0, 0);
+   filter: saturate(0.8) brightness(3);
     
 }

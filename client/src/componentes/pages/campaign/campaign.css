@@ -5,7 +5,7 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background-color: rgb(34, 34, 34);
+  background: linear-gradient(0deg,rgb(22, 22, 24),rgb(31, 32, 34));
 }
 
 #campaign_content {
@@ -79,9 +79,19 @@
   font-family: Signika Negative;
 }
 #introduction_part div{
+  animation-name: introduction-animation;
+  animation-duration: 0.8s;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+@keyframes introduction-animation {
+  0%{
+    opacity: 0;
+    transform: rotate(1deg) scale(0.950);
+  }
 }
 #introduction_part div div{
    align-items: start;

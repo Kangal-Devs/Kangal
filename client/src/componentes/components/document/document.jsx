@@ -5,9 +5,7 @@ export function Document({title,funcAlter,itemId}){
             <div className="document_principal">
                 <p>{title}</p>
             </div>
-            <div className="document_decoration">
-
-            </div>
+            
         </div>
     )
 }

@@ -26,12 +26,12 @@ import chat_color3 from "../../../assets/specific_page/group/chat_color3.png"
 import chat_color4 from "../../../assets/specific_page/group/chat_color4.png"
 import chat_color5 from "../../../assets/specific_page/group/chat_color5.png"
 import chat_color6 from "../../../assets/specific_page/group/chat_color6.png"
-import not_invited from "../../../assets/specific_page/group/noInvited2.png"
+import not_invited from "../../../assets/specific_page/group/noInvited.webp"
 import add_user from "../../../assets/specific_page/group/add_user.png"
 import lup from "../../../assets/specific_page/group/lup.png"
 import copy_github from "../../../assets/specific_page/group/copy_github.png"
 import paper_error from "../../../assets/all_pages/error/paper_error.png"
-import select_group from "../../../assets/specific_page/group/select_group.png"
+import select_group from "../../../assets/specific_page/group/select_group2.webp"
 import default_lesson from "../../../assets/specific_page/group/default_lesson_picture.jpg"
 import ajuda from "../../../assets/specific_page/group/help.png"
 import select from "../../../assets/specific_page/group/select.png"
@@ -169,6 +169,7 @@ export function Groups() {
 
     const updateAlterImageRef = useRef()
 
+
     const [createTaskDescription2,setCreateTaskDescription2] = useState("")
     const [createTaskDescription1,setCreateTaskDescription1] = useState("")
     const [createTaskImageInput,setCreateTaskImageInput] = useState()
@@ -243,11 +244,30 @@ export function Groups() {
     // },[updateGroupStatus])
 
     useEffect(() => {
+    
+        if(currentGroupLink1 !=" "){
         setUpdateGroupLink1(currentGroupLink1)
-        setUpdateGroupTitleLink1(currentGroupTitleLink1)
+        }else{
+            setUpdateGroupLink1("")
+        }
 
+        if(currentGroupTitleLink1 !=" "){
+        setUpdateGroupTitleLink1(currentGroupTitleLink1)
+        }else{
+            setUpdateGroupTitleLink1("")
+        }
+
+        if(currentGroupLink2 !=" "){
         setUpdateGroupLink2(currentGroupLink2)
+        }else{
+            setUpdateGroupLink2("")
+        }
+
+        if(currentGroupTitleLink2 !=" "){
         setUpdateGroupTitleLink2(currentGroupTitleLink2)
+        }else{
+            setUpdateGroupTitleLink2("")
+        }
 
     }, [currentGroupTitleLink1, currentGroupTitleLink2, currentGroupLink1, currentGroupLink2,])
 
@@ -669,6 +689,7 @@ export function Groups() {
                             !currentGroupId ?
                                 <div id="groups_content_empty">
                                     <img src={select_group} />
+                                    <p>Nenhum grupo selecionado</p>
                                 </div> :
                                 <div id="groups_content_principal">
                                     <div id="groups_content_principal_chat_part">
@@ -789,7 +810,10 @@ export function Groups() {
                                                     {usersInvited}
                                                 </div>
                                                 :
-                                                <img src={not_invited} id="not_invited" />}
+                                                <div id="not_invited">
+                                                <img src={not_invited}  />
+                                                <p>Sem usuários convidados</p>
+                                                </div>}
                                         </div>
                                     </div>
                                 </div>
@@ -1161,15 +1185,20 @@ export function Groups() {
                                 {
                                     createTaskType=="explanation"?
                                     <div id="bar_task_explanation">
-                                        <h1>Explicação</h1>
+                                        <div id="bar_task_explanation_left">
+                                            <h1>Explicação</h1>
                                         <label>Título</label>
-                                        <input type="text"/>
+                                        <input type="text" placeholder="Oque são as..."/>
                                         <label>Descrição 1</label>
-                                        <textarea/>
-                                        <button onClick={()=>{createTaskImageRef.current.click()}}><img src={task_image}/></button>
+                                        <textarea placeholder="Essa lissão..."/>
+                                        
                                         <input type="file" ref={createTaskImageRef}/>
                                          <label>Descrição 2</label>
-                                        <textarea/>
+                                        <textarea placeholder="Portanto..."/>
+                                        </div>
+                                            <div id="bar_task_explanation_right">
+                                            <button onClick={()=>{createTaskImageRef.current.click()}}><img src={task_image}/></button>
+                                            </div>
                                         </div>
                                     :
                                     createTaskType=="select"?

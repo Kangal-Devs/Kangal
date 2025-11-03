@@ -10,7 +10,7 @@ import { Notification } from "../notification/notification.jsx"
 import { genders } from "./genders.js"
 import { Alert } from "../alert/alert.jsx"
 import { useNavigate } from "react-router-dom"
-import empty_notification from "../../../assets/all_pages/nav_top_icons/empty_notification.png"
+import empty_notification from "../../../assets/all_pages/nav_top_icons/empty_notification.webp"
 import axios from "axios"
 import "./enhanced_nav_top.css"
 
@@ -375,7 +375,7 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
                     <div onClick={(e)=>{e.stopPropagation()}} id="notification_bar">
                     <div id="notification_bar_top">
                         <h1>Notificações</h1>
-                        <button>X</button>
+                        <button onClick={()=>{setNotificationStatus(false)}}>X</button>
                     </div>
                     {(readNotifications.length>0 || notReadNotifications.length>0)?
                     <div id="notification_bar_bottom">
@@ -391,6 +391,8 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
                     </div>:
                     <div id="empty_notification">
                         <img src={empty_notification}/>
+                        <p>Sem notificações</p>
+                        <p id="empty_notification_note">Notificações vindas de grupos aperecerão aqui.</p>
                     </div>
                     }
                 </div>

@@ -1,7 +1,7 @@
 #upgrade{
    width: 100vw;
    height:100vh;
-
+    overflow: hidden;
    position: absolute;
    top:0;
    display: flex;
@@ -9,16 +9,28 @@
    justify-content: center; 
 }
 #upgrade_principal{
+    
+    animation-name: upgrade_animation;
+    animation-duration: 0.4s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
     border-radius: 15px;
     overflow: hidden;
     font-family: Signika Negative;
     border-radius: 10px;
-
 }
+@keyframes upgrade_animation {
+    0%{
+        opacity: 0;
+      
+       transform: scale(0.8);
+    }
+}
+
 #upgrade_about{
     
 padding:15px;
-    background-color: rgb(41, 41, 41);
+    background-color: rgb(36, 36, 41);
 }
 #upgrade_about div{
   
@@ -66,7 +78,7 @@ padding:15px;
     row-gap: 2px;
     display: flex;
     flex-direction: column;
-   background-color: rgb(82, 82, 82);
+   background-color: rgb(74, 73, 87);
    border-radius: 15px;
     align-items: center;
     overflow: hidden;
@@ -96,7 +108,7 @@ padding:15px;
     width: 100%;
     padding-block: 20px;
     color: white;
-     background-color: rgb(46, 46, 46);
+     background-color: rgb(44, 44, 49);
        border-radius: 15px 15px 0px 0px;
 
    display: flex;
@@ -125,7 +137,7 @@ padding:15px;
     width: 100%;
     border-radius: 0px 0px 15px 15px;
         padding-bottom: 20px;
-        background-color: rgb(46, 46, 46);
+        background-color: rgb(44, 44, 49);
    align-items: center;
    justify-content: center;
    display: flex;
