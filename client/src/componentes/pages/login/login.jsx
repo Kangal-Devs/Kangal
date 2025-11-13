@@ -235,7 +235,7 @@ export function Login() {
                     </div>
                     <div className="inputs">
                         <label>Senha</label>
-                        <input type="text" placeholder="********" value={signinPassword} onChange={(e) => { setSigninPassword(e.target.value) }} />
+                        <input type="password" placeholder="********" value={signinPassword} onChange={(e) => { setSigninPassword(e.target.value) }} />
                     </div>
                     <button id="sign_button" onClick={() => { commonLogin() }}> Entrar</button>
                     <div id="separator"></div>

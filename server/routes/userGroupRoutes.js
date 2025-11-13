@@ -9,4 +9,5 @@ router.post("/get_all_user_group2",userGroupController.get_all_user_group2)
 router.delete("/delete_user_group/:userId/:groupId/",userGroupController.delete_user_group)
 router.post("/create_user_group",userGroupController.create_user_group)
 router.post("/get_count_user_group",userGroupController.get_count_user_group)
+router.post("/create_fast_user_group/:userId/:groupId",userGroupController.create_fast_user_group)
 module.exports.router = router

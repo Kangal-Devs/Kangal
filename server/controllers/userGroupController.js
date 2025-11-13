@@ -3,11 +3,13 @@ const {solicitationModel} = require("../models/solicitationModel.js")
 const {userModel} = require("../models/userModel.js")
 
 const {notificationModel} = require("../models/notificationModel.js")
-const {userNotification, userNotificationModel} = require("../models/userNotificationModel.js")
-
+const {userNotificationModel} = require("../models/userNotificationModel.js")
+const  userGroupService = require("../services/userGroupService.js")
 const {groupModel} = require("../models/groupModel.js")
 const {messageModel} = require("../models/messageModel.js")
-// const {solicitationModel} = require("../models/solicitationModel.js")
+
+
+
 exports.get_user_group = async (req,res)=>{
     try{
         const {groupId,userId} = req.body
@@ -18,7 +20,7 @@ exports.get_user_group = async (req,res)=>{
         if(user && group){
             const userGroup = await userGroupModel.findOne({user:userId,group:groupId})
             if(userGroup){
-                res.status(200).json({message:"found"})
+                return res.status(200).json({message:"found"})
             }
             return res.status(404).json({message:"not found userGroup"})
         }
@@ -136,8 +138,10 @@ exports.create_user_group = async (req,res)=>{
         res.status(500).json({message:err.message})
     }
 }
+//retorna em quantos grupos você está
 module.exports.get_count_user_group = async (req,res) =>{
-    try{const {userId} = req.body;
+    try{
+        const {userId} = req.body;
 
     const countGroup = await userGroupModel.countDocuments({user:userId})
     res.status(200).json({message:countGroup})}
@@ -145,12 +149,22 @@ module.exports.get_count_user_group = async (req,res) =>{
         res.status(500).json({message:err.message})
     }
 }
+//retorna quantos membros há no grupo
 module.exports.get_count_members_group = async(req,res)=>{
     try{
     const {groupId} = req.params
 
     const countMembersGroup = await userGroupModel.countDocuments({group:groupId})
     res.status(200).json({message:countMembersGroup})}
+    catch(err){
+        res.status(500).json({message:err.message})
+    }
+}
+module.exports.create_fast_user_group = async(req,res)=>{
+    try{
+        await userGroupService.create_fast_user_group(req);
+        res.status(200).json({message:"created user group"})
+    }
     catch(err){
         res.status(500).json({message:err.message})
     }

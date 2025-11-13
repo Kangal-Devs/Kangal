@@ -300,7 +300,7 @@ export function Home() {
                                                     <img src={campaign_icon}/>
                                                     <div>
                                                         <h1>Campanha</h1>
-                                                        <p>Você fez -- lições</p>
+                                                        <p>Você fez {commonLessonsDid} lições</p>
                                                     </div>
                                                 </div>
                                                 <div id="groups_page" onClick={()=>{navigate("/groups")}}>

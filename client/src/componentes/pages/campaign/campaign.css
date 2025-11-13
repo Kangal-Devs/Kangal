@@ -30,7 +30,7 @@
   max-width: 700px;
 }
 #campaign_content_principal{
-
+  
   display: grid;
   grid-template-columns: 0.8fr 1fr 1fr;
 }
@@ -102,7 +102,7 @@
   background-color: rgba(255, 0, 0, 0);
 }
 #lessons_part{
-  
+
   scrollbar-color: transparent transparent;
   overflow-y: scroll;
  

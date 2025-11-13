@@ -359,28 +359,31 @@ color:white;
     max-width:98%;
 }
 #create_collection_bar button{
+  margin-top:10px;
   margin-left: 5px;
-  margin-top: 10px;
-  padding:7px;
-  border-radius: 7px;
-  border: 1px solid;
-  background-color: transparent;
-  font-family: Signika Negative;
-  font-weight: 400;
-  font-size: 15px;
   cursor: pointer;
-  transition: all 0.07s ease-in-out;
+  padding:8px 16px 8px 16px;
+  font-size:15px;
+  font-family: Signika Negative;
+  border-radius: 7px;
+  transition: all 0.17s ease-in-out;
+cursor: pointer;
 }
 #create_collection{
-  color: rgb(160, 218, 0);
+   background-color: rgba(79, 120, 255, 0.822);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(127, 157, 255, 0.822);
 }
 #cancel_collection{
- color: rgb(206, 206, 206);
+   background-color: rgba(0, 0, 0, 0.048);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(255, 255, 255, 0.055);
 }
 #create_collection:hover{
- background-color:rgb(176, 255, 31);
- color: rgb(26, 26, 26);
+background-color: rgba(67, 102, 218, 0.822);
 }
 #cancel_collection:hover{
-  color: white;
+   background-color:  rgba(255, 255, 255, 0.062);
 }

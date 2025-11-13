@@ -30,6 +30,12 @@
     text-decoration: underline;
     
 }
+.see_document:hover{
+   
+    color: rgb(80, 185, 255);
+   
+    
+}
 .delete_collection img{
   
     height:80%;
@@ -77,19 +83,20 @@
 }
 .my_collection_description{
  
-    padding:5px;
-    background-color: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.171);
-    color: rgba(255, 255, 255, 0.486);
-    font-family: Signika Negative;
-    border-radius: 4px;
     cursor: pointer;
-    transition: all 0.1s ease-in-out;
+  padding:8px 16px 8px 16px;
+  font-size:12px;
+  font-family: Signika Negative;
+  border-radius: 7px;
+  transition: all 0.17s ease-in-out;
+cursor: pointer;
+background-color: rgba(0, 0, 0, 0.048);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(255, 255, 255, 0.055);
 }
 .my_collection_description:hover{
-    border: 1px solid rgb(36, 36, 36);
-    color: rgb(36, 36, 36);
-    background-color: rgba(255, 255, 255, 0.486);
+     background-color:  rgba(255, 255, 255, 0.062);
 }
 .collection_description_title,.collection_description{
     margin-left: 10px;

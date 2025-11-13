@@ -28,6 +28,10 @@ const groupLessonSchema = mongoose.Schema({
     image:{
         type:Buffer,
         required:[true,"groupLessonError7"]
+    },
+    description:{
+        type:String,
+        required:[true,"groupLessonError8"]
     }
 },{
     timestamps:true

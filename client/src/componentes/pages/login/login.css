@@ -90,7 +90,7 @@ display: none;
     color: white;
     font-family: "Signika Negative";
 }
-#login_core_part input[type="text"]{
+#login_core_part input[type="text"],#login_core_part input[type="password"]{
     color:white;
     font-size: 20px;
     padding:10px;

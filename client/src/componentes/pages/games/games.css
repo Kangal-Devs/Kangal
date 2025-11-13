@@ -132,26 +132,33 @@ gap:2px;
   font-size: 20px;
 }
 #enter_game_background div button{
-  margin-top: 10px;
   margin-left: 5px;
-  padding:10px;
-  background-color: transparent;
-  border-radius: 5px;
-  border:1px solid;
+ padding:8px 16px 8px 16px;
+  font-size:15px;
+  font-family: Signika Negative;
+  border-radius: 7px;
+  transition: all 0.17s ease-in-out;
   cursor: pointer;
+  margin-top: 10px;
 }
 #enter_game_cancel:hover{
-  background-color: rgba(255, 255, 255, 0.267);
+   background-color:  rgba(255, 255, 255, 0.062);
 }
 
 #enter_game_play:hover{
-  background-color: rgba(255, 255, 255, 0.267);
+ background-color: rgba(160, 218, 67, 0.822);
 }
 #enter_game_cancel{
-  color: rgb(196, 196, 196);
+   background-color: rgba(0, 0, 0, 0.048);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(255, 255, 255, 0.055);
 }
 #enter_game_play{
-  color: #AACE1C;
+  background-color: rgba(106, 187, 0, 0.925);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(206, 255, 127, 0.822);
 }
 #enter_game_background div{
   padding:10px;

@@ -305,7 +305,7 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
 
                     <div className="bar_update_part">
                         <div id="bar_update_part_title">
-                            <img src={config_img} id="config_img" />
+                            {/* <img src={config_img} id="config_img" /> */}
                             <h1>Configurações</h1>
                         </div>
                         <div id="bar_update_part_image">
@@ -321,7 +321,7 @@ export function EnhancedNavTop({ page,home,group,isOwner, search, userName, user
                         {
                             userAccountType == "google" ?
                                 <p id="bar_update_alert_account_type">
-                                    Você está logado com uma conta google, campo email e senha estarão bloqueados para mudança
+                                    Você está logado com uma conta google, campo email e senha estarão bloqueados para mudança.
                                 </p> : ""
                         }
                     </div>

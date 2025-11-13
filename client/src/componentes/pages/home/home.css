@@ -356,6 +356,7 @@ aspect-ratio: 3/1;
     display: none;
 }
 #accept_solicitation_active{
+    min-width:400px;
     animation-name: accept-solicitation-animation;
     animation-duration: 0.4s;
     animation-delay: 0s;
@@ -367,7 +368,7 @@ aspect-ratio: 3/1;
     position: fixed;
     bottom:30px;
     left:100px;
-    min-width: 25vw;
+  
     background-color: rgb(21, 21, 22);
     border-radius: 10px;
 }
@@ -442,35 +443,36 @@ aspect-ratio: 3/1;
     width:100%;
     padding-top: 10px;
     justify-content: end;
-    column-gap: 20px;
+    column-gap: 10px;
     display: flex;
 
 }
 #accept_solicitation_bottom button{
-    padding:10px 20px 10px 20px;
-    font-family: Silkscreen;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
+cursor: pointer;
+  padding:8px 16px 8px 16px;
+  font-size:15px;
+  font-family: Signika Negative;
+  border-radius: 7px;
+  transition: all 0.17s ease-in-out;
+cursor: pointer;
 }
 #accept_button{
-    color: #AACE1C;
-    border: 1px solid #AACE1C;
-    border-radius: 10px;
-    background-color: transparent;
+    background-color: rgba(79, 120, 255, 0.822);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(127, 157, 255, 0.822);
 }
 #accept_button:hover{
-    color: #1f1f1f;
-     background-color: #AACE1C;
+   background-color: rgba(67, 102, 218, 0.822);
 }
 #refuse_button{
-    color: #ce1c1c;
-    border: 1px solid #ce1c1c;
-    border-radius: 10px;
-    background-color: transparent;
+ background-color: rgba(255, 57, 57, 0.822);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(255, 98, 98, 0.822);
 }
 #refuse_button:hover{
-     color: #1f1f1f;
-     background-color: #ce1c1c;
+background-color: rgba(219, 51, 51, 0.822);
 }
 #collection_background{
     overflow: hidden;
@@ -589,29 +591,36 @@ box-shadow: inset 0px 0px 15px rgb(19, 19, 19);
 #delete_collection_bar{
      padding:10px;
   border-radius: 15px;
-  background-color: rgb(48, 48, 48);
+  background-color: rgb(40, 40, 43);
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.39);
 }
 #delete_collection_bar button{
-      margin-top: 10px;
-  margin-left: 5px;
-  padding:10px;
-  background-color: transparent;
-  border-radius: 5px;
-  border:1px solid;
-  cursor: pointer;
+    cursor: pointer;
+  padding:8px 16px 8px 16px;
+  font-size:15px;
+  font-family: Signika Negative;
+  border-radius: 7px;
+  transition: all 0.17s ease-in-out;
+cursor: pointer;
+margin-top: 10px;
+margin-left: 5px;
 }
 #delete_collection_confirm{
-color: rgb(223, 0, 0);
+
+ background-color: rgba(255, 57, 57, 0.822);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(255, 98, 98, 0.822);
 }
 #delete_collection_cancel{
-    color: rgb(233, 233, 233);
+       background-color: rgba(0, 0, 0, 0.048);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(255, 255, 255, 0.055);
 }
 #delete_collection_confirm:hover{
-background-color: rgb(223, 0, 0);
-color:#111111;
+ background-color: rgba(219, 51, 51, 0.822);
 }
 #delete_collection_cancel:hover{
-    background-color: rgb(231, 231, 231);
-color:#111111;
+  background-color:  rgba(255, 255, 255, 0.062);
 }

@@ -615,7 +615,7 @@ export function Task() {
                                 <div id="report_task_bar" onClick={(e)=>{e.stopPropagation()}}>
                                     <h1>Reportar lição</h1>
                                      <p>Razão do reporte:</p>
-                                     <textarea value={reportTaskReason} onChange={(e)=>{setReportTaskReason(e.target.value)}}/>
+                                     <textarea value={reportTaskReason} placeholder="O problema é..."onChange={(e)=>{setReportTaskReason(e.target.value)}}/>
                                     <button id="create_task_report" onClick={()=>{reportTask()}}>Reportar</button>
                                     <button id="cancel_task_report" onClick={()=>{
                                         setReportTaskStatus(false)

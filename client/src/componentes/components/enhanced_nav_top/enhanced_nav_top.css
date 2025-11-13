@@ -69,8 +69,8 @@ overflow: hidden;
    
     box-shadow: 0px 0px 10px rgb(26, 26, 26);
     /* max-height: 800px; */
-    max-width: 1000px;
-    width:70vw;
+    max-width: 700px;
+    width:50vw;
     background:rgb(36, 37, 41);
     gap:1px;
     padding-inline: 15px;
@@ -89,17 +89,17 @@ overflow: hidden;
 }
 #bar_decoration_update{
    
-    max-width: 1000px;
+    max-width: 700px;
     display: flex;
     justify-content: end;
     padding:10px 15px 10px 15px;
-    width:70vw;
+    width:50vw;
     border-radius:10px 10px 00px 0px;
-    background-color: #17171b;
+    background-color: #151518;
 }
 #bar_decoration_update button{
     cursor: pointer;
-    background-color: rgb(44, 44, 44);
+    background-color: rgb(15, 15, 15);
     border: none;
     border-radius: 5px;
     height:30px;
@@ -129,37 +129,36 @@ column-gap: 20px;
 
 }
 #bar_update_part_bottom button{
-    cursor: pointer;
-    padding:10px;
-    font-size:15px;
-    background-color: transparent;
-    font-family: Signika Negative;
-    transition: all 0.17s ease-in-out;
+cursor: pointer;
+  padding:8px 16px 8px 16px;
+  font-size:15px;
+  font-family: Signika Negative;
+  border-radius: 7px;
+  transition: all 0.17s ease-in-out;
+cursor: pointer;
 }
 
 #btn_cancel{
-    color: rgb(207, 207, 207);
-    border:1px solid;
-    border-radius: 10px;
+       background-color: rgba(0, 0, 0, 0.048);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(255, 255, 255, 0.055);
 }
 #btn_cancel:hover{
-     background-color:rgb(209, 209, 209);
-    color: #1b1b1b;
-    font-weight: 500;
+     background-color:  rgba(255, 255, 255, 0.062);
 }
 #btn_apply{
-    color: rgb(0, 217, 255);
-    border:1px solid;
-    border-radius: 10px;
+     background-color: rgba(79, 120, 255, 0.822);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(127, 157, 255, 0.822);
 }
 #btn_apply:hover{
-    background-color:rgb(0, 191, 224);
-    color: #1b1b1b;
-    font-weight: 500;
+   background-color: rgba(67, 102, 218, 0.822);
 }
 #bar_update_part_title{
     margin-top: 10px;
-    justify-content: center;
+    justify-content: start;
     column-gap: 20px;
     /* background-color: green; */
     align-items: center;
@@ -202,16 +201,17 @@ box-shadow: 0px 0px 5px black;
    width:50%;
 }
 #bar_update_part_image button{
-    background-color: transparent;
-   width:70%;
-   padding-block: 10px;
-   border: 2px solid;
-   color:rgb(255, 255, 255);
-   font-family: Silkscreen;
-   border-radius: 10px;
-   font-size: 15px;
-   cursor: pointer;
-   transition:all 0.1s ease-in-out;
+    cursor: pointer;
+  padding:8px 16px 8px 16px;
+  font-size:15px;
+  font-family: Signika Negative;
+  border-radius: 7px;
+  transition: all 0.17s ease-in-out;
+cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.048);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(255, 255, 255, 0.055);
 }
 #bar_update_part_image button:hover{
     background-color:rgb(255, 255, 255);
@@ -248,8 +248,8 @@ box-shadow: 0px 0px 5px black;
 }
 
 #bar_update_alert_account_type{
-    background-color: rgba(255, 0, 0, 0.103);
-    color: rgba(255, 0, 0, 0.562);
+    background-color: rgba(255, 0, 0, 0.041);
+    color: rgba(255, 44, 44, 0.671);
     padding:10px;
     border:1px solid;
     border-radius: 5px;

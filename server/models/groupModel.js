@@ -41,11 +41,15 @@ const groupSchema = mongoose.Schema({
     },
     titleLink1: {
         type: String,
-        required: [true, "groupErrorType10"]
+        required: [true, "groupErrorType-10"]
     },
     titleLink2: {
         type: String,
-        required: [true, "groupErrorType11"]
+        required: [true, "groupErrorType-11"]
+    },
+    isPublic:{
+        type:Boolean,
+        required:[true,"groupErrorType-12"]
     }
 
 

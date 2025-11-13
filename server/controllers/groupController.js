@@ -23,7 +23,9 @@ exports.create_group = async (req,res)=>{
         link1:link1,
         link2:link2,
         titleLink2:titleLink2,
-        titleLink1:titleLink1})
+        titleLink1:titleLink1,
+        isPublic:false
+    })
 
     const userGroup = await userGroupModel.create({user:owner,group:group._id})
     
@@ -54,6 +56,7 @@ exports.get_group = async (req,res)=>{
                 titleLink2:group.titleLink2,
                 link2:group.link2,
                 link1:group.link1,
+                isPublic:group.isPublic,
                 createdAt:group.createdAt,
             }})
     }
@@ -84,19 +87,63 @@ module.exports.update_group = async(req,res)=>{
 
         const image = req?.file?.buffer
 
-        const {link1,link2,titleLink1,titleLink2,name,description} = req.body
+        let {link1,link2,titleLink1,titleLink2,name,description,isPublic} = req.body
 
-        if((link1=="" && titleLink1!="")||(link1!="" && titleLink1=="")||(link2=="" && titleLink2!="")||(link2!="" && titleLink2=="")){
-            res.status(500).json({message:"campo link esta faltando"})
-        }
+        if(link1==""){link1 =" "}
+        if(link2==""){link2 =" "}
+        if(titleLink1==""){titleLink1 =" "}
+        if(titleLink2==""){titleLink2 =" "}
 
         if(image){
-            const group = await groupModel.findByIdAndUpdate(groupId,{link1,link2,titleLink1,titleLink2,name,description,image}, { runValidators: true})
+            const group = await groupModel.findByIdAndUpdate(groupId,{link1,link2,titleLink1,titleLink2,name,description,isPublic,image}, { runValidators: true})
         }
         else{
-           const group = await groupModel.findByIdAndUpdate(groupId,{link1,link2,titleLink1,titleLink2,name,description}, { runValidators: true}) 
+           const group = await groupModel.findByIdAndUpdate(groupId,{link1,link2,titleLink1,titleLink2,name,description,isPublic}, { runValidators: true}) 
         }
         res.status(200).json({message:"atualizado"})
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    }
+}
+
+module.exports.get_all_groups = async(req,res)=>{
+    try{
+        const groups = await groupModel.find({});
+
+        // Cria um array de promises para salvar todos os grupos
+        const updatePromises = groups.map(group => {
+            if (group.isPublic === true) {  // opcional: só altera se necessário
+                group.isPublic = false;
+            }
+            return group.save();
+        });
+
+        // Aguarda todas serem salvas
+        await Promise.all(updatePromises);
+
+        return res.status(200).json({ message: groups });
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    }
+}
+module.exports.get_all_public_groups = async(req,res)=>{
+    try{
+        const publicGroups = await groupModel.find({isPublic:true})
+
+        const publicGroupsBase64 = publicGroups.map((publicGroup)=>{
+            return {
+                createdAt:publicGroup.createdAt,
+                owner:publicGroup.owner,
+                name:publicGroup.name,
+                description:publicGroup.description,
+                image:publicGroup.image.toString("base64"),
+                _id:publicGroup._id
+            }
+        })
+
+        res.status(200).json({message:publicGroupsBase64})
     }
     catch(err){
         res.status(500).json({message:err.message})

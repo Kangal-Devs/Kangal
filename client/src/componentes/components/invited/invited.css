@@ -43,23 +43,26 @@ border-radius: 200px;
 .invited button{
     font-family: Silkscreen;
     padding:5px 10px 5px 10px;
-    border: 1px solid;
 
     border-radius: 5px;
-    background-color: transparent;
+
     font-size: 11px;
     cursor: pointer;
 }
 
 .button_to_invite{
-    color:rgb(36, 255, 219)
+    color:rgb(255, 255, 255);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    background-color: rgba(79, 120, 255, 0.822);
 }
 .button_to_invite:hover{
-    background-color: rgba(36, 255, 218, 0.226)
+    background-color: rgba(36, 113, 255, 0.425)
 }
 .button_invited{
-    color:rgb(243, 125, 57)
+    color:rgb(255, 255, 255);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    background-color: rgb(31, 31, 31);
 }
 .button_invited:hover{
-    background-color: rgba(255, 160, 36, 0.226)
+    background-color: rgba(252, 252, 252, 0.014)
 }

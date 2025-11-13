@@ -7,34 +7,39 @@ const groupTaskSchema = mongoose.Schema({
         required:[true,"groupTaskError1"],
         ref:"GroupLesson"
     },
+    group:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:false,
+        ref:"Group"
+    },
     category:{
         type:String,
-        enum:["select","toCorrect","free","explanation","toContinue"],
+        enum:["select","free","explanation"],
         required:[true,"groupTaskError2"]
     },
-    text:{
+    title:{
         type:String,
-        minLength:[1,"groupTaskError3"],
-        maxLength:[300,"groupTaskError4"],
-        required:[true,"groupTaskError5"]
+        required:[true,"groupTaskError3"]
     },
-    text2:{
+    description1:{
         type:String,
-        minLength:[1,"groupTaskError6"],
-        maxLength:[100,"groupTaskError7"],
+        required:[true,"groupTaskError4"]
+    },
+    description2:{
+        type:String,
         required:false
     },
-    correct:{
+    code:{
         type:String,
-        required:false,
-         maxLength:[1,"groupTaskError8"],
-        maxLength:[30,"groupTaskError9"]
+        required:false
+    },
+    image:{
+        type:Buffer,
+        required:false
     },
     possibleAnswers:{
-        type:String,
-        required:false,
-        maxLength:[1,"groupTaskError-10"],
-        maxLength:[30,"groupTaskError-11"]
+        type:[String],
+        required:false
     }
 })
 

@@ -38,10 +38,14 @@ import select from "../../../assets/specific_page/group/select.png"
 import explanation from "../../../assets/specific_page/group/explanation.png"
 import code from "../../../assets/specific_page/group/free.png"
 import task_image from "../../../assets/specific_page/group/task_image1.png"
+import { Group } from "../../components/group/group.jsx"
+import loading from "../../../assets/specific_page/group/loading.webp"
+// import groups_background from "../../../assets/specific_page/group/groups_background1.svg"
 export function Groups() {
 
     const navigate = useNavigate()
 
+    
     const [chatColorsImages, setChatColorsImages] = useState({
         chatColor1: chat_color1,
         chatColor2: chat_color2,
@@ -92,6 +96,7 @@ export function Groups() {
 
     const [messages, setMessages] = useState()
 
+    const [publicGroups,setPublicGroups] = useState()
 
     const [amIOwner, setAmIOwner] = useState()
     const [currentGroupOwner, setCurrentGroupOwner] = useState()
@@ -102,6 +107,7 @@ export function Groups() {
     const [currentGroupCreatedAt, setCurrentGroupCreatedAt] = useState()
     const [currentGroupName, setCurrentGroupName] = useState()
     const [currentGroupId, setCurrentGroupId] = useState()
+    const [currentGroupIsPublic, setCurrentGroupIsPublic] = useState()
     const [currentGroupDescription, setCurrentGroupDescription] = useState()
     const [currentGroupImage, setCurrentGroupImage] = useState()
     const [currentGroupTitleLink2, setCurrentGroupTitleLink2] = useState()
@@ -164,6 +170,7 @@ export function Groups() {
     const [updateGroupLink1, setUpdateGroupLink1] = useState("")
     const [updateGroupTitleLink2, setUpdateGroupTitleLink2] = useState("")
     const [updateGroupLink2, setUpdateGroupLink2] = useState("")
+    const [updateGroupIsPublic,setUpdateGroupIsPublic] = useState(false)
 
     const [showMoreCoordinates, setShowMoreCoordinates] = useState([])
 
@@ -175,6 +182,8 @@ export function Groups() {
     const [createTaskImageInput,setCreateTaskImageInput] = useState()
     const [createTaskImage,setCreateTaskImage] = useState()
     const [createTaskType,setCreateTaskType] = useState()
+    const [createTaskCode,setCreateTaskCode] = useState()
+    const [createTaskTitle,setCreateTaskTitle] = useState()
 
     const [createLessonName,setCreateLessonName] = useState()
     const [createLessonDescription,setCreateLessonDescription] = useState()
@@ -182,6 +191,20 @@ export function Groups() {
 
     const [createLessonImageInput,setCreateLessonImageInput] = useState()
     const [createLessonImage,setCreateLessonImage] = useState()
+
+    useEffect(()=>{
+      
+    
+        if(!currentGroupId){
+          axios.get("http://localhost:5000/api/get_all_public_groups")
+          .then((res)=>{
+            setPublicGroups(res.data.message.map((group,i)=>{
+                return (<Group name={group.name} description={group.description} image={group.image} itemId={group._id} owner={group.owner} userId={userId} funcAlter={[setCurrentGroupId]}/>)
+            }))
+          })
+          .catch((err)=>{console.log(err)})
+        }
+    },[currentGroupId])
 
     useEffect(()=>{
         
@@ -204,6 +227,8 @@ export function Groups() {
             }
         }
     },[createLessonImageInput,createLessonStatus])
+
+    
 
     const reportMessage = useCallback(()=>{
         axios.post("http://localhost:5000/api/create_message_report",{userId,messageId:currentMessageId,reason:reportMessageReason})
@@ -237,7 +262,8 @@ export function Groups() {
         setUpdateGroupDescription(currentGroupDescription)
         setUpdateGroupName(currentGroupName)
         setUpdateGroupImage(`data:image/png;base64,${currentGroupImage}`)
-    }, [currentGroupImage, currentGroupDescription, currentGroupName])
+        setUpdateGroupIsPublic(currentGroupIsPublic)
+    }, [currentGroupImage, currentGroupDescription, currentGroupName,currentGroupIsPublic])
 
     // useEffect(()=>{
     //     console.log(updateGroupImageFile)
@@ -366,6 +392,7 @@ export function Groups() {
         formData.append("titleLink1", updateGroupTitleLink1)
         formData.append("titleLink2", updateGroupTitleLink2)
         formData.append("file", updateGroupImageFile)
+        formData.append("isPublic", updateGroupIsPublic)
 
         console.log(updateGroupTitleLink1)
 
@@ -378,7 +405,7 @@ export function Groups() {
                 console.log(err)
             })
 
-    }, [updateGroupDescription, updateGroupImage, updateGroupLink1, updateGroupLink2, updateGroupName, updateGroupTitleLink1, updateGroupTitleLink2, updateGroupImageFile, currentGroupId])
+    }, [updateGroupDescription, updateGroupImage, updateGroupLink1, updateGroupLink2, updateGroupName, updateGroupTitleLink1, updateGroupTitleLink2, updateGroupImageFile, currentGroupId,updateGroupIsPublic])
 
     const cancelUpdateGroup = useCallback(() => {
         setUpdateGroupStatus(false)
@@ -389,8 +416,10 @@ export function Groups() {
         setUpdateGroupTitleLink1(currentGroupTitleLink1)
         setUpdateGroupLink2(currentGroupLink2)
         setUpdateGroupTitleLink2(currentGroupTitleLink2)
+        setUpdateGroupIsPublic(currentGroupIsPublic)
     }, [currentGroupDescription,
         currentGroupName,
+        currentGroupIsPublic,
         currentGroupImage,
         currentGroupLink1,
         currentGroupLink2,
@@ -533,6 +562,7 @@ export function Groups() {
     useEffect(() => {
 
         if (currentGroupId) {
+           
             setCurrentMemberId()
             axios.post("http://localhost:5000/api/get_group", { _id: currentGroupId })
                 .then((res) => {
@@ -556,6 +586,7 @@ export function Groups() {
                     setCurrentGroupTitleLink1(res.data.message.titleLink1)
                     setCurrentGroupImage(res.data.message.image)
                     setCurrentGroupName(res.data.message.name)
+                    setCurrentGroupIsPublic(res.data.message.isPublic)
                     setCurrentGroupDescription(res.data.message.description)
                     setAmIOwner(res.data.message.owner == userId)
 
@@ -570,6 +601,8 @@ export function Groups() {
                 .catch((err) => { console.log(err) })
 
 
+        }else{
+           
         }
     }, [currentGroupId])
 
@@ -688,8 +721,14 @@ export function Groups() {
                         {
                             !currentGroupId ?
                                 <div id="groups_content_empty">
-                                    <img src={select_group} />
-                                    <p>Nenhum grupo selecionado</p>
+                                    <div id="decoration_groups_background">
+                           
+                                    </div>
+                                     <div id="decoration_groups_principal"></div>
+                                     <p id="group_list_title">Grupos públicos:</p>
+                                     <div id="groups_list">
+                                        {publicGroups?publicGroups:<img src={loading} id="loading"/>}
+                                     </div>
                                 </div> :
                                 <div id="groups_content_principal">
                                     <div id="groups_content_principal_chat_part">
@@ -874,9 +913,10 @@ export function Groups() {
                                     <div id="create_group_bar_decoration"></div>
                                     <div id="create_group_bar_bottom">
                                         <label>Nome</label>
-                                        <input type="text" value={createGroupName} onChange={(e) => { setCreateGroupName(e.target.value) }} />
+                                        <input type="text" placeholder="Grupo..." value={createGroupName} onChange={(e) => { setCreateGroupName(e.target.value) }} />
                                         <label>Descrição</label>
-                                        <input type="text" value={createGroupDescription} onChange={(e) => { setCreateGroupDescription(e.target.value) }} />
+                                        <input type="text"
+                                        placeholder="Esse grupo..." value={createGroupDescription} onChange={(e) => { setCreateGroupDescription(e.target.value) }} />
                                         <button onClick={() => { createGroup() }}>Criar</button>
                                     </div>
                                 </div>
@@ -940,7 +980,7 @@ export function Groups() {
                                                 }
                                             </div>) :
                                             <div id="about_group_no_link">
-                                                Este grupo não possui nenhum link
+                                                Este grupo possui nenhum link
                                             </div>
                                     }
                                     <h2 id="about_group_title_description">Descrição:</h2>
@@ -966,7 +1006,12 @@ export function Groups() {
                                             <button onClick={() => { updateAlterImageRef.current.click() }}>Alterar</button>
                                             <input type="file" style={{ display: "none" }} ref={updateAlterImageRef} onChange={(e) => { changeGroupImage(e) }} />
                                         </div>
-
+                                        <div id="update_group_public_part">
+                                    
+                                        <input type="checkbox" checked={updateGroupIsPublic} onChange={()=>setUpdateGroupIsPublic(value=>{return !value})}/>
+                                        
+                                        <label>Grupo Público</label>
+                                        </div>
                                     </div>
                                     <div id="update_group_right">
                                         <label>Nome</label>
@@ -1182,30 +1227,103 @@ export function Groups() {
                                         <div><img src={code}/></div>
                                     </button>
                                 </div>
-                                {
-                                    createTaskType=="explanation"?
-                                    <div id="bar_task_explanation">
-                                        <div id="bar_task_explanation_left">
-                                            <h1>Explicação</h1>
-                                        <label>Título</label>
-                                        <input type="text" placeholder="Oque são as..."/>
-                                        <label>Descrição 1</label>
-                                        <textarea placeholder="Essa lissão..."/>
-                                        
-                                        <input type="file" ref={createTaskImageRef}/>
-                                         <label>Descrição 2</label>
-                                        <textarea placeholder="Portanto..."/>
+                                
+                                    <div id="bar_task_create">
+                                        {createTaskType=="explanation"?
+                                            <div className="bar_task_create_note_red">
+                                           <p> Este exercício não requer resposta do usuário</p>
+                                        </div>:
+                                    createTaskType=="select"?
+                                    <div className="bar_task_create_note_blue">
+                                           <p> Este exercício requer que o usuário selecione a opção correta</p>
+                                        </div>:
+                                    createTaskType=="free"?
+                                    <div className="bar_task_create_note_blue">
+                                           <p> Este exercício requer que o usuário escreva um código</p>
                                         </div>
-                                            <div id="bar_task_explanation_right">
-                                            <button onClick={()=>{createTaskImageRef.current.click()}}><img src={task_image}/></button>
+                                    :null}
+                                        <div id="bar_task_create_left">
+                                            <h1>{
+                                            createTaskType=="explanation"?
+                                            "Explicação"
+                                            :
+                                            createTaskType=="select"?
+                                            "Selecionar":
+                                            createTaskType=="free"?
+                                            "Código"
+                                            :null
+                                            }</h1>
+                                        <label>Título</label>
+                                        <input type="text" placeholder="Oque são as..." onChange={(e)=>{setCreateTaskTitle(e.target.value)}} value={createTaskTitle}/>
+                                        <label>Descrição 1</label>
+                                        <textarea placeholder="Essa lissão..." onChange={(e)=>{setCreateTaskDescription1(e.target.value)}} value={createTaskDescription1}/>
+                                            
+                                            {
+                                                createTaskType=="select"?
+                                                <>
+                                                <label>Opções:</label>
+                                            <div className="bar_task_option">
+                                                <p>1</p>
+                                                <input type="text"/>
+                                            </div>
+                                            <div className="bar_task_option">
+                                                <p>2</p>
+                                                <input type="text"/>
+                                            </div>
+                                            <div className="bar_task_option">
+                                                <p>3</p>
+                                                <input type="text"/>
+                                            </div>
+                                            <div className="bar_task_option">
+                                                <p>4</p>
+                                                <input type="text"/>
+                                            </div>
+                                            <div className="bar_task_option">
+                                                <p>5</p>
+                                                <input type="text"/>
+                                            </div>
+                                            <div className="bar_task_option">
+                                                <p>6</p>
+                                                <input type="text"/>
+                                            </div>
+                                            
+                                            </>
+                                            :null
+                                            }
+
+                                         {createTaskType!="select"?
+                                            <><label>Descrição 2 <span>(opcional)</span></label>
+                                        <textarea placeholder="Portanto..." onChange={(e)=>{setCreateTaskDescription2(e.target.value)}} value={createTaskDescription2}/>
+                                        </>
+                                        :null}
+                                        </div>
+                                            <div id="bar_task_create_right">
+                                                 <input type="file" ref={createTaskImageRef} onChange={(e)=>{setCreateTaskImageInput(e.target.files[0])}}/>
+                                                <label>Thumbnail<span>(opcional)</span></label>
+                                            {
+                                                createTaskImageInput?
+                                                <>
+                                                <div></div>
+                                                <button onClick={()=>{createTaskImageRef.current.click()}}>
+                                                    Mudar thumbnail
+                                                </button>
+                                                </>
+                                                :
+                                                <button onClick={()=>{createTaskImageRef.current.click()}}><img src={task_image}/></button>
+                                            }
+                                            
+
+                                            <label>Código <span>(opcional)</span></label>
+                                            <textarea placeholder="const a = ..." onChange={(e)=>{setCreateTaskCode(e.target.value)}} value={createTaskCode}/>
+                                                                                     {createTaskType=="select"?
+                                            <><label>Descrição 2 <span>(opcional)</span></label>
+                                        <textarea placeholder="Portanto..." onChange={(e)=>{setCreateTaskDescription2(e.target.value)}} value={createTaskDescription2}/>
+                                        </>
+                                        :null}
                                             </div>
                                         </div>
-                                    :
-                                    createTaskType=="select"?
-                                    <div>Seleção</div>:
-                                    createTaskType=="free"?
-                                    <div>Código</div>:null
-                                }
+                                    
+                                
                                 <div id="create_task_bar_buttons">
                                     <button id="cancel_task_button">Cancelar</button>
                                     <button id="create_task_button">Criar</button>

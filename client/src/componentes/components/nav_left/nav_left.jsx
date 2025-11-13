@@ -21,7 +21,7 @@ import { useEffect, useState, useCallback } from "react"
 import { NavLeftListItem } from "../nav_left_list_item/nav_left_list_item.jsx"
 import paper_error from "../../../assets/all_pages/error/paper_error.png"
 import create_group from "../../../assets/specific_page/group/create_group1.png"
-
+import principal_groups from "../../../assets/specific_page/group/principal_groups.png"
 export function NavLeft({ userId, topButtons,updateButton,local,listTitle,requestLocal,requestType ,upgradeFunction,funcAlter,vars,code}) {
 
    
@@ -197,7 +197,17 @@ else if(requestType=="campaign"){
                     <div id="nav_left_bottom">
                             <div id="nav_left_list">
                               {
-                                  local=="groups"?(<button id="button_create_group" onClick={()=>{funcAlter[1](true)}}> <img src={create_group}/>Criar Grupo</button>):null
+                                  local=="groups"?(
+                                  <>
+                                  {
+                                    vars[0]?<button id="back_groups" onClick={()=>{
+                                      funcAlter[0](null)
+                                      localStorage.setItem("currentGroup",null)
+                                    }}> <img src={principal_groups}/>Página principal</button>:null
+                                  }
+                                  <button id="button_create_group" onClick={()=>{funcAlter[1](true)}}> <img src={create_group}/>Criar Grupo</button>
+                                </>
+                                ):null
                                 }
                             {
                                 
