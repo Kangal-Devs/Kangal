@@ -29,7 +29,7 @@ import chat_color6 from "../../../assets/specific_page/group/chat_color6.png"
 import not_invited from "../../../assets/specific_page/group/noInvited.webp"
 import add_user from "../../../assets/specific_page/group/add_user.png"
 import lup from "../../../assets/specific_page/group/lup.png"
-import copy_github from "../../../assets/specific_page/group/copy_github.png"
+import copy from "../../../assets/specific_page/group/copy.png"
 import paper_error from "../../../assets/all_pages/error/paper_error.png"
 import select_group from "../../../assets/specific_page/group/select_group2.webp"
 import default_lesson from "../../../assets/specific_page/group/default_lesson_picture.jpg"
@@ -40,12 +40,15 @@ import code from "../../../assets/specific_page/group/free.png"
 import task_image from "../../../assets/specific_page/group/task_image1.png"
 import { Group } from "../../components/group/group.jsx"
 import loading from "../../../assets/specific_page/group/loading.webp"
+import { IncompleteGroupTask } from "../../components/incomplete_group_task/incomplete_group_task.jsx"
+import { GroupLesson } from "../../components/group_lesson/group_lesson.jsx"
+import { GroupTaskButton } from "../../components/group_task_button/group_task_button.jsx"
 // import groups_background from "../../../assets/specific_page/group/groups_background1.svg"
 export function Groups() {
 
     const navigate = useNavigate()
 
-    
+
     const [chatColorsImages, setChatColorsImages] = useState({
         chatColor1: chat_color1,
         chatColor2: chat_color2,
@@ -72,7 +75,7 @@ export function Groups() {
     const [usersInvited, setUsersInvited] = useState([])
     const [usersToInvite, setUsersToInvite] = useState([])
 
-
+    const [incompleteGroupTasks, setIncompleteGroupTasks] = useState([])
     const [toInvite, setToInvite] = useState([])
     const [invited, setInvited] = useState([])
 
@@ -96,13 +99,15 @@ export function Groups() {
 
     const [messages, setMessages] = useState()
 
-    const [publicGroups,setPublicGroups] = useState()
+    const [publicGroups, setPublicGroups] = useState()
+
+    const [leaveGroupLessonStatus, setLeaveGroupLessonStatus] = useState(false)
 
     const [amIOwner, setAmIOwner] = useState()
     const [currentGroupOwner, setCurrentGroupOwner] = useState()
     const [currentGroupMembers, setCurrentGroupMembers] = useState()
 
-    const [reportMessageReason,setReportMessageReason] = useState()
+    const [reportMessageReason, setReportMessageReason] = useState()
 
     const [currentGroupCreatedAt, setCurrentGroupCreatedAt] = useState()
     const [currentGroupName, setCurrentGroupName] = useState()
@@ -118,7 +123,9 @@ export function Groups() {
     const [groupMembers, setGroupMembers] = useState()
     const [groupOwner, setGroupOwner] = useState()
 
-    const [reportMessageStatus,setReportMessageStatus] = useState(false)
+    const [reportMessageStatus, setReportMessageStatus] = useState(false)
+
+    const [chat,setChat] = useState()
 
     const [currentMemberId, setCurrentMemberId] = useState()
     const [currentMemberName, setCurrentMemberName] = useState()
@@ -144,15 +151,15 @@ export function Groups() {
     const [createGroupStatus, setCreateGroupStatus] = useState(false)
     const [aboutGroupStatus, setAboutGroupStatus] = useState(false)
     const [chatColorStatus, setChatColorStatus] = useState(false)
-    const [createLessonStatus,setCreateLessonStatus] = useState(false)
-    const [createTaskStatus,setCreateTaskStatus] = useState(false)
-    const [helpTaskStatus,setHelpTaskStatus] = useState(false)
+    const [createLessonStatus, setCreateLessonStatus] = useState(false)
+    const [createTaskStatus, setCreateTaskStatus] = useState(false)
+    const [helpTaskStatus, setHelpTaskStatus] = useState(false)
     const createLessonImageRef = useRef()
     const createTaskImageRef = useRef()
-    
+
     const [updateMessageStatus, setUpdateMessageStatus] = useState(false)
 
-    const [currentMessageValue,setCurrentMessageValue] = useState("")
+    const [currentMessageValue, setCurrentMessageValue] = useState("")
 
     const [inputMessage, setInputMessage] = useState("")
 
@@ -170,73 +177,319 @@ export function Groups() {
     const [updateGroupLink1, setUpdateGroupLink1] = useState("")
     const [updateGroupTitleLink2, setUpdateGroupTitleLink2] = useState("")
     const [updateGroupLink2, setUpdateGroupLink2] = useState("")
-    const [updateGroupIsPublic,setUpdateGroupIsPublic] = useState(false)
+    const [updateGroupIsPublic, setUpdateGroupIsPublic] = useState(false)
 
     const [showMoreCoordinates, setShowMoreCoordinates] = useState([])
 
     const updateAlterImageRef = useRef()
 
 
-    const [createTaskDescription2,setCreateTaskDescription2] = useState("")
-    const [createTaskDescription1,setCreateTaskDescription1] = useState("")
-    const [createTaskImageInput,setCreateTaskImageInput] = useState()
-    const [createTaskImage,setCreateTaskImage] = useState()
-    const [createTaskType,setCreateTaskType] = useState()
-    const [createTaskCode,setCreateTaskCode] = useState()
-    const [createTaskTitle,setCreateTaskTitle] = useState()
+    const [createTaskDescription2, setCreateTaskDescription2] = useState("")
+    const [createTaskDescription1, setCreateTaskDescription1] = useState("")
+    const [createTaskImageInput, setCreateTaskImageInput] = useState()
+    const [createTaskImage, setCreateTaskImage] = useState()
+    const [createTaskType, setCreateTaskType] = useState()
+    const [createTaskCode, setCreateTaskCode] = useState("")
+    const [createTaskTitle, setCreateTaskTitle] = useState("")
 
-    const [createLessonName,setCreateLessonName] = useState()
-    const [createLessonDescription,setCreateLessonDescription] = useState()
+    const [deleteTaskStatus, setDeleteTaskStatus] = useState()
+
+    const [createTaskOption1, setCreateTaskOption1] = useState("")
+    const [createTaskOption2, setCreateTaskOption2] = useState("")
+    const [createTaskOption3, setCreateTaskOption3] = useState("")
+    const [createTaskOption4, setCreateTaskOption4] = useState("")
+    const [createTaskOption5, setCreateTaskOption5] = useState("")
+    const [createTaskOption6, setCreateTaskOption6] = useState("")
+
+    const [createTaskOptions, setCreateTaskOptions] = useState([])
+
+    const [currentIncompleteGroupTaskName, setCurrentIncompleteGroupTaskName] = useState()
+    const [currentIncompleteGroupTaskId, setCurrentIncompleteGroupTaskId] = useState()
+
+    const [createLessonName, setCreateLessonName] = useState("")
+    const [createLessonDescription, setCreateLessonDescription] = useState("")
     // createLessonImageInput é a o valor no qual que o usuario põe no campo file de imagem para criar a lissão, e createLessonImage é a imagem a mostra para o usuario, se a createLessonImageInput for vazia createLessonImage recebera uma imagem default para aparecer
 
-    const [createLessonImageInput,setCreateLessonImageInput] = useState()
-    const [createLessonImage,setCreateLessonImage] = useState()
+    const [createLessonImageInput, setCreateLessonImageInput] = useState()
+    const [createLessonImage, setCreateLessonImage] = useState()
+
+    const [groupLessons, setGroupLessons] = useState([])
+
+    const [currentGroupLessonId, setCurrentGroupLessonId] = useState()
+    const [currentGroupLessonImage, setCurrentGroupLessonImage] = useState()
+    const [currentGroupLessonName, setCurrentGroupLessonName] = useState()
+    const [currentGroupLessonDescription, setCurrentGroupLessonDescription] = useState()
+
+    const [currentGroupTaskId, setCurrentGroupTaskId] = useState()
+    const [currentGroupTaskType, setCurrentGroupTaskType] = useState()
+    const [currentGroupTaskCode, setCurrentGroupTaskCode] = useState()
+    const [currentGroupTaskDescription2, setCurrentGroupTaskDescription2] = useState()
+    const [currentGroupTaskDescription1, setCurrentGroupTaskDescription1] = useState()
+    const [currentGroupTaskTitle, setCurrentGroupTaskTitle] = useState()
+    const [currentGroupTaskImage, setCurrentGroupTaskImage] = useState()
+    const [currentGroupTaskPossibleAnswers, setCurrentGroupTaskPossibleAnswers] = useState()
+
+    const [isGroupLessonStarted, setIsGroupLessonStarted] = useState()
+    const [isGroupLessonFinished, setIsGroupLessonFinished] = useState()
+
+    const [userGroupTaskResponse,setUserGroupTaskResponse] = useState("")
+
+    const [currentGroupTaskCount, setCurrentGroupTaskCount] = useState(0)
+    const [currentAllGroupTasksCount, setCurrentAllGroupTasksCount] = useState(0)
+    const [currentGroupTasks, setCurrentGroupTasks] = useState([])
+
+    const leaveGroupLesson = useCallback(()=>{
+        setCurrentGroupTasks([])
+        setCurrentAllGroupTasksCount(0)
+        setCurrentGroupTaskCount(0)
+        setIsGroupLessonFinished(false)
+        setIsGroupLessonStarted(false)
+        setCurrentGroupLessonId()
+        setLeaveGroupLessonStatus(false)
+    },[])
 
     useEffect(()=>{
-      
-    
-        if(!currentGroupId){
-          axios.get("http://localhost:5000/api/get_all_public_groups")
-          .then((res)=>{
-            setPublicGroups(res.data.message.map((group,i)=>{
-                return (<Group name={group.name} description={group.description} image={group.image} itemId={group._id} owner={group.owner} userId={userId} funcAlter={[setCurrentGroupId]}/>)
-            }))
-          })
-          .catch((err)=>{console.log(err)})
-        }
-    },[currentGroupId])
+        if(groupLessons?.length && messages?.length){
+        let chat1 = [];
+        groupLessons.forEach((item)=>{
+            chat1.push(item)
+        })
+        messages.forEach((item)=>{
+            chat1.push(item)
+        })
+        const chat2 = chat1.sort( (a, b) => new Date(a.props.createdAt) - new Date(b.props.createdAt))
+        console.log(chat2)
+        setChat(chat2)
+    }
+    else if(groupLessons?.length){
+        setChat(groupLessons)
+    }
+    else if(messages?.length){
+        setChat(messages)
+    }
+    else{
+        setChat()
+    }
+    },[groupLessons,messages])
 
-    useEffect(()=>{
+    const nextTask = useCallback(()=>{
+        setCurrentGroupTaskCount(currentGroupTaskCount+1);
+    },[userId,userGroupTaskResponse,currentGroupTaskCount])
         
-        if(createLessonStatus){
+    useEffect(()=>{
+        if(currentGroupTasks.length){
+            if(!currentGroupTasks[currentGroupTaskCount]){
+                setIsGroupLessonFinished(true)
+            }
+            setUserGroupTaskResponse("")
+            setCurrentGroupTaskId(currentGroupTasks[currentGroupTaskCount]?._id)
+            setCurrentGroupTaskTitle(currentGroupTasks[currentGroupTaskCount]?.title)
+            setCurrentGroupTaskDescription1(currentGroupTasks[currentGroupTaskCount]?.description1)
+            setCurrentGroupTaskDescription2(currentGroupTasks[currentGroupTaskCount]?.description2)
+            setCurrentGroupTaskCode(currentGroupTasks[currentGroupTaskCount]?.code)
+            setCurrentGroupTaskImage(currentGroupTasks[currentGroupTaskCount]?.image)
+            setCurrentGroupTaskPossibleAnswers(currentGroupTasks[currentGroupTaskCount]?.possibleAnswers)
+            setCurrentGroupTaskType(currentGroupTasks[currentGroupTaskCount]?.type)
+        }
+    },[currentGroupTasks,currentGroupTaskCount])
+
+    const startLesson = useCallback(() => {
+        setIsGroupLessonStarted(true)
+    }, [])
+
+
+    useEffect(()=>{
+        if(userGroupTaskResponse){
+            console.log(userGroupTaskResponse)
+        }
+    },[userGroupTaskResponse])
+    
+    useEffect(() => {
+        if (currentGroupLessonId) {
+            axios.get(`http://localhost:5000/api/get_all_group_lesson_tasks/${currentGroupLessonId}`)
+                .then((res) => { 
+                    console.log(res.data.message)
+                    setCurrentGroupTasks(res.data.message);
+                    setCurrentAllGroupTasksCount(res.data.message.length) })
+                .catch((err) => { console.log(err) })
+
+            axios.get(`http://localhost:5000/api/get_group_lesson/${currentGroupLessonId}`)
+                .then((res) => {
+                    setCurrentGroupLessonImage(res.data.message.image)
+                    setCurrentGroupLessonName(res.data.message.name)
+                    setCurrentGroupLessonDescription(res.data.message.description)
+                })
+                .catch((err) => { console.log(err) })
+
+        }
+    }, [currentGroupLessonId])
+
+    const deleteGroupTask = useCallback(() => {
+        axios.delete(`http://localhost:5000/api/delete_group_task/${currentIncompleteGroupTaskId}`)
+            .then((res) => {
+                axios.get(`http://localhost:5000/api/get_all_incomplete_group_task/${currentGroupId}`)
+                    .then((res) => {
+                        if (res.data.message.length) {
+                            setIncompleteGroupTasks(res.data.message.map((incomplete_group_task, i) => {
+                                return <IncompleteGroupTask key={"GT" + i} index={i + 1} type={incomplete_group_task.type}
+                                    title={incomplete_group_task.title} itemId={incomplete_group_task._id}
+                                    funcAlter={[setDeleteTaskStatus, setCurrentIncompleteGroupTaskId, setCurrentIncompleteGroupTaskName]}
+                                />
+                            }))
+                        }
+                        else {
+                            setIncompleteGroupTasks(null)
+                        }
+
+                        setDeleteTaskStatus(false)
+                    })
+                    .catch((err) => { console.log(err) })
+            })
+            .catch((err) => { console.log(err) })
+    }, [currentIncompleteGroupTaskId])
+
+    const loadIncompleteGroupTask = useCallback(() => {
+        axios.get(`http://localhost:5000/api/get_all_incomplete_group_task/${currentGroupId}`)
+            .then((res) => {
+                if (res.data.message.length) {
+                    setIncompleteGroupTasks(res.data.message.map((incomplete_group_task, i) => {
+                        return <IncompleteGroupTask key={"GT" + i} index={i + 1} type={incomplete_group_task.type}
+                            title={incomplete_group_task.title} itemId={incomplete_group_task._id}
+                            funcAlter={[setDeleteTaskStatus, setCurrentIncompleteGroupTaskId, setCurrentIncompleteGroupTaskName]}
+                        />
+                    }))
+                }
+                else {
+                    setIncompleteGroupTasks(null)
+                }
+            })
+            .catch((err) => { console.log(err) })
+    }, [currentGroupId])
+
+    useEffect(() => {
+        if (createLessonStatus) {
+            loadIncompleteGroupTask()
+        }
+    }, [createLessonStatus])
+
+
+
+    const createTask = useCallback(() => {
+        if (!createTaskTitle || !createTaskDescription1) {
+            return
+        }
+
+        const formData = new FormData()
+
+        formData.append("title", createTaskTitle)
+        formData.append("description1", createTaskDescription1)
+        formData.append("description2", createTaskDescription2)
+        formData.append("type", createTaskType)
+        formData.append("group", currentGroupId)
+        formData.append("file", createTaskImageInput)
+        formData.append("code", createTaskCode)
+        formData.append("possibleAnswers", [createTaskOption1, createTaskOption2, createTaskOption3, createTaskOption4, createTaskOption5, createTaskOption6])
+
+        axios.post("http://localhost:5000/api/create_group_task", formData)
+            .then((res) => {
+                console.log(res);
+                setCreateTaskStatus(false)
+                setCreateTaskCode("")
+                setCreateTaskDescription1("")
+                setCreateTaskDescription2("")
+                setCreateTaskTitle("")
+                setCreateTaskImageInput()
+                setCreateTaskOption1("")
+                setCreateTaskOption2("")
+                setCreateTaskOption3("")
+                setCreateTaskOption4("")
+                setCreateTaskOption5("")
+                setCreateTaskOption6("")
+                setCreateTaskType("explanation")
+                loadIncompleteGroupTask()
+            })
+            .catch((err) => { console.log(err) })
+    }, [
+        createTaskOption1, createTaskOption2, createTaskOption3, createTaskOption4, createTaskOption5, createTaskOption6,
+        createTaskCode,
+        createTaskDescription1,
+        createTaskDescription2,
+        createTaskTitle,
+        createTaskType,
+        currentGroupId,
+        createTaskImageInput
+    ])
+
+    const createLesson = useCallback(() => {
+        if (createGroupDescription || createGroupName || currentGroupId) {
+
+            const formData = new FormData()
+
+            formData.append("name", createLessonName)
+            formData.append("file", createLessonImageInput)
+            formData.append("description", createLessonDescription)
+            formData.append("group", currentGroupId)
+
+            axios.post("http://localhost:5000/api/create_group_lesson", formData)
+                .then((res) => { console.log(res.data) })
+                .catch((err) => { console.log(err) })
+        }
+    }, [createLessonDescription, createLessonImageInput, createLessonName, currentGroupId])
+
+    useEffect(() => {
+
+
+        if (!currentGroupId) {
+            axios.get("http://localhost:5000/api/get_all_public_groups")
+                .then((res) => {
+                    setPublicGroups(res.data.message.map((group, i) => {
+                        return (<Group name={group.name} description={group.description} image={group.image} itemId={group._id} owner={group.owner} userId={userId} funcAlter={[setCurrentGroupId]} />)
+                    }))
+                })
+                .catch((err) => { console.log(err) })
+        }
+    }, [currentGroupId])
+
+    useEffect(() => {
+
+        if (createLessonStatus && !createTaskStatus) {
             setCreateLessonName("")
             setCreateLessonDescription("")
             setCreateLessonImageInput()
             setCreateLessonImage(default_lesson)
-         
-        }
-    },[createLessonStatus])
 
-    useEffect(()=>{
-        if(createLessonStatus){
-            if(createLessonImageInput){
-                setCreateLessonImage(URL.createObjectURL(createLessonImageInput)) 
+        }
+    }, [createLessonStatus])
+
+    useEffect(() => {
+        if (createLessonStatus) {
+            if (createLessonImageInput) {
+                setCreateLessonImage(URL.createObjectURL(createLessonImageInput))
             }
-            else{
+            else {
                 setCreateLessonImage(default_lesson)
             }
         }
-    },[createLessonImageInput,createLessonStatus])
+    }, [createLessonImageInput, createLessonStatus])
 
-    
+    useEffect(() => {
+        if (createTaskStatus) {
+            if (createTaskImageInput) {
+                setCreateTaskImage(URL.createObjectURL(createTaskImageInput))
+            }
+            else {
+                setCreateTaskImage()
+            }
+        }
+    }, [createTaskImageInput, createTaskStatus])
 
-    const reportMessage = useCallback(()=>{
-        axios.post("http://localhost:5000/api/create_message_report",{userId,messageId:currentMessageId,reason:reportMessageReason})
-        .then((res)=>{
-            window.location.reload()
-        })
-        .catch((err)=>{console.log(err)})
-    },[reportMessageReason,userId,currentMessageId])
+    const reportMessage = useCallback(() => {
+        axios.post("http://localhost:5000/api/create_message_report", { userId, messageId: currentMessageId, reason: reportMessageReason })
+            .then((res) => {
+                window.location.reload()
+            })
+            .catch((err) => { console.log(err) })
+    }, [reportMessageReason, userId, currentMessageId])
 
     const deleteMessage = useCallback(() => {
         axios.delete(`http://localhost:5000/api/delete_message/${currentMessageId}`)
@@ -249,11 +502,11 @@ export function Groups() {
             })
     }, [currentMessageId])
 
-    useEffect(()=>{
-        if(createTaskStatus){
+    useEffect(() => {
+        if (createTaskStatus) {
             setCreateTaskType("explanation")
         }
-    },[createTaskStatus])
+    }, [createTaskStatus])
 
 
 
@@ -263,35 +516,35 @@ export function Groups() {
         setUpdateGroupName(currentGroupName)
         setUpdateGroupImage(`data:image/png;base64,${currentGroupImage}`)
         setUpdateGroupIsPublic(currentGroupIsPublic)
-    }, [currentGroupImage, currentGroupDescription, currentGroupName,currentGroupIsPublic])
+    }, [currentGroupImage, currentGroupDescription, currentGroupName, currentGroupIsPublic])
 
     // useEffect(()=>{
     //     console.log(updateGroupImageFile)
     // },[updateGroupStatus])
 
     useEffect(() => {
-    
-        if(currentGroupLink1 !=" "){
-        setUpdateGroupLink1(currentGroupLink1)
-        }else{
+
+        if (currentGroupLink1 != " ") {
+            setUpdateGroupLink1(currentGroupLink1)
+        } else {
             setUpdateGroupLink1("")
         }
 
-        if(currentGroupTitleLink1 !=" "){
-        setUpdateGroupTitleLink1(currentGroupTitleLink1)
-        }else{
+        if (currentGroupTitleLink1 != " ") {
+            setUpdateGroupTitleLink1(currentGroupTitleLink1)
+        } else {
             setUpdateGroupTitleLink1("")
         }
 
-        if(currentGroupLink2 !=" "){
-        setUpdateGroupLink2(currentGroupLink2)
-        }else{
+        if (currentGroupLink2 != " ") {
+            setUpdateGroupLink2(currentGroupLink2)
+        } else {
             setUpdateGroupLink2("")
         }
 
-        if(currentGroupTitleLink2 !=" "){
-        setUpdateGroupTitleLink2(currentGroupTitleLink2)
-        }else{
+        if (currentGroupTitleLink2 != " ") {
+            setUpdateGroupTitleLink2(currentGroupTitleLink2)
+        } else {
             setUpdateGroupTitleLink2("")
         }
 
@@ -361,7 +614,7 @@ export function Groups() {
                 setInputMessage("")
                 axios.post("http://localhost:5000/api/get_all_messages", { groupId: currentGroupId })
                     .then((res) => {
-                        setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} status={message.status} itemId={message._id} funcAlter={[setCurrentMessageId, setShowMoreCoordinates,setCurrentMessageValue]} /> }))
+                        setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} status={message.status} itemId={message._id} funcAlter={[setCurrentMessageId, setShowMoreCoordinates, setCurrentMessageValue]} createdAt={message.createdAt} /> }))
                     })
                     .catch((err) => { console.log(err) })
 
@@ -405,7 +658,7 @@ export function Groups() {
                 console.log(err)
             })
 
-    }, [updateGroupDescription, updateGroupImage, updateGroupLink1, updateGroupLink2, updateGroupName, updateGroupTitleLink1, updateGroupTitleLink2, updateGroupImageFile, currentGroupId,updateGroupIsPublic])
+    }, [updateGroupDescription, updateGroupImage, updateGroupLink1, updateGroupLink2, updateGroupName, updateGroupTitleLink1, updateGroupTitleLink2, updateGroupImageFile, currentGroupId, updateGroupIsPublic])
 
     const cancelUpdateGroup = useCallback(() => {
         setUpdateGroupStatus(false)
@@ -427,13 +680,13 @@ export function Groups() {
         currentGroupTitleLink2
     ])
 
-    const updateMessage = useCallback(()=>{
-        axios.put(`http://localhost:5000/api/update_message/${currentMessageId}`,{value:currentMessageValue})
-        .then((res)=>{
-            window.location.reload()
-        })
-        .catch((err)=>{console.log(err)})
-    },[currentMessageId,currentMessageValue])
+    const updateMessage = useCallback(() => {
+        axios.put(`http://localhost:5000/api/update_message/${currentMessageId}`, { value: currentMessageValue })
+            .then((res) => {
+                window.location.reload()
+            })
+            .catch((err) => { console.log(err) })
+    }, [currentMessageId, currentMessageValue])
 
     const createGroup = useCallback(() => {
         if (createGroupName.length >= 3 && createGroupDescription.length >= 3) {
@@ -562,7 +815,7 @@ export function Groups() {
     useEffect(() => {
 
         if (currentGroupId) {
-           
+
             setCurrentMemberId()
             axios.post("http://localhost:5000/api/get_group", { _id: currentGroupId })
                 .then((res) => {
@@ -593,7 +846,7 @@ export function Groups() {
                     axios.post("http://localhost:5000/api/get_all_messages", { groupId: currentGroupId })
                         .then((res) => {
                             if (res.data.message.length) {
-                                setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} status={message.status} itemId={message._id} funcAlter={[setCurrentMessageId, setShowMoreCoordinates,setCurrentMessageValue]} /> }))
+                                setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} status={message.status} itemId={message._id} funcAlter={[setCurrentMessageId, setShowMoreCoordinates, setCurrentMessageValue]} createdAt={message.createdAt}/> }))
                             }
                         })
                         .catch((err) => { console.log(err) })
@@ -601,8 +854,8 @@ export function Groups() {
                 .catch((err) => { console.log(err) })
 
 
-        }else{
-           
+        } else {
+
         }
     }, [currentGroupId])
 
@@ -618,9 +871,9 @@ export function Groups() {
                         .then((res3) => {
 
                             setGroupMembers(res3.map((member2, i) => {
-                               
+
                                 if (member2.data.message._id != currentGroupOwner) {
-                                  
+
 
                                     return <Member
                                         funcAlter={[setCurrentMemberId]}
@@ -685,6 +938,25 @@ export function Groups() {
         }
     }, [aboutGroupStatus])
 
+    useEffect(() => {
+        if (currentGroupId) {
+            axios.get(`http://localhost:5000/api/get_all_group_lesson/${currentGroupId}`)
+                .then((res) => {
+                    console.log(res.data.message)
+                    if (res.data.message.length) {
+                        setGroupLessons(res.data.message.map((groupLesson) => {
+                            return <GroupLesson name={groupLesson.name} image={groupLesson.image} amIOwner={amIOwner} userId={userId} itemId={groupLesson._id} owner={currentGroupOwner} createdAt={groupLesson.createdAt} status={groupLesson.status}
+                                funcAlter={[setCurrentGroupLessonId]} />
+                        }))
+                    }
+                    else {
+                        setGroupLessons(null)
+                    }
+                })
+                .catch((err) => { console.log(err) })
+        }
+    }, [currentGroupId, currentGroupOwner])
+
     return (
         <div id="groups">
             {connected == false ? <TokenInvalid token_error={tokenError} /> : (
@@ -722,28 +994,28 @@ export function Groups() {
                             !currentGroupId ?
                                 <div id="groups_content_empty">
                                     <div id="decoration_groups_background">
-                           
+
                                     </div>
-                                     <div id="decoration_groups_principal"></div>
-                                     <p id="group_list_title">Grupos públicos:</p>
-                                     <div id="groups_list">
-                                        {publicGroups?publicGroups:<img src={loading} id="loading"/>}
-                                     </div>
+                                    <div id="decoration_groups_principal"></div>
+                                    <p id="group_list_title">Grupos públicos:</p>
+                                    <div id="groups_list">
+                                        {publicGroups ? publicGroups : <img src={loading} id="loading" />}
+                                    </div>
                                 </div> :
                                 <div id="groups_content_principal">
                                     <div id="groups_content_principal_chat_part">
                                         <div id="group_chat">
 
 
-
-                                            {messages}
-
+                                            {chat}
+                                            {/* {messages}
+                                            {groupLessons} */}
                                         </div>
                                         {currentGroupOwner == userId ?
                                             <div id="group_input_bar">
 
                                                 <div id="group_input_bar_principal">
-                                                    <button id="input_add" onClick={()=>{setCreateLessonStatus(true)}} className="inputs_chat"><img src={more} /></button>
+                                                    <button id="input_add" onClick={() => { setCreateLessonStatus(true) }} className="inputs_chat"><img src={more} /></button>
                                                     <div id="input_part">
                                                         <button id="input_emogi" onClick={() => { setEmogiBarStatus(true) }}>
                                                             <img src={emogi} />
@@ -792,7 +1064,7 @@ export function Groups() {
                                                                     currentMemberGithub
                                                             }</p>
                                                             <button onClick={() => { navigator.clipboard.writeText(currentMemberGithub) }}>
-                                                                <img src={copy_github} />
+                                                                <img src={copy} />
                                                             </button>
                                                         </div>
                                                     </div>
@@ -850,8 +1122,8 @@ export function Groups() {
                                                 </div>
                                                 :
                                                 <div id="not_invited">
-                                                <img src={not_invited}  />
-                                                <p>Sem usuários convidados</p>
+                                                    <img src={not_invited} />
+                                                    <p>Sem usuários convidados</p>
                                                 </div>}
                                         </div>
                                     </div>
@@ -916,7 +1188,7 @@ export function Groups() {
                                         <input type="text" placeholder="Grupo..." value={createGroupName} onChange={(e) => { setCreateGroupName(e.target.value) }} />
                                         <label>Descrição</label>
                                         <input type="text"
-                                        placeholder="Esse grupo..." value={createGroupDescription} onChange={(e) => { setCreateGroupDescription(e.target.value) }} />
+                                            placeholder="Esse grupo..." value={createGroupDescription} onChange={(e) => { setCreateGroupDescription(e.target.value) }} />
                                         <button onClick={() => { createGroup() }}>Criar</button>
                                     </div>
                                 </div>
@@ -1007,10 +1279,10 @@ export function Groups() {
                                             <input type="file" style={{ display: "none" }} ref={updateAlterImageRef} onChange={(e) => { changeGroupImage(e) }} />
                                         </div>
                                         <div id="update_group_public_part">
-                                    
-                                        <input type="checkbox" checked={updateGroupIsPublic} onChange={()=>setUpdateGroupIsPublic(value=>{return !value})}/>
-                                        
-                                        <label>Grupo Público</label>
+
+                                            <input type="checkbox" checked={updateGroupIsPublic} onChange={() => setUpdateGroupIsPublic(value => { return !value })} />
+
+                                            <label>Grupo Público</label>
                                         </div>
                                     </div>
                                     <div id="update_group_right">
@@ -1112,13 +1384,13 @@ export function Groups() {
                         currentMessageId ? (
                             <div id="show_more_background" onClick={() => { setCurrentMessageId(null) }}>
                                 <div id="show_more_bar" style={{ top: showMoreCoordinates[1] - 14, left: showMoreCoordinates[0] + 14 }} onClick={(e) => { e.stopPropagation() }}>
-                                    
-                                    {amIOwner?
-                                    (<>
-                                    <button onClick={() => { setUpdateMessageStatus(true) }}>Editar</button>
-                                    <button onClick={() => { deleteMessage() }}>Deletar</button>
-                                    </>):
-                                    <button onClick={()=>{setReportMessageStatus(true)}}>Reportar</button>
+
+                                    {amIOwner ?
+                                        (<>
+                                            <button onClick={() => { setUpdateMessageStatus(true) }}>Editar</button>
+                                            <button onClick={() => { deleteMessage() }}>Deletar</button>
+                                        </>) :
+                                        <button onClick={() => { setReportMessageStatus(true) }}>Reportar</button>
                                     }
                                 </div>
                             </div>
@@ -1126,222 +1398,320 @@ export function Groups() {
                     }
                     {
                         updateMessageStatus ?
-                            <div id="update_message_background" onClick={()=>{setUpdateMessageStatus(false)}}>
-                                <div id="update_message_bar" onClick={(e)=>{e.stopPropagation()}}>
+                            <div id="update_message_background" onClick={() => { setUpdateMessageStatus(false) }}>
+                                <div id="update_message_bar" onClick={(e) => { e.stopPropagation() }}>
                                     <div id="update_message_bar_top"><p>Editar mensagem</p><button
-                                    onClick={()=>{setUpdateMessageStatus(false);setCurrentMessageId(null)}}>X</button></div>
+                                        onClick={() => { setUpdateMessageStatus(false); setCurrentMessageId(null) }}>X</button></div>
                                     <div id="update_message_bar_middle">
-                                        
-                                        <textarea type="text" onChange={(e)=>{setCurrentMessageValue(e.target.value)}} value={currentMessageValue}/>
+
+                                        <textarea type="text" onChange={(e) => { setCurrentMessageValue(e.target.value) }} value={currentMessageValue} />
                                     </div>
                                     <div id="update_message_bar_bottom">
-                                        <button id="cancel_update_message" onClick={()=>{
+                                        <button id="cancel_update_message" onClick={() => {
                                             setUpdateMessageStatus(false)
                                             setCurrentMessageId(null)
                                         }}>Cancelar</button>
-                                        <button id="apply_update_message" onClick={()=>{updateMessage()}}>Editar</button>
+                                        <button id="apply_update_message" onClick={() => { updateMessage() }}>Editar</button>
                                     </div>
                                 </div>
                             </div> : null
                     }
                     {
-                        reportMessageStatus?
-                        <div id="report_message_background" onClick={()=>{setReportMessageStatus(false)}}>
-                                <div id="report_message_bar" onClick={(e)=>{e.stopPropagation()}}>
+                        reportMessageStatus ?
+                            <div id="report_message_background" onClick={() => { setReportMessageStatus(false) }}>
+                                <div id="report_message_bar" onClick={(e) => { e.stopPropagation() }}>
                                     <div id="report_message_bar_top"><p>Reportar Messagem</p><button
-                                    onClick={()=>{setReportMessageStatus(false);setCurrentMessageId(null)}}>X</button></div>
+                                        onClick={() => { setReportMessageStatus(false); setCurrentMessageId(null) }}>X</button></div>
                                     <div id="report_message_bar_middle">
-                                        
-                                        <textarea type="text" onChange={(e)=>{setReportMessageReason(e.target.value)}} value={reportMessageReason}/>
+
+                                        <textarea type="text" onChange={(e) => { setReportMessageReason(e.target.value) }} value={reportMessageReason} />
                                     </div>
                                     <div id="report_message_bar_bottom">
-                                        <button id="cancel_report_message" onClick={()=>{
+                                        <button id="cancel_report_message" onClick={() => {
                                             setReportMessageStatus(false)
                                             setCurrentMessageId(null)
                                         }}>Cancelar</button>
-                                        <button id="apply_report_message" onClick={()=>{reportMessage()}}>Reportar</button>
+                                        <button id="apply_report_message" onClick={() => { reportMessage() }}>Reportar</button>
                                     </div>
                                 </div>
                             </div>
-                        :null
+                            : null
                     }
                     {
-                        createLessonStatus?
-                        (<div id="create_lesson_background" onClick={()=>{setCreateLessonStatus(false)}}>
-                            <div id="create_lesson_bar" onClick={(e)=>{e.stopPropagation()}}>
-                                <div id="create_lesson_bar_title">
-                                    <h1>Criar lição</h1>
-                                    <button onClick={()=>{setCreateLessonStatus(false)}}>X</button>
-                                </div>
-                                <div id="create_lesson_bar_info">
-                                    <label> Título da lição</label>
-                                    <input placeholder="Lição de..." type="text" onChange={(e)=>{setCreateLessonName(e.target.value)}}/>
-                                    <label>Descrição</label>
-                                    <textarea placeholder="Essa lição..." onChange={(e)=>{setCreateLessonDescription(e.target.value)}}/>
-                                </div>
-                                <div id="create_lesson_bar_thumbnail">
-                                    <div id="create_lesson_bar_thumbnail_title">
-                                    <label>Thumbnail</label>
+                        createLessonStatus ?
+                            (<div id="create_lesson_background" onClick={() => { setCreateLessonStatus(false) }}>
+                                <div id="create_lesson_bar" onClick={(e) => { e.stopPropagation() }}>
+                                    <div id="create_lesson_bar_title">
+                                        <h1>Criar lição</h1>
+                                        <button onClick={() => { setCreateLessonStatus(false) }}>X</button>
                                     </div>
-                                    <div id="create_lesson_bar_thumbnail_principal">
-                                    <img src={createLessonImage}/>
+                                    <div id="create_lesson_bar_info">
+                                        <label> Título da lição</label>
+                                        <input placeholder="Lição de..." type="text" onChange={(e) => { setCreateLessonName(e.target.value) }} value={createLessonName} />
+                                        <label>Descrição</label>
+                                        <textarea placeholder="Essa lição..." onChange={(e) => { setCreateLessonDescription(e.target.value) }} value={createLessonDescription} />
                                     </div>
-                                    <button onClick={()=>{createLessonImageRef.current.click()}}>Mudar thumbnail</button>
-                                    <input id="create_lesson_bar_thumbnail_input"type="file" ref={createLessonImageRef} onChange={(e)=>{setCreateLessonImageInput(e.target.files[0])}}/>
-                                </div>
-                                <div id="create_lesson_bar_tasks_title">
-                                    <p id="create_tasks_button" onClick={()=>{setCreateTaskStatus(true)}}>+ Criar exercício</p>
-                                    <p id="create_tasks_type">Tipo</p>
-                                    <div></div>
-                                </div>
-                                <div id="create_lesson_bar_tasks"></div>
-                                <div id="create_lesson_bar_buttons">
-                               
-                                    <button onClick={()=>{setCreateLessonStatus(false)}} id="cancel_lesson_button">Cancelar</button>
-                                    <button onClick={()=>{}} id="create_lesson_button">Criar lição</button>
-                                </div>
-                            </div>
-
-                        </div>)
-                        :null
-                    }
-                    {
-                        createTaskStatus?
-                        (<div id="create_task_background" onClick={()=>{setCreateTaskStatus(false)}}>
-                            <div id="create_task_bar" onClick={(e)=>{e.stopPropagation()}}>
-                                <div id="create_task_bar_title">
-                                    <h1>Criar exercício</h1>
-                                    <button onClick={()=>{setCreateTaskStatus(false)}}>X</button>
-                                </div>
-                                <div id="create_task_bar_type_title">
-                                   <p>Tipo:</p> <button onClick={()=>{setHelpTaskStatus(true)}}><img src={ajuda}/>Ajuda</button>
-                                </div>
-                                <div id="create_task_bar_type">
-                                    <button onClick={()=>{setCreateTaskType("explanation")}}>Explicação
-                                        <div><img src={explanation}/></div>
-                                    </button>
-                                    <button onClick={()=>{setCreateTaskType("select")}}>Selecionar
-                                        <div><img src={select}/></div>
-                                    </button>
-                                    <button onClick={()=>{setCreateTaskType("free")}}>Código
-                                        <div><img src={code}/></div>
-                                    </button>
-                                </div>
-                                
-                                    <div id="bar_task_create">
-                                        {createTaskType=="explanation"?
-                                            <div className="bar_task_create_note_red">
-                                           <p> Este exercício não requer resposta do usuário</p>
-                                        </div>:
-                                    createTaskType=="select"?
-                                    <div className="bar_task_create_note_blue">
-                                           <p> Este exercício requer que o usuário selecione a opção correta</p>
-                                        </div>:
-                                    createTaskType=="free"?
-                                    <div className="bar_task_create_note_blue">
-                                           <p> Este exercício requer que o usuário escreva um código</p>
+                                    <div id="create_lesson_bar_thumbnail">
+                                        <div id="create_lesson_bar_thumbnail_title">
+                                            <label>Thumbnail  3:2 </label>
                                         </div>
-                                    :null}
+                                        <div id="create_lesson_bar_thumbnail_principal">
+                                            <img src={createLessonImage} />
+                                        </div>
+                                        <button onClick={() => { createLessonImageRef.current.click() }}>Mudar thumbnail</button>
+                                        <input id="create_lesson_bar_thumbnail_input" type="file" ref={createLessonImageRef} onChange={(e) => { setCreateLessonImageInput(e.target.files[0]) }} />
+                                    </div>
+                                    <div id="create_lesson_bar_tasks_title">
+                                        <p id="create_tasks_button" onClick={() => { setCreateTaskStatus(true) }}>+ Criar exercício</p>
+                                        <p id="create_tasks_type">Tipo</p>
+                                        <div></div>
+                                    </div>
+                                    <div id="create_lesson_bar_tasks">
+                                        {incompleteGroupTasks}
+                                    </div>
+                                    <div id="create_lesson_bar_buttons">
+
+                                        <button onClick={() => { setCreateLessonStatus(false) }} id="cancel_lesson_button">Cancelar</button>
+                                        <button onClick={() => { createLesson() }} id="create_lesson_button">Criar lição</button>
+                                    </div>
+                                </div>
+
+                            </div>)
+                            : null
+                    }
+                    {
+                        createTaskStatus ?
+                            (<div id="create_task_background" onClick={() => { setCreateTaskStatus(false) }}>
+                                <div id="create_task_bar" onClick={(e) => { e.stopPropagation() }}>
+                                    <div id="create_task_bar_title">
+                                        <h1>Criar exercício</h1>
+                                        <button onClick={() => { setCreateTaskStatus(false); }}>X</button>
+                                    </div>
+                                    <div id="create_task_bar_type_title">
+                                        <p>Tipo:</p> <button onClick={() => { setHelpTaskStatus(true) }}><img src={ajuda} />Ajuda</button>
+                                    </div>
+                                    <div id="create_task_bar_type">
+                                        <button onClick={() => { setCreateTaskType("explanation") }}>Explicação
+                                            <div><img src={explanation} /></div>
+                                        </button>
+                                        <button onClick={() => { setCreateTaskType("select") }}>Selecionar
+                                            <div><img src={select} /></div>
+                                        </button>
+                                        <button onClick={() => { setCreateTaskType("free") }}>Código
+                                            <div><img src={code} /></div>
+                                        </button>
+                                    </div>
+
+                                    <div id="bar_task_create">
+                                        {createTaskType == "explanation" ?
+                                            <div className="bar_task_create_note_red">
+                                                <p> Este exercício não requer resposta do usuário</p>
+                                            </div> :
+                                            createTaskType == "select" ?
+                                                <div className="bar_task_create_note_blue">
+                                                    <p> Este exercício requer que o usuário selecione a opção correta</p>
+                                                </div> :
+                                                createTaskType == "free" ?
+                                                    <div className="bar_task_create_note_blue">
+                                                        <p> Este exercício requer que o usuário escreva um código</p>
+                                                    </div>
+                                                    : null}
                                         <div id="bar_task_create_left">
                                             <h1>{
-                                            createTaskType=="explanation"?
-                                            "Explicação"
-                                            :
-                                            createTaskType=="select"?
-                                            "Selecionar":
-                                            createTaskType=="free"?
-                                            "Código"
-                                            :null
+                                                createTaskType == "explanation" ?
+                                                    "Explicação"
+                                                    :
+                                                    createTaskType == "select" ?
+                                                        "Selecionar" :
+                                                        createTaskType == "free" ?
+                                                            "Código"
+                                                            : null
                                             }</h1>
-                                        <label>Título</label>
-                                        <input type="text" placeholder="Oque são as..." onChange={(e)=>{setCreateTaskTitle(e.target.value)}} value={createTaskTitle}/>
-                                        <label>Descrição 1</label>
-                                        <textarea placeholder="Essa lissão..." onChange={(e)=>{setCreateTaskDescription1(e.target.value)}} value={createTaskDescription1}/>
-                                            
+                                            <label>Título</label>
+                                            <input type="text" placeholder="Oque são as..." onChange={(e) => { setCreateTaskTitle(e.target.value) }} value={createTaskTitle} />
+                                            <label>Descrição 1</label>
+                                            <textarea placeholder="Essa lissão..." onChange={(e) => { setCreateTaskDescription1(e.target.value) }} value={createTaskDescription1} />
+
                                             {
-                                                createTaskType=="select"?
-                                                <>
-                                                <label>Opções:</label>
-                                            <div className="bar_task_option">
-                                                <p>1</p>
-                                                <input type="text"/>
-                                            </div>
-                                            <div className="bar_task_option">
-                                                <p>2</p>
-                                                <input type="text"/>
-                                            </div>
-                                            <div className="bar_task_option">
-                                                <p>3</p>
-                                                <input type="text"/>
-                                            </div>
-                                            <div className="bar_task_option">
-                                                <p>4</p>
-                                                <input type="text"/>
-                                            </div>
-                                            <div className="bar_task_option">
-                                                <p>5</p>
-                                                <input type="text"/>
-                                            </div>
-                                            <div className="bar_task_option">
-                                                <p>6</p>
-                                                <input type="text"/>
-                                            </div>
-                                            
-                                            </>
-                                            :null
+                                                createTaskType == "select" ?
+                                                    <>
+                                                        <label>Opções:</label>
+                                                        <div className="bar_task_option">
+                                                            <p>1</p>
+                                                            <input type="text" value={createTaskOption1} onChange={(e) => { setCreateTaskOption1(e.target.value) }} />
+                                                        </div>
+                                                        <div className="bar_task_option">
+                                                            <p>2</p>
+                                                            <input type="text" value={createTaskOption2} onChange={(e) => { setCreateTaskOption2(e.target.value) }} />
+                                                        </div>
+                                                        <div className="bar_task_option">
+                                                            <p>3</p>
+                                                            <input type="text" value={createTaskOption3} onChange={(e) => { setCreateTaskOption3(e.target.value) }} />
+                                                        </div>
+                                                        <div className="bar_task_option">
+                                                            <p>4</p>
+                                                            <input type="text" value={createTaskOption4} onChange={(e) => { setCreateTaskOption4(e.target.value) }} />
+                                                        </div>
+                                                        <div className="bar_task_option">
+                                                            <p>5</p>
+                                                            <input type="text" value={createTaskOption5} onChange={(e) => { setCreateTaskOption5(e.target.value) }} />
+                                                        </div>
+                                                        <div className="bar_task_option">
+                                                            <p>6</p>
+                                                            <input type="text" value={createTaskOption6} onChange={(e) => { setCreateTaskOption6(e.target.value) }} />
+                                                        </div>
+
+                                                    </>
+                                                    : null
                                             }
 
-                                         {createTaskType!="select"?
-                                            <><label>Descrição 2 <span>(opcional)</span></label>
-                                        <textarea placeholder="Portanto..." onChange={(e)=>{setCreateTaskDescription2(e.target.value)}} value={createTaskDescription2}/>
-                                        </>
-                                        :null}
-                                        </div>
-                                            <div id="bar_task_create_right">
-                                                 <input type="file" ref={createTaskImageRef} onChange={(e)=>{setCreateTaskImageInput(e.target.files[0])}}/>
-                                                <label>Thumbnail<span>(opcional)</span></label>
-                                            {
-                                                createTaskImageInput?
-                                                <>
-                                                <div></div>
-                                                <button onClick={()=>{createTaskImageRef.current.click()}}>
-                                                    Mudar thumbnail
-                                                </button>
+                                            {createTaskType != "select" ?
+                                                <><label>Descrição 2 <span>(opcional)</span></label>
+                                                    <textarea placeholder="Portanto..." onChange={(e) => { setCreateTaskDescription2(e.target.value) }} value={createTaskDescription2} />
                                                 </>
-                                                :
-                                                <button onClick={()=>{createTaskImageRef.current.click()}}><img src={task_image}/></button>
+                                                : null}
+                                        </div>
+                                        <div id="bar_task_create_right">
+                                            <input type="file" ref={createTaskImageRef} onChange={(e) => { setCreateTaskImageInput(e.target.files[0]) }} />
+                                            <label>Thumbnail<span>(opcional)</span></label>
+                                            {
+                                                createTaskImageInput ?
+                                                    <div id="create_task_image">
+                                                        <div>
+                                                            <img src={createTaskImage} />
+                                                        </div>
+                                                        <button onClick={() => { createTaskImageRef.current.click() }}>
+                                                            Mudar thumbnail
+                                                        </button>
+                                                    </div>
+                                                    :
+                                                    <button onClick={() => { createTaskImageRef.current.click() }}><img src={task_image} /></button>
                                             }
-                                            
+
 
                                             <label>Código <span>(opcional)</span></label>
-                                            <textarea placeholder="const a = ..." onChange={(e)=>{setCreateTaskCode(e.target.value)}} value={createTaskCode}/>
-                                                                                     {createTaskType=="select"?
-                                            <><label>Descrição 2 <span>(opcional)</span></label>
-                                        <textarea placeholder="Portanto..." onChange={(e)=>{setCreateTaskDescription2(e.target.value)}} value={createTaskDescription2}/>
-                                        </>
-                                        :null}
-                                            </div>
+                                            <textarea placeholder="const a = ..." onChange={(e) => { setCreateTaskCode(e.target.value) }} value={createTaskCode} />
+                                            {createTaskType == "select" ?
+                                                <><label>Descrição 2 <span>(opcional)</span></label>
+                                                    <textarea placeholder="Portanto..." onChange={(e) => { setCreateTaskDescription2(e.target.value) }} value={createTaskDescription2} />
+                                                </>
+                                                : null}
                                         </div>
-                                    
-                                
-                                <div id="create_task_bar_buttons">
-                                    <button id="cancel_task_button">Cancelar</button>
-                                    <button id="create_task_button">Criar</button>
+                                    </div>
+
+
+                                    <div id="create_task_bar_buttons">
+                                        <button id="cancel_task_button" onClick={() => { setCreateTaskStatus(false) }}>Cancelar</button>
+                                        <button id="create_task_button" onClick={() => { createTask() }}>Criar</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>)
-                        :null
+                            </div>)
+                            : null
                     }
                     {
-                        helpTaskStatus?
-                        (<div id="help_task_background" onClick={()=>{setHelpTaskStatus(false)}}>
-                            <div id="help_task_bar" onCanPlay={(e)=>{e.stopPropagation()}}>
-                                
-                            </div>
-                        </div>)
-                        :null
-                    }
+                        helpTaskStatus ?
+                            (<div id="help_task_background" onClick={() => { setHelpTaskStatus(false) }}>
+                                <div id="help_task_bar" onCanPlay={(e) => { e.stopPropagation() }}>
 
+                                </div>
+                            </div>)
+                            : null
+                    }
+                    {
+                        deleteTaskStatus ?
+                            (<div id="delete_task_background" onClick={() => { setDeleteTaskStatus(false) }}>
+                                <div id="delete_task_bar" onClick={(e) => { e.stopPropagation() }}>
+                                    <p>Tem certeza que deseja deletar a Task:</p>
+                                    <p>{currentIncompleteGroupTaskName}</p>
+
+                                    <button onClick={() => { setDeleteTaskStatus(false) }} id="cancel_delete_task">Cancelar</button>
+                                    <button id="delete_task" onClick={() => { deleteGroupTask() }}>Deletar</button>
+
+                                </div>
+                            </div>) : null
+                    }
+                    {
+                        currentGroupLessonId ?
+                            (<div id="group_lesson_background">
+                                {!isGroupLessonFinished?<button id="group_lesson_exit" onClick={() => {setLeaveGroupLessonStatus(true) }}>
+                                    Sair
+                                </button>:null}
+                                {!isGroupLessonStarted?
+                                <div id="group_lesson_bar">
+                                    <div id="group_lesson_bar_image">
+                                        <img src={`data:image/png;base64,${currentGroupLessonImage}`} />
+                                    </div>
+                                    <div id="group_lesson_bar_title">
+                                        <h2>{currentGroupLessonName}</h2>
+                                        <button onClick={() => { startLesson() }}>Começar</button>
+                                    </div>
+                                    <p>
+                                        {currentGroupLessonDescription}
+                                    </p>
+                                </div>
+                                :!isGroupLessonFinished?
+                                <div id="group_task_bar">
+                                    <div id="group_task_bar_top">
+                                         <h1>{currentGroupTaskTitle}</h1>
+                                        <p>{currentGroupTaskDescription1}</p>
+                                        {
+                                            currentGroupTaskPossibleAnswers?.length?
+                                            <div id="group_task_bar_top_buttons">
+                                                {
+                                            currentGroupTaskPossibleAnswers.map((possibleAnswers,i)=>{
+                                                return <GroupTaskButton funcAlter={[setUserGroupTaskResponse]} key={"GTB"+i} i={i} value={possibleAnswers} possibleAnswers={currentGroupTaskPossibleAnswers} userResponse={userGroupTaskResponse}/>
+                                            })}
+                                            </div>
+                                            :null
+                                        }
+                                        {
+                                            currentGroupTaskType=="free"?
+                                            (<div id="group_task_bar_top_write">
+                                                <div>
+                                                <p>Resposta:</p><button onClick={()=>{navigator.clipboard.writeText(userGroupTaskResponse)}}><img src={copy}/></button>
+                                                </div>
+                                                <textarea value={userGroupTaskResponse} onChange={(e)=>{setUserGroupTaskResponse(e.target.value)}}/>
+                                            </div>)
+                                            :null
+                                        }
+                                        <p>{currentGroupTaskDescription2}</p>
+                                        <p>{currentGroupTaskCode}</p>
+
+                                    </div>
+                                    <div id="group_task_bar_bottom">
+                                    {   (currentGroupTaskType=="explanation" || userGroupTaskResponse)?
+                                         <button onClick={()=>{
+                                            nextTask();
+                                         }}>Próximo</button>
+                                         :
+                                         currentGroupTaskType=="select"?
+                                           <button>Selecione alguma alternativa</button>
+                                           :
+                                           <button>Escreva uma resposta</button>
+                                    }
+                                      </div>
+                                </div>
+                                :
+                                 <div id="group_lesson_bar_finished"></div>
+                                }
+                            </div>
+                               
+                            )
+                            : null
+                    }
+                    {
+                        leaveGroupLessonStatus ?
+                            (<div id="leave_group_lesson_background" onClick={()=>{setLeaveGroupLessonStatus(false)}}>
+                                <div onClick={(e)=>{e.stopPropagation()}}>
+                                    <p>Tem certeza que quer sair da lissão?</p>
+                                    <button id="cancel_leave_group_lesson" onClick={()=>{
+                                       setLeaveGroupLessonStatus(false)
+                                    }}>Cancelar</button>
+                                    <button id="leave_group_lesson" onClick={()=>{leaveGroupLesson()}}>Sair</button>
+                                </div>
+                            </div>)
+                            : null
+                    }
                 </div>)
             }
         </div>

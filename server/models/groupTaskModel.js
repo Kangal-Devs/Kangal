@@ -4,15 +4,15 @@ const {prohibitedWords} = require("../prohibitedWords.js")
 const groupTaskSchema = mongoose.Schema({
     groupLesson:{
         type:mongoose.Schema.Types.ObjectId,
-        required:[true,"groupTaskError1"],
+        required:false,
         ref:"GroupLesson"
     },
     group:{
         type:mongoose.Schema.Types.ObjectId,
-        required:false,
+        required:[true,"groupTaskError1"],
         ref:"Group"
     },
-    category:{
+    type:{
         type:String,
         enum:["select","free","explanation"],
         required:[true,"groupTaskError2"]

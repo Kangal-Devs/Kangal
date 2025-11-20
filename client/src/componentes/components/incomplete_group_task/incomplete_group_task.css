@@ -1,0 +1,36 @@
+.incomplete_group_task{
+    display: grid;
+    grid-template-columns: 1fr 0.75fr 0.45fr 0.1fr;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    opacity: 0.9;
+    background-color: rgba(0, 0, 0, 0.062);
+    border: 1px solid rgba(255, 255, 255, 0.096);
+    border-radius: 10px;
+}
+.incomplete_group_task:hover{
+    opacity: 1;
+}
+.incomplete_group_task button img{
+    height: 20px;;
+}
+.incomplete_group_task button{
+
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+.incomplete_group_task button:hover img{
+    animation-fill-mode: forwards;
+    animation-name:group-task-delete;
+    animation-delay:0s;
+    animation-duration: 0.2s;
+    animation-iteration-count: 1;
+}
+@keyframes group-task-delete {
+    100%{
+    transform: rotate(-30deg);  
+    }
+    
+}

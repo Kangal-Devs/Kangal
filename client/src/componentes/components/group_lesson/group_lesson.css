@@ -1,0 +1,61 @@
+.group_lesson{
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.253);
+    border-radius: 7px;
+
+    width: 50%;
+    max-width:300px;
+
+}
+.group_lesson_top{
+    
+    width: 100%;
+    aspect-ratio: 3/2;
+    background-color:rgba(0, 0, 0, 0.363);
+    border-radius: 7px 7px 0px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.group_lesson_top img{
+   height: 100%;
+
+}
+.group_lesson_bottom{
+    justify-content: space-between;
+display: flex;
+box-sizing: border-box;
+background-color: rgb(38, 40, 46);
+padding: 10px;
+border-radius: 0px 0px 7px 7px;
+}
+.group_lesson_bottom button{
+    cursor: pointer;
+  padding:6px 12px 6px 12px;
+  font-size:13px;
+  font-family: Signika Negative;
+  border-radius: 6px;
+  transition: all 0.17s ease-in-out;
+cursor: pointer;
+box-sizing: border-box
+;
+}
+
+.group_lesson_did{
+    background-color: rgba(102, 102, 102, 0.24);
+    color: white;
+    border: 1px solid rgba(207, 207, 207, 0.055);
+}
+.group_lesson_did:hover{
+    background-color: rgba(85, 85, 85, 0.137);
+ 
+}
+.group_lesson_to_do{
+    background-color: rgba(115, 255, 0, 0.24);
+    color: white;
+    border: 1px solid rgba(136, 255, 0, 0.055);
+}
+.group_lesson_to_do:hover{
+    background-color: rgba(115, 255, 0, 0.137);
+ 
+}
