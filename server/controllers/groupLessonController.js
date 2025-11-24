@@ -52,3 +52,23 @@ module.exports.get_group_lesson = async(req,res)=>{
         res.status(500).json({message:err.message})
     }
 }
+module.exports.update_group_lesson= async(req,res)=>{
+    try{
+        const {group_lesson_id:groupLessonId} = req.params;
+        
+        const {name,description} = req.body
+        const image = req?.file?.buffer
+
+        if(image){
+            const groupLesson = await groupLessonModel.findByIdAndUpdate(groupLessonId,{name,description,image})
+        }
+        else{
+          const groupLesson = await groupLessonModel.findByIdAndUpdate(groupLessonId,{name,description})  
+        }
+        res.status(200).json({message:"updated group lesson"})
+        
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    }
+}

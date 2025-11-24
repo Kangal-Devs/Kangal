@@ -1,6 +1,6 @@
 import "./groups2.css"
 import axios from "axios"
-import { useState, useEffect, useCallback, useRef, } from "react"
+import { useState, useEffect, useCallback, useRef, use, } from "react"
 import { TokenInvalid } from "../../components/token_invalid/token_invalid.jsx"
 import { EnhancedNavTop } from "../../components/enhanced_nav_top/enhanced_nav_top.jsx"
 import { Footer } from "../../components/footer/footer.jsx"
@@ -43,6 +43,9 @@ import loading from "../../../assets/specific_page/group/loading.webp"
 import { IncompleteGroupTask } from "../../components/incomplete_group_task/incomplete_group_task.jsx"
 import { GroupLesson } from "../../components/group_lesson/group_lesson.jsx"
 import { GroupTaskButton } from "../../components/group_task_button/group_task_button.jsx"
+import { UserGroupLesson } from "../../components/user_group_lesson/user_group_lesson.jsx"
+import user_group_lesson from "../../../assets/specific_page/group/user_group_lesson.png"
+import { UserGroupTask } from "../../components/user_group_task/user_group_task.jsx"
 // import groups_background from "../../../assets/specific_page/group/groups_background1.svg"
 export function Groups() {
 
@@ -67,7 +70,9 @@ export function Groups() {
         chatColor6: { fontColor: "#B20000", backgroundColor: "#4A5823" },
     })
 
-
+    const [currentUserGroupTasks, setCurrentUserGroupTasks] = useState()
+    const [currentUserGroupLessonUserId, setCurrentUserGroupLessonUserId] = useState()
+    const [currentUserGroupLessonUserName, setCurrentUserGroupLessonUserName] = useState("")
 
     const [chatColor, setChatColor] = useState("chatColor1")
 
@@ -79,7 +84,21 @@ export function Groups() {
     const [toInvite, setToInvite] = useState([])
     const [invited, setInvited] = useState([])
 
+    const [currentAboutGroupLessonId, setCurrentAboutGroupLessonId] = useState()
+    const [currentAboutGroupLessonName, setCurrentAboutGroupLessonName] = useState()
+    const [currentAboutGroupLessonDescription, setCurrentAboutGroupLessonDescription] = useState()
+    const [currentAboutGroupLessonImage, setCurrentAboutGroupLessonImage] = useState()
+
+    const [updateGroupLessonName, setUpdateGroupLessonName] = useState("")
+    const [updateGroupLessonDescription, setUpdateGroupLessonDescription] = useState("")
+    const [updateGroupLessonImage, setUpdateGroupLessonImage] = useState("")
+    const [updateGroupLessonImageInput, setUpdateGroupLessonImageInput] = useState("")
+
+    const updateGroupLessonImageRef = useRef()
+
     const [reportReason, setReportReason] = useState()
+
+    const [chatRender, setChatRender] = useState(0)
 
     const [currentMessageCreatAt, setCurrentMessageCreatAt] = useState("")
 
@@ -125,7 +144,7 @@ export function Groups() {
 
     const [reportMessageStatus, setReportMessageStatus] = useState(false)
 
-    const [chat,setChat] = useState()
+    const [chat, setChat] = useState()
 
     const [currentMemberId, setCurrentMemberId] = useState()
     const [currentMemberName, setCurrentMemberName] = useState()
@@ -168,6 +187,8 @@ export function Groups() {
     const [createGroupName, setCreateGroupName] = useState("")
     const [createGroupDescription, setCreateGroupDescription] = useState("")
 
+    const [userGroupLessonsStatus, setUserGroupLessonsStatus] = useState()
+
     const [updateGroupName, setUpdateGroupName] = useState()
     const [updateGroupDescription, setUpdateGroupDescription] = useState()
     // updateGroupImage é usado para pegar imagem e carrega-la na tela, enquanto o updateGroupImageFile, ele fica responsável por ficar com as informações da imagem para mandar para o backend.
@@ -183,6 +204,7 @@ export function Groups() {
 
     const updateAlterImageRef = useRef()
 
+    const [aboutGroupLessonStatus, setAboutGroupLessonStatus] = useState()
 
     const [createTaskDescription2, setCreateTaskDescription2] = useState("")
     const [createTaskDescription1, setCreateTaskDescription1] = useState("")
@@ -220,6 +242,12 @@ export function Groups() {
     const [currentGroupLessonName, setCurrentGroupLessonName] = useState()
     const [currentGroupLessonDescription, setCurrentGroupLessonDescription] = useState()
 
+    const [userGroupLessons, setUserGroupLessons] = useState()
+
+    const [currentUserGroupLessonId, setCurrentUserGroupLessonId] = useState()
+    const [currentUserGroupLessonScore, setCurrentUserGroupLessonScore] = useState("")
+    const [currentUserGroupLessonMessage, setCurrentUserGroupLessonMessage] = useState("")
+
     const [currentGroupTaskId, setCurrentGroupTaskId] = useState()
     const [currentGroupTaskType, setCurrentGroupTaskType] = useState()
     const [currentGroupTaskCode, setCurrentGroupTaskCode] = useState()
@@ -232,13 +260,171 @@ export function Groups() {
     const [isGroupLessonStarted, setIsGroupLessonStarted] = useState()
     const [isGroupLessonFinished, setIsGroupLessonFinished] = useState()
 
-    const [userGroupTaskResponse,setUserGroupTaskResponse] = useState("")
+    const [userGroupTaskResponse, setUserGroupTaskResponse] = useState("")
 
     const [currentGroupTaskCount, setCurrentGroupTaskCount] = useState(0)
     const [currentAllGroupTasksCount, setCurrentAllGroupTasksCount] = useState(0)
     const [currentGroupTasks, setCurrentGroupTasks] = useState([])
 
-    const leaveGroupLesson = useCallback(()=>{
+    const [currentAboutGroupTasks, setCurrentAboutGroupTasks] = useState([])
+
+    const [currentUserGroupTaskResponse, setCurrentUserGroupTaskResponse] = useState()
+    const [currentAboutGroupTaskId, setCurrentAboutGroupTaskId] = useState()
+    const [currentAboutGroupTaskDescription1, setCurrentAboutGroupTaskDescription1] = useState()
+    const [currentAboutGroupTaskDescription2, setCurrentAboutGroupTaskDescription2] = useState()
+    const [currentAboutGroupTaskImage, setCurrentAboutGroupTaskImage] = useState()
+    const [currentAboutGroupTaskCode, setCurrentAboutGroupTaskCode] = useState()
+    const [currentAboutGroupTaskType, setCurrentAboutGroupTaskType] = useState()
+    const [currentAboutGroupTaskTitle, setCurrentAboutGroupTaskTitle] = useState()
+    const [currentAboutGroupTaskPossibleAnswers, setCurrentAboutGroupTaskPossibleAnswers] = useState()
+
+    useEffect(() => {
+        if (currentAboutGroupTaskId) {
+            axios.get(`http://localhost:5000/api/get_group_task/${currentAboutGroupTaskId}`)
+                .then((res) => {
+                    console.log(res)
+                    setCurrentAboutGroupTaskDescription1(res.data.message?.description1)
+                    setCurrentAboutGroupTaskDescription2(res.data.message?.description2)
+                    setCurrentAboutGroupTaskCode(res.data.message?.code)
+                    setCurrentAboutGroupTaskType(res.data.message?.type)
+                    setCurrentAboutGroupTaskTitle(res.data.message?.title)
+                    setCurrentAboutGroupTaskImage(res.data.message?.image)
+                    setCurrentAboutGroupTaskPossibleAnswers(res.data.message?.possibleAnswers)
+                })
+                .catch((err) => { console.log(err) })
+        }
+    }, [currentAboutGroupTaskId])
+
+    const updateUserGroupLesson = useCallback(() => {
+        axios.put(`http://localhost:5000/api/update_user_group_lesson/${currentUserGroupLessonId}`, { message: currentUserGroupLessonMessage, score: currentUserGroupLessonScore })
+            .then((res) => { console.log(res) })
+            .catch((err) => { console.log(err) })
+    }, [currentUserGroupLessonId, currentUserGroupLessonMessage, currentUserGroupLessonScore])
+
+    useEffect(() => {
+        if (currentUserGroupLessonId && currentUserGroupLessonUserId && currentAboutGroupLessonId) {
+            axios.get(`http://localhost:5000/api/get_all_group_lesson_tasks/${currentAboutGroupLessonId}`)
+                .then((res) => {
+                    setCurrentAboutGroupTasks(res.data.message)
+                })
+                .catch((err) => { console.log(err) })
+
+            axios.get(`http://localhost:5000/api/get_user_group_lesson/${currentAboutGroupLessonId}/${currentUserGroupLessonUserId}`)
+                .then((res) => {
+                    if (res.data.message.message) {
+                        setCurrentUserGroupLessonMessage(res.data.message?.message)
+                    }
+                    else {
+                        setCurrentUserGroupLessonMessage("")
+                    }
+
+                    if (res.data.message.score) {
+                        setCurrentUserGroupLessonScore(res.data.message?.score)
+                    }
+                    else {
+                        setCurrentUserGroupLessonScore("")
+                    }
+
+                })
+                .catch((err) => { console.log(err) })
+
+        }
+    }, [currentUserGroupLessonId, currentUserGroupLessonUserId, currentAboutGroupLessonId])
+
+    useEffect(() => {
+        console.log("a")
+        if (currentAboutGroupTasks) {
+            Promise.all(currentAboutGroupTasks.map((groupTask) => {
+                return axios.get(`http://localhost:5000/api/get_user_group_task/${currentUserGroupLessonUserId}/${groupTask._id}`)
+            }))
+                .then((res) => {
+                    console.log(res)
+                    setCurrentUserGroupTasks(res.map((userGroupTask, i) => {
+                        return <UserGroupTask key={"UGT" + i} i={i} response={userGroupTask.data.message?.response}
+                            userGroupTaskId={userGroupTask.data.message?._id} groupTaskId={userGroupTask.data.message?.groupTask} funcAlter={[setCurrentAboutGroupTaskId, setCurrentUserGroupTaskResponse]} />
+                    }))
+                })
+                .catch((err) => { console.log(err) })
+        }
+    }, [currentAboutGroupTasks])
+
+    useEffect(() => {
+        if (currentUserGroupLessonUserId) {
+            console.log(currentUserGroupLessonUserId)
+        }
+    }, [currentUserGroupLessonUserId])
+
+    const updateGroupLesson = useCallback(() => {
+        const formData = new FormData()
+
+        formData.append("name", updateGroupLessonName)
+        formData.append("description", updateGroupLessonDescription)
+        formData.append("file", updateGroupLessonImageInput)
+
+        axios.put(`http://localhost:5000/api/update_group_lesson/${currentAboutGroupLessonId}`, formData)
+            .then((res) => {
+                setCurrentAboutGroupLessonId()
+                setChatRender(chatRender => chatRender + 1)
+            })
+            .catch((err) => { console.log(err) })
+    }, [updateGroupLessonDescription, updateGroupLessonImageInput, updateGroupLessonName, currentAboutGroupLessonId])
+
+    useEffect(() => {
+        if (updateGroupLessonImageInput) {
+            setUpdateGroupLessonImage(URL.createObjectURL(updateGroupLessonImageInput))
+        }
+        else {
+            setUpdateGroupLessonImage(`data:image/png;base64,${currentAboutGroupLessonImage}`)
+        }
+    }, [updateGroupLessonImageInput, currentAboutGroupLessonImage])
+
+    useEffect(() => {
+        setCurrentUserGroupLessonUserId()
+        if (currentAboutGroupLessonId) {
+            axios.get(`http://localhost:5000/api/get_group_lesson/${currentAboutGroupLessonId}`)
+                .then((res) => {
+                    console.log(res)
+                    setCurrentAboutGroupLessonDescription(res.data.message.description)
+                    setCurrentAboutGroupLessonImage(`data:image/png;base64,${res.data.message.image}`)
+                    setCurrentAboutGroupLessonName(res.data.message.name)
+                })
+                .catch((err) => { console.log(err) })
+        }
+        else {
+            setCurrentAboutGroupLessonDescription("")
+            setCurrentAboutGroupLessonImage("")
+            setCurrentAboutGroupLessonName("")
+        }
+    }, [currentAboutGroupLessonId])
+
+    useEffect(() => {
+        if (userGroupLessonsStatus) {
+            axios.get(`http://localhost:5000/api/get_all_user_group_lesson/${currentAboutGroupLessonId}`)
+                .then((res) => {
+
+                    if (res.data.message.length) {
+                        setUserGroupLessons(res.data.message.map((userGroupLesson, i) => {
+                            return <UserGroupLesson userId={userGroupLesson.user} groupLessonId={userGroupLesson.groupLesson} createdAt={userGroupLesson.createdAt} userGroupLessonId={userGroupLesson._id} score={userGroupLesson.score} funcAlter={[setCurrentUserGroupLessonId, setCurrentUserGroupLessonUserId, setCurrentUserGroupLessonUserName]} />
+                        }))
+                    }
+                })
+                .catch((err) => { console.log(err) })
+        }
+    }, [userGroupLessonsStatus])
+
+    useEffect(() => {
+        console.log(currentAboutGroupLessonName)
+    }, [currentAboutGroupLessonName])
+
+    useEffect(() => {
+        if (currentAboutGroupLessonImage || currentAboutGroupLessonDescription || currentAboutGroupLessonName) {
+            setUpdateGroupLessonImage(currentAboutGroupLessonImage)
+            setUpdateGroupLessonDescription(currentAboutGroupLessonDescription)
+            setUpdateGroupLessonName(currentAboutGroupLessonName)
+        }
+    }, [currentAboutGroupLessonImage, currentAboutGroupLessonName, currentAboutGroupLessonDescription])
+
+    const leaveGroupLesson = useCallback(() => {
         setCurrentGroupTasks([])
         setCurrentAllGroupTasksCount(0)
         setCurrentGroupTaskCount(0)
@@ -246,39 +432,54 @@ export function Groups() {
         setIsGroupLessonStarted(false)
         setCurrentGroupLessonId()
         setLeaveGroupLessonStatus(false)
-    },[])
+    }, [])
 
-    useEffect(()=>{
-        if(groupLessons?.length && messages?.length){
-        let chat1 = [];
-        groupLessons.forEach((item)=>{
-            chat1.push(item)
-        })
-        messages.forEach((item)=>{
-            chat1.push(item)
-        })
-        const chat2 = chat1.sort( (a, b) => new Date(a.props.createdAt) - new Date(b.props.createdAt))
-        console.log(chat2)
-        setChat(chat2)
-    }
-    else if(groupLessons?.length){
-        setChat(groupLessons)
-    }
-    else if(messages?.length){
-        setChat(messages)
-    }
-    else{
-        setChat()
-    }
-    },[groupLessons,messages])
 
-    const nextTask = useCallback(()=>{
-        setCurrentGroupTaskCount(currentGroupTaskCount+1);
-    },[userId,userGroupTaskResponse,currentGroupTaskCount])
-        
-    useEffect(()=>{
-        if(currentGroupTasks.length){
-            if(!currentGroupTasks[currentGroupTaskCount]){
+
+    const finishLesson = useCallback(() => {
+        axios.post("http://localhost:5000/api/create_user_group_lesson", { groupLessonId: currentGroupLessonId, userId })
+            .then((res) => {
+                window.location.reload()
+
+            })
+            .catch((err) => { console.log(err) })
+
+    }, [currentGroupLessonId, userId])
+
+    useEffect(() => {
+        if (groupLessons?.length && messages?.length) {
+            let chat1 = [];
+            groupLessons.forEach((item) => {
+                chat1.push(item)
+            })
+            messages.forEach((item) => {
+                chat1.push(item)
+            })
+            const chat2 = chat1.sort((a, b) => new Date(a.props.createdAt) - new Date(b.props.createdAt))
+            setChat(chat2)
+        }
+        else if (groupLessons?.length) {
+            setChat(groupLessons)
+        }
+        else if (messages?.length) {
+            setChat(messages)
+        }
+        else {
+            setChat()
+        }
+    }, [groupLessons, messages])
+
+    const nextTask = useCallback(() => {
+        axios.post("http://localhost:5000/api/create_user_group_task", { userId, groupTaskId: currentGroupTaskId, response: userGroupTaskResponse })
+            .then((res) => { console.log(res) })
+            .catch((err) => console.log(err))
+
+        setCurrentGroupTaskCount(currentGroupTaskCount + 1);
+    }, [userId, userGroupTaskResponse, currentGroupTaskCount, currentGroupTaskId])
+
+    useEffect(() => {
+        if (currentGroupTasks.length) {
+            if (!currentGroupTasks[currentGroupTaskCount]) {
                 setIsGroupLessonFinished(true)
             }
             setUserGroupTaskResponse("")
@@ -291,26 +492,31 @@ export function Groups() {
             setCurrentGroupTaskPossibleAnswers(currentGroupTasks[currentGroupTaskCount]?.possibleAnswers)
             setCurrentGroupTaskType(currentGroupTasks[currentGroupTaskCount]?.type)
         }
-    },[currentGroupTasks,currentGroupTaskCount])
+    }, [currentGroupTasks, currentGroupTaskCount])
+
+    useEffect(()=>{
+        console.log("img"+JSON.stringify(currentGroupTaskImage))
+    },[currentGroupTaskImage])
 
     const startLesson = useCallback(() => {
         setIsGroupLessonStarted(true)
     }, [])
 
 
-    useEffect(()=>{
-        if(userGroupTaskResponse){
+    useEffect(() => {
+        if (userGroupTaskResponse) {
             console.log(userGroupTaskResponse)
         }
-    },[userGroupTaskResponse])
-    
+    }, [userGroupTaskResponse])
+
     useEffect(() => {
         if (currentGroupLessonId) {
             axios.get(`http://localhost:5000/api/get_all_group_lesson_tasks/${currentGroupLessonId}`)
-                .then((res) => { 
+                .then((res) => {
                     console.log(res.data.message)
                     setCurrentGroupTasks(res.data.message);
-                    setCurrentAllGroupTasksCount(res.data.message.length) })
+                    setCurrentAllGroupTasksCount(res.data.message.length)
+                })
                 .catch((err) => { console.log(err) })
 
             axios.get(`http://localhost:5000/api/get_group_lesson/${currentGroupLessonId}`)
@@ -431,7 +637,10 @@ export function Groups() {
             formData.append("group", currentGroupId)
 
             axios.post("http://localhost:5000/api/create_group_lesson", formData)
-                .then((res) => { console.log(res.data) })
+                .then((res) => {
+                    setCreateLessonStatus(false)
+                    setChatRender(chatRender => chatRender + 1)
+                })
                 .catch((err) => { console.log(err) })
         }
     }, [createLessonDescription, createLessonImageInput, createLessonName, currentGroupId])
@@ -683,7 +892,9 @@ export function Groups() {
     const updateMessage = useCallback(() => {
         axios.put(`http://localhost:5000/api/update_message/${currentMessageId}`, { value: currentMessageValue })
             .then((res) => {
-                window.location.reload()
+                setCurrentMessageId()
+                setUpdateMessageStatus(false)
+                setChatRender(chatRender => chatRender + 1)
             })
             .catch((err) => { console.log(err) })
     }, [currentMessageId, currentMessageValue])
@@ -846,7 +1057,7 @@ export function Groups() {
                     axios.post("http://localhost:5000/api/get_all_messages", { groupId: currentGroupId })
                         .then((res) => {
                             if (res.data.message.length) {
-                                setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} status={message.status} itemId={message._id} funcAlter={[setCurrentMessageId, setShowMoreCoordinates, setCurrentMessageValue]} createdAt={message.createdAt}/> }))
+                                setMessages(res.data.message.map((message) => { return <Message value={message.value} fontColor={message.fontColor} backgroundColor={message.backgroundColor} status={message.status} itemId={message._id} funcAlter={[setCurrentMessageId, setShowMoreCoordinates, setCurrentMessageValue]} createdAt={message.createdAt} /> }))
                             }
                         })
                         .catch((err) => { console.log(err) })
@@ -857,7 +1068,7 @@ export function Groups() {
         } else {
 
         }
-    }, [currentGroupId])
+    }, [currentGroupId, chatRender])
 
     useEffect(() => {
         if (currentGroupOwner) {
@@ -942,11 +1153,11 @@ export function Groups() {
         if (currentGroupId) {
             axios.get(`http://localhost:5000/api/get_all_group_lesson/${currentGroupId}`)
                 .then((res) => {
-                    console.log(res.data.message)
+
                     if (res.data.message.length) {
                         setGroupLessons(res.data.message.map((groupLesson) => {
                             return <GroupLesson name={groupLesson.name} image={groupLesson.image} amIOwner={amIOwner} userId={userId} itemId={groupLesson._id} owner={currentGroupOwner} createdAt={groupLesson.createdAt} status={groupLesson.status}
-                                funcAlter={[setCurrentGroupLessonId]} />
+                                funcAlter={[setCurrentGroupLessonId, setCurrentAboutGroupLessonId]} />
                         }))
                     }
                     else {
@@ -996,7 +1207,10 @@ export function Groups() {
                                     <div id="decoration_groups_background">
 
                                     </div>
-                                    <div id="decoration_groups_principal"></div>
+                                    <div id="decoration_groups_principal">
+                                        <h1>Grupos</h1>
+                                        <p>Participe de grupos ou comece um novo agora mesmo!</p>
+                                    </div>
                                     <p id="group_list_title">Grupos públicos:</p>
                                     <div id="groups_list">
                                         {publicGroups ? publicGroups : <img src={loading} id="loading" />}
@@ -1633,85 +1847,256 @@ export function Groups() {
                     {
                         currentGroupLessonId ?
                             (<div id="group_lesson_background">
-                                {!isGroupLessonFinished?<button id="group_lesson_exit" onClick={() => {setLeaveGroupLessonStatus(true) }}>
+                                {!isGroupLessonFinished ? <button id="group_lesson_exit" onClick={() => { setLeaveGroupLessonStatus(true) }}>
                                     Sair
-                                </button>:null}
-                                {!isGroupLessonStarted?
-                                <div id="group_lesson_bar">
-                                    <div id="group_lesson_bar_image">
-                                        <img src={`data:image/png;base64,${currentGroupLessonImage}`} />
+                                </button> : null}
+                                {!isGroupLessonStarted ?
+                                    <div id="group_lesson_bar">
+                                        <div id="group_lesson_bar_image">
+                                            <img src={`data:image/png;base64,${currentGroupLessonImage}`} />
+                                        </div>
+                                        <div id="group_lesson_bar_title">
+                                            <h2>{currentGroupLessonName}</h2>
+                                            <button onClick={() => { startLesson() }}>Começar</button>
+                                        </div>
+                                        <p>
+                                            {currentGroupLessonDescription}
+                                        </p>
                                     </div>
-                                    <div id="group_lesson_bar_title">
-                                        <h2>{currentGroupLessonName}</h2>
-                                        <button onClick={() => { startLesson() }}>Começar</button>
-                                    </div>
-                                    <p>
-                                        {currentGroupLessonDescription}
-                                    </p>
-                                </div>
-                                :!isGroupLessonFinished?
-                                <div id="group_task_bar">
-                                    <div id="group_task_bar_top">
-                                         <h1>{currentGroupTaskTitle}</h1>
-                                        <p>{currentGroupTaskDescription1}</p>
-                                        {
-                                            currentGroupTaskPossibleAnswers?.length?
-                                            <div id="group_task_bar_top_buttons">
+                                    : !isGroupLessonFinished ?
+                                        <div id="group_task_bar">
+                                            <div id="group_task_bar_top">
+                                                <h1>{currentGroupTaskTitle}</h1>
+                                                <p>{currentGroupTaskDescription1}</p>
                                                 {
-                                            currentGroupTaskPossibleAnswers.map((possibleAnswers,i)=>{
-                                                return <GroupTaskButton funcAlter={[setUserGroupTaskResponse]} key={"GTB"+i} i={i} value={possibleAnswers} possibleAnswers={currentGroupTaskPossibleAnswers} userResponse={userGroupTaskResponse}/>
-                                            })}
-                                            </div>
-                                            :null
-                                        }
-                                        {
-                                            currentGroupTaskType=="free"?
-                                            (<div id="group_task_bar_top_write">
-                                                <div>
-                                                <p>Resposta:</p><button onClick={()=>{navigator.clipboard.writeText(userGroupTaskResponse)}}><img src={copy}/></button>
+                                                   currentGroupTaskImage?
+                                                    <div id="group_task_bar_top_image">
+                                                        <img src={`data:image/png;base64,${currentGroupTaskImage}`}/>
                                                 </div>
-                                                <textarea value={userGroupTaskResponse} onChange={(e)=>{setUserGroupTaskResponse(e.target.value)}}/>
-                                            </div>)
-                                            :null
-                                        }
-                                        <p>{currentGroupTaskDescription2}</p>
-                                        <p>{currentGroupTaskCode}</p>
+                                                :null
+                                                }
+                                                
+                                                {
+                                                    currentGroupTaskPossibleAnswers?.length ?
+                                                        <div id="group_task_bar_top_buttons">
+                                                            {
+                                                                currentGroupTaskPossibleAnswers.map((possibleAnswers, i) => {
+                                                                    return <GroupTaskButton funcAlter={[setUserGroupTaskResponse]} key={"GTB" + i} i={i} value={possibleAnswers} possibleAnswers={currentGroupTaskPossibleAnswers} userResponse={userGroupTaskResponse} />
+                                                                })}
+                                                        </div>
+                                                        : null
+                                                }
+                                                {
+                                                    currentGroupTaskType == "free" ?
+                                                        (<div id="group_task_bar_top_write">
+                                                            <div>
+                                                                <p>Resposta:</p><button onClick={() => { navigator.clipboard.writeText(userGroupTaskResponse) }}><img src={copy} /></button>
+                                                            </div>
+                                                            <textarea value={userGroupTaskResponse} onChange={(e) => { setUserGroupTaskResponse(e.target.value) }} />
+                                                        </div>)
+                                                        : null
+                                                }
+                                                <p>{currentGroupTaskDescription2}</p>
+                                                <p>{currentGroupTaskCode}</p>
 
-                                    </div>
-                                    <div id="group_task_bar_bottom">
-                                    {   (currentGroupTaskType=="explanation" || userGroupTaskResponse)?
-                                         <button onClick={()=>{
-                                            nextTask();
-                                         }}>Próximo</button>
-                                         :
-                                         currentGroupTaskType=="select"?
-                                           <button>Selecione alguma alternativa</button>
-                                           :
-                                           <button>Escreva uma resposta</button>
-                                    }
-                                      </div>
-                                </div>
-                                :
-                                 <div id="group_lesson_bar_finished"></div>
+                                            </div>
+                                            <div id="group_task_bar_bottom">
+                                                {(currentGroupTaskType == "explanation" || userGroupTaskResponse) ?
+                                                    <button onClick={() => {
+                                                        nextTask();
+                                                    }}>Próximo</button>
+                                                    :
+                                                    currentGroupTaskType == "select" ?
+                                                        <button>Selecione alguma alternativa</button>
+                                                        :
+                                                        <button>Escreva uma resposta</button>
+                                                }
+                                            </div>
+                                        </div>
+                                        :
+                                        <div id="group_lesson_bar_finished">
+                                            <h1>Parabéns🎈</h1>
+                                            <h2>Você terminou a lissão:</h2>
+                                            <div id="group_lesson_bar_finished_about">
+                                                <div id="group_lesson_bar_finished_image"><img src={`data:image/png;base64,${currentGroupLessonImage}`} /></div>
+                                                <div id="group_lesson_bar_finished_text">
+                                                    <h2>{currentGroupLessonName}</h2>
+                                                    <p>{currentGroupDescription}</p>
+
+                                                </div>
+
+                                            </div>
+                                            <button onClick={() => { finishLesson() }}>Enviar</button>
+                                        </div>
                                 }
                             </div>
-                               
+
                             )
                             : null
                     }
                     {
                         leaveGroupLessonStatus ?
-                            (<div id="leave_group_lesson_background" onClick={()=>{setLeaveGroupLessonStatus(false)}}>
-                                <div onClick={(e)=>{e.stopPropagation()}}>
+                            (<div id="leave_group_lesson_background" onClick={() => { setLeaveGroupLessonStatus(false) }}>
+                                <div onClick={(e) => { e.stopPropagation() }}>
                                     <p>Tem certeza que quer sair da lissão?</p>
-                                    <button id="cancel_leave_group_lesson" onClick={()=>{
-                                       setLeaveGroupLessonStatus(false)
+                                    <button id="cancel_leave_group_lesson" onClick={() => {
+                                        setLeaveGroupLessonStatus(false)
                                     }}>Cancelar</button>
-                                    <button id="leave_group_lesson" onClick={()=>{leaveGroupLesson()}}>Sair</button>
+                                    <button id="leave_group_lesson" onClick={() => { leaveGroupLesson() }}>Sair</button>
                                 </div>
                             </div>)
                             : null
                     }
+                    {
+                        currentAboutGroupLessonId && amIOwner ?
+
+                            (<div id="about_group_lesson_background" onClick={() => {
+                                setCurrentAboutGroupLessonId("")
+                                setUserGroupLessonsStatus(false)
+                                setCurrentUserGroupLessonId()
+                            }}>
+
+
+                                {
+                                    !userGroupLessonsStatus ?
+                                        <div id="about_group_lesson_bar" onClick={(e) => {
+                                            e.stopPropagation()
+                                        }}>
+
+                                            <div id="about_group_lesson_bar_title">
+                                                <h1>Lição</h1>
+
+
+                                                <button onClick={() => { setCurrentAboutGroupLessonId("") }}>X</button>
+                                            </div>
+                                            <button id="see_user_group_lesson" onClick={() => { setUserGroupLessonsStatus(true) }}><img src={user_group_lesson} />Ver respostas</button>
+                                            <label>Nome:</label>
+                                            <input type="text" value={updateGroupLessonName} onChange={(e) => {
+                                                setUpdateGroupLessonName(e.target.value)
+                                            }} />
+                                            <label>Descrição:</label>
+                                            <textarea value={updateGroupLessonDescription} onChange={(e) => {
+                                                setUpdateGroupLessonDescription(e.target.value)
+                                            }} />
+                                            <label>Imagem</label>
+                                            <div id="about_group_lesson_bar_image">
+
+
+                                                <img src={updateGroupLessonImage} />
+
+                                            </div>
+                                            <button id="about_group_lesson_bar_image_modify" onClick={() => {
+                                                updateGroupLessonImageRef.current.click()
+                                            }}>Alterar</button>
+                                            <input type="file" ref={updateGroupLessonImageRef} style={{ display: "none" }} onChange={(e) => { setUpdateGroupLessonImageInput(e.target.files[0]) }} />
+                                            <div id="about_group_lesson_bar_buttons">
+                                                <button id="cancel_update_group_lesson">Cancelar</button>
+                                                <button id="update_group_lesson" onClick={() => {
+                                                    updateGroupLesson()
+                                                }}>Aplicar</button>
+                                            </div>
+                                        </div>
+                                        :
+                                        !currentUserGroupLessonId ?
+                                            <div id="user_group_lessons_bar" onClick={(e) => { e.stopPropagation() }}>
+                                                <div id="user_group_lessons_bar_top">
+                                                    <img src={arrow} onClick={() => { setUserGroupLessonsStatus(false) }} />
+                                                    <button onClick={() => { setUserGroupLessonsStatus(false); setCurrentAboutGroupLessonId() }}>X</button>
+                                                </div>
+
+                                                <h1>Respostas:</h1>
+                                                <div id="user_group_lessons_bottom">
+                                                    <div id="user_group_lessons_list">
+                                                        {userGroupLessons}
+                                                        {/* {userGroupLessons} */}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            :
+                                            <><div id="user_group_lesson_bar" onClick={(e) => { e.stopPropagation() }}>
+                                                <div id="user_group_lesson_bar_top">
+                                                    <img src={arrow} onClick={() => {
+                                                        setCurrentUserGroupLessonId()
+                                                    }} />
+                                                    <button onClick={() => {
+                                                        setUserGroupLessonsStatus(false); setCurrentAboutGroupLessonId()
+                                                        setCurrentUserGroupLessonId()
+                                                    }}>X</button>
+                                                </div>
+                                                <p>Respostas de:{currentUserGroupLessonUserName}</p>
+                                                <div id="user_group_tasks_list_title">
+                                                    <p>Index</p>
+                                                    <p></p>
+                                                    <p>Respostas</p>
+                                                </div>
+                                                <div id="user_group_tasks_list">
+                                                    {currentUserGroupTasks}
+                                                </div>
+                                                <h3>Deixe seu feedBack:</h3>
+                                                <label>Mensagem:</label>
+                                                <textarea placeholder="Você está indo bem..."
+                                                    value={currentUserGroupLessonMessage} onChange={(e) => { setCurrentUserGroupLessonMessage(e.target.value) }} />
+                                                <label>Nota:</label>
+                                                <input type="text" placeholder="7.5" value={currentUserGroupLessonScore} onChange={(e) => { setCurrentUserGroupLessonScore(e.target.value) }} />
+                                                <div id="user_group_lesson_bar_buttons">
+                                                    <button onClick={() => { updateUserGroupLesson() }}>Enviar</button>
+                                                </div>
+                                            </div>
+                                                {currentAboutGroupTaskId ?
+                                                    <div id="about_group_task_bar" onClick={(e) => {
+                                                        e.stopPropagation()
+                                                    }}>
+                                                        <div id="about_group_task_bar_top">
+                                                            <h1>Informações do exercício</h1>
+                                                            <div>
+                                                                <p>Tipo:</p>
+                                                                <p>{currentAboutGroupTaskType == "select" ? "Seleção" : currentAboutGroupTaskType == "free" ? "Código" : "Explicação"}</p>
+                                                            </div>
+                                                            <div>
+                                                                <p>Título:</p>
+                                                                <p>{currentAboutGroupTaskTitle}</p>
+                                                            </div>
+                                                            <div>
+                                                                <p>1º Descrição:</p>
+                                                                <p>{currentAboutGroupTaskDescription1}</p>
+                                                            </div>
+                                                            {
+                                                                currentAboutGroupTaskDescription2 ?
+                                                                    <div>
+                                                                        <p>2º Descrição:</p>
+                                                                        <p>{currentAboutGroupTaskDescription2}</p>
+                                                                    </div>
+                                                                    : null
+                                                            }
+                                                            {
+                                                                currentAboutGroupTaskCode?
+                                                                <p></p>
+                                                                :null
+                                                            }
+                                                            {
+                                                              currentAboutGroupTaskImage?
+                                                              <div>
+                                                                <p>Imagem:</p>
+                                                                <div><img src={`data:image/png;base64,${currentAboutGroupTaskImage}`}/>
+                                                                </div>
+                                                                </div>:null  
+                                                            }
+
+                                                        </div>
+                                                        <div id="about_group_task_bar_bottom">
+                                                            {/* <p>Resposta:</p>
+                                    <p>AAAAAAAAAAAAAAAAAAA</p> */}
+                                                        </div>
+                                                    </div> : null
+                                                }
+
+                                            </>
+                                }
+                            </div>)
+                            : null
+                    }
+
                 </div>)
             }
         </div>

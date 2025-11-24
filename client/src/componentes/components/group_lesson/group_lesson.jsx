@@ -28,7 +28,7 @@ export function GroupLesson({image,userId,amIOwner,owner,itemId,name,funcAlter})
             <div className="group_lesson_bottom">
             <p>{name}</p>
             {amIOwner?
-            <button onClick={()=>{console.log(amIOwner);console.log(owner)}}>Sobre</button>:
+            <button className="group_lesson_about"onClick={()=>{funcAlter[1](itemId)}}>Sobre</button>:
              didLesson?
              <button className="group_lesson_did">Lição feita</button>:
              <button className="group_lesson_to_do" onClick={()=>{funcAlter[0](itemId)}}>Começar</button>

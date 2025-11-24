@@ -261,3 +261,80 @@ display: none;
     top:20px;
     right:20px;
 }
+.recover_password{
+    margin-top: 10px;
+    text-decoration: underline;
+    opacity: 0.7;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+.recover_password:hover{
+       opacity: 0.95;
+}
+#recover_password_background{
+    animation-name:recover-password-animation;
+    animation-delay: 0s;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(20, 20, 20, 0.322);
+    backdrop-filter: blur(2px);
+}
+@keyframes recover-password-animation {
+    0%{
+        opacity: 0;
+        
+    }
+}
+#recover_password_background div{
+          border: 1px solid rgba(255, 255, 255, 0.027);
+  display: flex;
+  flex-direction: column;
+  padding:10px 10px 20px 10px;
+  max-width: 400px;
+  width: 35%;
+  border-radius: 10px;
+    background-color: rgb(39, 39, 43);
+}
+#recover_password_background div div{
+    padding: 0;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+    border:none;
+}
+#recover_password_background div div button{
+    cursor: pointer;
+    height: 25px;
+    width: 25px;
+    background-color: rgb(19, 19, 19);
+    border-radius: 5px;
+    border: none;
+    color: white;
+}
+#recover_password_background div label{
+    margin-top: 20px;
+    color: white;
+    font-family: Signika Negative;
+}
+#recover_password_background div input{
+     color:white;
+    font-size: 15px;
+    padding:10px;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    border-radius: 5px;
+    transition: all 0.5s ease-in-out;
+}
+#recover_password_background div h1{
+    color: white;
+    font-family: Signika Negative;
+}

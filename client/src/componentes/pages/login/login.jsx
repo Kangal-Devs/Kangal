@@ -48,6 +48,8 @@ export function Login() {
     const [signupEmail, setSignupEmail] = useState("")
     const [signupDate, setSignupDate] = useState("")
 
+    const [recoverPasswordStatus,setRecoverPasswordStatus] = useState()
+
     const navigate = useNavigate()
     const [actualModeSignIn, setActualModeSignIn] = useState("login_signin_active")
     const [actualModeSignUp, setActualModeSignUp] = useState("login_signup_inactive")
@@ -239,6 +241,7 @@ export function Login() {
                     </div>
                     <button id="sign_button" onClick={() => { commonLogin() }}> Entrar</button>
                     <div id="separator"></div>
+                     <p className="recover_password" onClick={()=>{setRecoverPasswordStatus(true)}}>Esqueci a senha</p>
                     <button className="google_button" onClick={() => { googleLogin() }}> <img src={google_img} className="google_img" /> GOOGLE</button>
                 </div>
                 <div id={actualModeSignUp}>
@@ -265,6 +268,7 @@ export function Login() {
                         <input type="date" value={signupDate} onChange={(e) => { setSignupDate(e.target.value) }} />
                     </div>
                     <button id="signup_button" onClick={() => { createAccountCommon() }}>Cadastrar</button>
+                  
                     <button className="google_button" onClick={() => { googleLogin() }}> <img src={google_img} className="google_img" />GOOGLE</button>
                 </div>
 
@@ -280,6 +284,17 @@ export function Login() {
             <div id={alertStatus}>
                 <Alert message={alertMessage} error={alertError} />
             </div>
+             {recoverPasswordStatus?
+                <div id="recover_password_background" onClick={()=>{setRecoverPasswordStatus(false)}}>
+                    <div onClick={(e)=>{e.stopPropagation()}}>
+                        <div> <h1>Recuperar senha</h1><button onClick={()=>{setRecoverPasswordStatus(false)}}>X</button></div>
+                       
+                        <label>Email:</label>
+                        <input/>
+                    </div>
+                </div>
+                :null
+            }
         </div>
 
     )

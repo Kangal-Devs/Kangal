@@ -18,8 +18,8 @@
 }
 #documents_content_principal {
   grid-template-columns: 3fr 1fr;
+
   
-  background-color: rgba(255, 0, 0, 0);
   height: 100%;
   min-height: 0;
   width: 100%;
@@ -79,7 +79,6 @@
 }
 #documents1{
   scrollbar-color: rgb(85, 85, 85) transparent;
-  background-color:rgba(255, 0, 0, 0) ;
   overflow: auto;
   display: flex;
   flex-direction: column;
@@ -92,7 +91,9 @@
   align-self: self-end;
 }
 #about_document{
-
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(56, 52, 52) rgba(255, 0, 0, 0);
   padding:30px
 }
 #about_document p{
@@ -167,8 +168,12 @@ color: rgb(212, 212, 212);
   color: #2F2F2F;
   background-color: aqua;
 }
-#description2{
-  margin-top: 40px;
+#document_description1{
+  text-align: justify;
+}
+#document_description2{
+  margin-top: 20px;
+ text-align: justify;
 }
 
 #note{

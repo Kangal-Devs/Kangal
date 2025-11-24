@@ -1,0 +1,33 @@
+.user_group_task{
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.116);
+    color: white;
+    font-family: Signika Negative;
+    display: grid;
+    grid-template-columns: 1fr 3fr 5fr;
+    opacity: 0.9;
+}
+.user_group_task:hover{
+    opacity: 1;
+    border: 1px solid rgba(255, 255, 255, 0.267);
+}
+.user_group_task p{
+
+    align-self: center;
+    justify-self: center;
+}
+.user_group_task button{
+    height: 70%;
+    border:1px solid rgba(255, 255, 255, 0.253);
+    border-radius: 5px;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.178);
+    align-self: center;
+    cursor: pointer;
+}
+.user_group_task button:hover{
+    transition: all 0.17s ease-in-out;
+    opacity: 0.4;
+}

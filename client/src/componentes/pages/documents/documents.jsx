@@ -183,7 +183,7 @@ export function Documents() {
                                             </button>
                                         </div>
                                         <h1>{currentDocumentTitle}</h1>
-                                        <p>{currentDocumentDescription1}</p>
+                                        <p id="document_description1">{currentDocumentDescription1}</p>
 
                                         <p id="about_document_code_title">Código:</p>
                                         <div id="about_document_codes_part">
@@ -216,7 +216,7 @@ export function Documents() {
                                             </div>) : null}
 
                                         </div>
-                                        <p id="description2">{currentDocumentDescription2}</p>
+                                        <p id="document_description2">{currentDocumentDescription2}</p>
                                         {
                                             !(currentDocumentNote == "null") ? (
                                                 <div id="note">

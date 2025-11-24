@@ -1700,19 +1700,48 @@ color:white;
   font-size: 20px;
 }
 #decoration_groups_background{
-
-
+   background:linear-gradient(220deg,rgba(0, 102, 255, 0.479),rgba(0, 119, 255, 0.425),rgba(0, 119, 255, 0.425),rgba(0, 119, 255, 0.164));
+animation-name:decoration-groups-animation;
+  animation-delay: 0s;
+  animation-timing-function:ease;
+  animation-iteration-count: infinite;
+  animation-duration: 7s;
    height: 150px;
   width: 100%;
 }
 
 #decoration_groups_principal{
+  display: flex;
+  
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 20px;
+  flex-direction: column;
   margin-top: -150px;
-  background:linear-gradient(220deg,rgba(0, 119, 255, 0.363),rgba(0, 0, 255, 0.048));
+  
    height: 150px;
   width: 100%;
 }
+@keyframes decoration-groups-animation {
+  0%{
+    opacity: 1;
+  }
+  25%{
+    opacity: 0.5;
+  }
+  50%{
+    opacity: 0.5;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+#decoration_groups_principal h1{
+color: white;
+text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.562);
 
+font-family: Signika Negative;
+}
 #groups_list{
 scrollbar-color: rgb(44, 44, 49) rgba(8, 8, 8, 0);
 box-sizing: border-box;
@@ -1806,7 +1835,7 @@ cursor: pointer;
 
 }
 #group_lesson_background{
-  
+
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.589);
   backdrop-filter:blur(5px);
@@ -1992,7 +2021,7 @@ background-color: rgba(255, 0, 0, 0);
     animation-duration: 1s;
   width: 45%;
   max-width: 700px;
-  height:45%;
+
   border-radius: 10px;
   padding: 10px;
    background-color: rgb(39, 39, 43);
@@ -2054,3 +2083,439 @@ background-color: rgba(255, 0, 0, 0);
   background-color: rgb(25, 25, 27);
   border:1px solid rgba(255, 255, 255, 0.247);
 }
+#group_lesson_bar_finished h1{
+  color: white;
+  font-family: Signika Negative;
+}
+#group_lesson_bar_finished h2{
+    color: rgb(243, 243, 243);
+  font-family: Signika Negative;
+}
+#group_lesson_bar_finished_image{
+  overflow: hidden;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(24, 24, 24);
+  border-radius: 10px;
+  aspect-ratio: 3/2;
+}
+#group_lesson_bar_finished_image img{
+  height: 100%;
+}
+#group_lesson_bar_finished_about{
+  border-radius: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.144);
+  display: flex;
+  column-gap: 10px;
+}
+#group_lesson_bar_finished_text{
+  scrollbar-color: rgb(65, 65, 65) rgba(255, 255, 255, 0);
+  scrollbar-width: thin;
+  flex-grow: 1;
+  max-height: 160px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+ 
+}
+#group_lesson_bar_finished button{
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border:1px solid rgba(255, 255, 255, 0.041);
+  background-color: rgba(255, 255, 255, 0.089);
+  width: 100%;
+  color: rgba(221, 221, 221, 0.404);
+  font-size: 15px;
+}
+#group_lesson_bar_finished button:hover{
+  background-color: rgba(255, 255, 255, 0.034);
+  color:rgb(128, 128, 128);
+}
+#about_group_lesson_background{
+  
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#about_group_lesson_bar{
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+  padding:10px;
+  width: 40%;
+  max-width: 600px;
+
+  border-radius: 10px;
+  background-color: rgb(35, 36, 41);
+  border: 1px solid rgba(255, 255, 255, 0.055);
+}
+#about_group_lesson_bar input,textarea{
+   color:white;
+    font-size: 20px;
+    padding:10px;
+    font-family: Signika negative;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    border-radius: 5px;
+    width: 70%;
+    transition: all 0.5s ease-in-out;
+}
+#about_group_lesson_bar_title{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+#about_group_lesson_bar_title h1{
+  color: white;
+  font-family: Signika Negative;
+}
+#about_group_lesson_bar_title button{
+  width: 25px;
+  height: 25px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: rgb(22, 22, 22);
+  cursor: pointer;
+}
+#about_group_lesson_bar_list{
+  display: flex;
+  border: 10px solid rgb(35, 36, 41);
+  box-sizing: border-box;
+  border-radius: 17px;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.123);
+  background-color: rgb(22, 22, 22);
+}
+#about_group_lesson_bar label{
+  margin-top: 5px;
+  color: white;
+  font-family: Signika Negative;
+}
+#about_group_lesson_bar_image{
+
+  height: 150px;
+ aspect-ratio: 3/2;
+ display: flex;
+  border-radius: 10px;
+ background-color: rgba(15, 15, 15, 0.356);
+ align-items: center;
+ justify-content: center;
+ overflow: hidden;
+}
+
+#about_group_lesson_bar_image img{
+  height: 100%;
+
+  
+}
+#about_group_lesson_bar_image_modify{
+  cursor: pointer;
+  width: 225px;
+  margin-top: 10px;
+  box-sizing: border-box;
+  padding: 5px;
+  background-color: rgba(39, 39, 39, 0.521);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.363);
+  border-radius: 5px;
+}
+#about_group_lesson_bar_image_modify:hover{
+    background-color: rgba(90, 90, 90, 0.521);
+}
+#see_user_group_lesson{
+  margin-block: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 5px;
+ cursor: pointer;
+  padding:6px 16px 6px 16px;
+  font-size:15px;
+  font-family: Signika Negative;
+  border-radius: 7px;
+  transition: all 0.17s ease-in-out;
+cursor: pointer;
+ background-color: rgba(105, 79, 255, 0.822);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(140, 127, 255, 0.822);
+}
+#about_group_lesson_bar_buttons{
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  column-gap: 5px;
+
+  justify-content: end;
+}
+#about_group_lesson_bar_buttons button{
+cursor: pointer;
+  padding:8px 16px 8px 16px;
+  font-size:15px;
+  font-family: Signika Negative;
+  border-radius: 7px;
+  transition: all 0.17s ease-in-out;
+cursor: pointer;
+}
+#cancel_update_group_lesson{
+  background-color: rgba(0, 0, 0, 0.048);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(255, 255, 255, 0.055);
+}
+#cancel_update_group_lesson:hover{
+  background-color:  rgba(255, 255, 255, 0.062);
+}
+#update_group_lesson{
+ background-color: rgba(79, 120, 255, 0.822);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(127, 157, 255, 0.822);
+}
+#update_group_lesson:hover{
+   background-color: rgba(67, 102, 218, 0.822);
+}
+#see_user_group_lesson img{
+  height: 25px;
+}
+#user_group_lessons_bar{
+   align-items: start;
+  display: flex;
+  flex-direction: column;
+  padding:10px;
+  width: 40%;
+  max-width: 600px;
+
+  border-radius: 10px;
+  background-color: rgb(35, 36, 41);
+  border: 1px solid rgba(255, 255, 255, 0.055);
+}
+#user_group_lessons_bar h1{
+  color: white;
+  font-family: Signika Negative;
+
+}
+#user_group_lessons_bar_top img,#user_group_lesson_bar_top img{
+  height:35px;
+cursor: pointer;
+}
+#user_group_lessons_bar_top,#user_group_lesson_bar_top{
+
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+#user_group_lessons_bar_top button,#user_group_lesson_bar_top button{
+  cursor: pointer;
+  height: 25px;
+  width: 25px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: rgb(24, 24, 24);
+}
+#user_group_lessons_list{
+  box-sizing: border-box;
+  padding: 5px;
+  gap:5px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  
+  height:fit-content;
+
+  border-radius: 10px;
+}
+@media (max-width:1000px) {
+  #user_group_lessons_list{
+  grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width:750px) {
+  #user_group_lessons_list{
+  grid-template-columns: 1fr
+  }
+}
+#user_group_lessons_bottom{
+  overflow: auto;
+    background-color: #0e0e0e44;
+  scrollbar-color: rgb(87, 87, 87) rgba(255, 255, 255, 0);
+  scrollbar-width: thin;
+    width: 100%;
+  height: 300px;
+}
+#user_group_lesson_bar{
+  z-index: 10;
+  border: 1px solid rgba(255, 255, 255, 0.027);
+  display: flex;
+  flex-direction: column;
+  padding:10px 10px 20px 10px;
+  max-width: 400px;
+  width: 35%;
+  border-radius: 10px;
+    background-color: rgb(39, 39, 43);
+}
+#user_group_tasks_list{
+
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.397);
+  row-gap: 5px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0px 0px 10px 10px;
+}
+#user_group_lesson_bar h3{
+  margin-top: 10px;
+  font-family: Signika Negative;
+}
+#user_group_lesson_bar label{
+  margin-top: 10px;
+  color: white;
+  font-family: Signika Negative;
+}
+#user_group_lesson_bar input,#user_group_lesson_bar textarea{
+  color: white;
+  width: 75%;
+  padding: 5px;
+  font-size: 20px;
+  background-color: rgb(22, 22, 22);
+  border: none;
+  border-radius: 5px;
+}
+#user_group_tasks_list_title{
+  grid-template-columns: 1fr 3fr 5fr;
+  display: grid;
+  border-radius: 10px 10px 0px 0px;
+  margin-top: 10px;
+  width: 100%;
+  border: 2px solid rgba(0, 0, 0, 0.397);
+  box-sizing: border-box;
+  padding: 5px;
+  background-color: rgba(255, 0, 0, 0);
+}
+#user_group_tasks_list_title p{
+  opacity: 0.5;
+  align-self: center;
+  justify-self: center;
+}
+#user_group_lesson_bar_buttons{
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  margin-top: 10px;
+}
+#user_group_lesson_bar_buttons button{
+  cursor: pointer;
+  padding:8px 16px 8px 16px;
+  font-size:15px;
+  font-family: Signika Negative;
+  border-radius: 7px;
+  transition: all 0.17s ease-in-out;
+cursor: pointer;
+ background-color: rgba(79, 120, 255, 0.822);
+ color: rgb(255, 255, 255);
+ border: none;
+ outline: 1px solid rgba(127, 157, 255, 0.822);
+}
+#user_group_lesson_bar_buttons button:hover{
+  background-color: rgba(67, 102, 218, 0.822);
+}
+#about_group_task_bar{
+  display: grid;
+  grid-template-rows: 8fr 1.5fr;
+  animation-name:about-group-task-animation;
+  animation-delay: 0s;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.562);
+  border: 1px solid rgba(255, 255, 255, 0.027);
+
+  padding:10px 10px 20px 10px;
+  max-width: 400px;
+  width: 22%;
+  height: 40%;
+  max-height: 40%;
+  border-radius: 0px 10px 10px 0px;
+    background-color: rgb(33, 33, 36);
+}
+@keyframes about-group-task-animation {
+  0%{
+    transform:translateX(-50%);
+    opacity: 0%;
+  }
+}
+
+#about_group_task_bar_top{
+  background-color: rgba(255, 0, 0, 0);
+  overflow: auto;
+  scrollbar-color: rgb(61, 61, 61) rgba(0, 0, 0, 0);
+  scrollbar-width: thin;
+  padding-bottom: 10px;
+}
+#about_group_task_bar_bottom{
+  box-sizing: border-box;
+  padding: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.137);
+  /* background-color: rgb(30, 255, 0); */
+
+}
+#about_group_task_bar_top h1{
+  color: white;
+  font-family: Signika Negative;
+  font-size: 25px;
+}
+#about_group_task_bar_bottom p{
+
+  background-color: red;
+}
+#about_group_task_bar_top div{
+  width:100%;
+  background-color: rgba(255, 0, 0, 0);
+  margin-top: 10px;
+  box-sizing: border-box;
+  padding:6px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.116);
+}
+#about_group_task_bar_top div div img{
+  cursor: pointer;
+  max-width: 40%;
+}
+#about_group_task_bar_top div div{
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.281);
+   margin-top: 5px;
+    padding:0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+  }
+  #group_task_bar_top_image{
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.219);
+    padding: 2px;
+    box-sizing: border-box;
+    max-height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+    #group_task_bar_top_image img{
+      height: 100%;
+    }

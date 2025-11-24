@@ -16,7 +16,9 @@ module.exports.get_user_group_lesson = async(req,res)=>{
     try{
         const {group_lesson_id:groupLessonId,user_id:userId} = req.params
 
-        const userGroupLesson = await userGroupLessonModel.findOne({groupLesson:groupLessonId,user:userId,description:null,score:null})
+        console.log("group"+groupLessonId)
+        console.log("user"+userId)
+        const userGroupLesson = await userGroupLessonModel.findOne({groupLesson:groupLessonId,user:userId})
 
         res.status(200).json({message:userGroupLesson})
     }
@@ -24,13 +26,14 @@ module.exports.get_user_group_lesson = async(req,res)=>{
         res.status(500).json({message:err.message})
     }
 }
+
 module.exports.get_all_user_group_lesson = async(req,res)=>{
     try{
         const {group_lesson_id:groupLessonId} = req.params
 
-        const userGroupLesson = await userGroupLessonModel.findOne({groupLesson:groupLessonId})
+        const userGroupLessons = await userGroupLessonModel.find({groupLesson:groupLessonId})
 
-        res.status(200).json({message:userGroupLesson})
+        res.status(200).json({message:userGroupLessons})
     }
     catch(err){
         res.status(500).json({message:err.message})
@@ -39,10 +42,10 @@ module.exports.get_all_user_group_lesson = async(req,res)=>{
 
 module.exports.update_user_group_lesson = async(req,res)=>{
     try{
-        const {group_lesson_id:groupLessonId,user_id:userId} = req.params
+        const {user_group_lesson_id:userGroupLessonId} = req.params
 
-        const {score,description} = req.body
-        const userGroupLesson = await userGroupLessonModel.findByIdAndUpdate({groupLesson:groupLessonId,user:userId},{$set:{description,score}})
+        const {score,message} = req.body
+        const userGroupLesson = await userGroupLessonModel.findByIdAndUpdate(userGroupLessonId,{$set:{message,score}})
 
         res.status(200).json({message:userGroupLesson})
     }

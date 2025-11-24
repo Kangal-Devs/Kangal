@@ -50,6 +50,14 @@ box-sizing: border-box
     background-color: rgba(85, 85, 85, 0.137);
  
 }
+.group_lesson_about{
+    color: white;
+    background-color: rgba(0, 153, 255, 0.589);
+    border:1px solid rgba(93, 190, 255, 0.048);
+}
+.group_lesson_about:hover{
+     background-color: rgba(0, 153, 255, 0.425);
+}
 .group_lesson_to_do{
     background-color: rgba(115, 255, 0, 0.24);
     color: white;
