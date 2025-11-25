@@ -26,7 +26,7 @@ export function GroupLesson({image,userId,amIOwner,owner,itemId,name,funcAlter})
                 <img src={`data:image/png;base64,${image}`}/>
             </div>
             <div className="group_lesson_bottom">
-            <p>{name}</p>
+            <p >{name}</p>
             {amIOwner?
             <button className="group_lesson_about"onClick={()=>{funcAlter[1](itemId)}}>Sobre</button>:
              didLesson?

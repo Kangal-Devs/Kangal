@@ -11,7 +11,7 @@ const groupLessonSchema = mongoose.Schema({
         type:String,
         required:[true,"groupLessonError2"],
         minLength:[1,"groupLessonError3"],
-        maxLength:[25,"groupLessonError4"],
+        maxLength:[35,"groupLessonError4"],
         validate:{
             validator:(value)=>{
                 const val = prohibitedWords.some((prohibitedWord)=> value.toLowerCase().includes(prohibitedWord))

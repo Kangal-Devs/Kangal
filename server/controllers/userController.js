@@ -290,3 +290,22 @@ exports.user_update = async (req, res) => {
         res.status(400).json({ message: err.message })
     }
 }
+module.exports.get_users_ranking = async(req,res)=>{
+    try{
+        const users = await userModel.find({}).sort({xp:-1}).limit(15)
+
+        const usersWithBase64 = users.map((user)=>{
+            return {
+                _id:user._id,
+                image:user.image.toString("base64"),
+                xp:user.xp,
+                name:user.name
+            }
+        })
+
+        res.status(200).json({message:usersWithBase64})
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
+    }
+}

@@ -46,6 +46,7 @@ import { GroupTaskButton } from "../../components/group_task_button/group_task_b
 import { UserGroupLesson } from "../../components/user_group_lesson/user_group_lesson.jsx"
 import user_group_lesson from "../../../assets/specific_page/group/user_group_lesson.png"
 import { UserGroupTask } from "../../components/user_group_task/user_group_task.jsx"
+import see_all from "../../../assets/specific_page/group/see_all.png"
 // import groups_background from "../../../assets/specific_page/group/groups_background1.svg"
 export function Groups() {
 
@@ -69,6 +70,8 @@ export function Groups() {
         chatColor5: { fontColor: "#FFFFFF", backgroundColor: "#4A5823" },
         chatColor6: { fontColor: "#B20000", backgroundColor: "#4A5823" },
     })
+
+    const [userGroupLessonsRender,setUserGroupLessonsRender] = useState(0)
 
     const [currentUserGroupTasks, setCurrentUserGroupTasks] = useState()
     const [currentUserGroupLessonUserId, setCurrentUserGroupLessonUserId] = useState()
@@ -278,6 +281,16 @@ export function Groups() {
     const [currentAboutGroupTaskTitle, setCurrentAboutGroupTaskTitle] = useState()
     const [currentAboutGroupTaskPossibleAnswers, setCurrentAboutGroupTaskPossibleAnswers] = useState()
 
+    useEffect(()=>{
+        console.log("nome:"+currentGroupName)
+        if(currentGroupName){
+            setLocalName("Grupo/"+currentGroupName)
+        }
+        else{
+            setLocalName("Grupos")
+        }
+    },[currentGroupName])
+
     useEffect(() => {
         if (currentAboutGroupTaskId) {
             axios.get(`http://localhost:5000/api/get_group_task/${currentAboutGroupTaskId}`)
@@ -293,6 +306,7 @@ export function Groups() {
                 })
                 .catch((err) => { console.log(err) })
         }
+    
     }, [currentAboutGroupTaskId])
 
     const updateUserGroupLesson = useCallback(() => {
@@ -332,7 +346,7 @@ export function Groups() {
     }, [currentUserGroupLessonId, currentUserGroupLessonUserId, currentAboutGroupLessonId])
 
     useEffect(() => {
-        console.log("a")
+   
         if (currentAboutGroupTasks) {
             Promise.all(currentAboutGroupTasks.map((groupTask) => {
                 return axios.get(`http://localhost:5000/api/get_user_group_task/${currentUserGroupLessonUserId}/${groupTask._id}`)
@@ -398,10 +412,12 @@ export function Groups() {
     }, [currentAboutGroupLessonId])
 
     useEffect(() => {
-        if (userGroupLessonsStatus) {
+       console.log("ESTOU AQUI")
+        if (userGroupLessonsStatus || currentUserGroupLessonId) {
+            
             axios.get(`http://localhost:5000/api/get_all_user_group_lesson/${currentAboutGroupLessonId}`)
                 .then((res) => {
-
+                    
                     if (res.data.message.length) {
                         setUserGroupLessons(res.data.message.map((userGroupLesson, i) => {
                             return <UserGroupLesson userId={userGroupLesson.user} groupLessonId={userGroupLesson.groupLesson} createdAt={userGroupLesson.createdAt} userGroupLessonId={userGroupLesson._id} score={userGroupLesson.score} funcAlter={[setCurrentUserGroupLessonId, setCurrentUserGroupLessonUserId, setCurrentUserGroupLessonUserName]} />
@@ -410,7 +426,7 @@ export function Groups() {
                 })
                 .catch((err) => { console.log(err) })
         }
-    }, [userGroupLessonsStatus])
+    }, [userGroupLessonsStatus,userGroupLessonsRender])
 
     useEffect(() => {
         console.log(currentAboutGroupLessonName)
@@ -649,6 +665,7 @@ export function Groups() {
 
 
         if (!currentGroupId) {
+            setCurrentGroupName("")
             axios.get("http://localhost:5000/api/get_all_public_groups")
                 .then((res) => {
                     setPublicGroups(res.data.message.map((group, i) => {
@@ -1954,6 +1971,7 @@ export function Groups() {
                                 setCurrentAboutGroupLessonId("")
                                 setUserGroupLessonsStatus(false)
                                 setCurrentUserGroupLessonId()
+                                ;setCurrentAboutGroupTaskId("")
                             }}>
 
 
@@ -2000,7 +2018,7 @@ export function Groups() {
                                         !currentUserGroupLessonId ?
                                             <div id="user_group_lessons_bar" onClick={(e) => { e.stopPropagation() }}>
                                                 <div id="user_group_lessons_bar_top">
-                                                    <img src={arrow} onClick={() => { setUserGroupLessonsStatus(false) }} />
+                                                    <img src={arrow} onClick={() => { setUserGroupLessonsStatus(false); }} />
                                                     <button onClick={() => { setUserGroupLessonsStatus(false); setCurrentAboutGroupLessonId() }}>X</button>
                                                 </div>
 
@@ -2017,11 +2035,13 @@ export function Groups() {
                                             <><div id="user_group_lesson_bar" onClick={(e) => { e.stopPropagation() }}>
                                                 <div id="user_group_lesson_bar_top">
                                                     <img src={arrow} onClick={() => {
-                                                        setCurrentUserGroupLessonId()
+                                                        setCurrentUserGroupLessonId();setCurrentAboutGroupTaskId("");
+                                                        ;setUserGroupLessonsRender(ab=>ab+1)
                                                     }} />
                                                     <button onClick={() => {
-                                                        setUserGroupLessonsStatus(false); setCurrentAboutGroupLessonId()
-                                                        setCurrentUserGroupLessonId()
+                                                        setUserGroupLessonsStatus(false); setCurrentAboutGroupLessonId();
+                                                        setCurrentUserGroupLessonId();setCurrentAboutGroupTaskId("");
+                                                       
                                                     }}>X</button>
                                                 </div>
                                                 <p>Respostas de:{currentUserGroupLessonUserName}</p>
@@ -2071,7 +2091,7 @@ export function Groups() {
                                                             }
                                                             {
                                                                 currentAboutGroupTaskCode?
-                                                                <p></p>
+                                                                <p>a</p>
                                                                 :null
                                                             }
                                                             {
@@ -2085,8 +2105,9 @@ export function Groups() {
 
                                                         </div>
                                                         <div id="about_group_task_bar_bottom">
-                                                            {/* <p>Resposta:</p>
-                                    <p>AAAAAAAAAAAAAAAAAAA</p> */}
+                                                            <p>Resposta:</p>
+                                                            <div>{currentUserGroupTaskResponse.length>15?<><p>{currentUserGroupTaskResponse.slice(0,15)+"..."}</p><button><img src={see_all}/></button> </>:<p>{currentUserGroupTaskResponse}</p>}
+                                                            <button><img src={copy}/></button></div>
                                                         </div>
                                                     </div> : null
                                                 }

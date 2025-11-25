@@ -37,6 +37,7 @@ border-radius: 0px 0px 7px 7px;
   border-radius: 6px;
   transition: all 0.17s ease-in-out;
 cursor: pointer;
+max-height:35px;
 box-sizing: border-box
 ;
 }
@@ -66,4 +67,9 @@ box-sizing: border-box
 .group_lesson_to_do:hover{
     background-color: rgba(115, 255, 0, 0.137);
  
+}
+.group_lesson p{
+
+    width: 70%;
+    overflow: hidden;
 }
