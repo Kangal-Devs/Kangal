@@ -10,23 +10,22 @@ import stage5 from "../../../../assets/specific_page/all_games/hangman/stage5.pn
 import stage6 from "../../../../assets/specific_page/all_games/hangman/stage6.png"
 import stage7 from "../../../../assets/specific_page/all_games/hangman/stage7.png"
 
-const words = ['iorgute'
-    ,'engravatar'
-    ,'girassol'
-    ,'caderno'
-    ,'janela'
-    ,'cachorro'
-    ,'franja'
-    ,'garganta'
-    ,'forca'
-    ,'suspiro'
-    ,'fragmento'
-    ,'calculadora'
-    ,'jantar'
-    ,"segredo"
-    ,"asfalto"
-    ,"frigideira",
-    ,"relampago"
+const words = ['criptografia'
+    ,'middleware'
+    ,'javascript'
+    ,
+    "objeto",
+  "array",
+  "loop",
+    ,'servidor'
+    ,"fullstack"
+    ,'websocket'
+    ,'thread'
+    ,'navegador'
+    ,"backend"
+    ,"frontend"
+    ,"interface",
+    ,"algoritmo"
     ];
 
 const images = [

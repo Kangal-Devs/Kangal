@@ -106,7 +106,7 @@ body{
 }
 #slogan_button_start:hover{
     background: #000000;
-    color:#8d1cce;
+    color:#D0FE1D;
     border:1px solid ;
     
 }
@@ -156,7 +156,7 @@ body{
 }
 
 #about_us_text_green{
-    color: #6f1cce;
+    color: #ccee0d;
     font-size: 40px;
     font-family: 'Signika Negative';
 }
@@ -172,6 +172,7 @@ body{
     font-size: 25px;
     color: white;
     font-family: 'Signika Negative';
+    padding-bottom: 30px;
 }
 
 .indexes{

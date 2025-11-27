@@ -13,7 +13,7 @@ import {Link,useNavigate} from "react-router-dom"
 
 export function AboutUs() {
 
-
+    const navigate = useNavigate()
     return (
         <div id="about_us"  >
             <BasicNavTop contact={true} login={true}/>
@@ -25,8 +25,11 @@ export function AboutUs() {
                         <h4 id="slogan_text_top">DA CURIOSIDADE AO CÓDIGO</h4>
                         <h2 id="slogan_text_core">Aprenda a colocar as suas ideias no mundo com a Kangal</h2>
                         <div id="slogan_buttons">
-                            <button id="slogan_button_start" className="slogan_button">COMEÇAR AGORA</button>
-                            <h5 className="slogan_button" id="slogan_button_enter"> Já tenho uma conta</h5>
+                            <button id="slogan_button_start" className="slogan_button" onClick={()=>{
+                                navigate("/login")
+                            }}>COMEÇAR AGORA</button>
+                            <h5 className="slogan_button" id="slogan_button_enter" onClick={()=>{
+                                navigate("/login")}}> Já tenho uma conta</h5>
                             <img src={sign} id="sign" />
                         </div>
                     </div>

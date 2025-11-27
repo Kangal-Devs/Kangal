@@ -490,6 +490,7 @@ background-color: rgba(219, 51, 51, 0.822);
     animation-name: collection_animation;
     animation-duration: 0.4s;
     animation-delay: 0s;
+    z-index: 2;
     animation-iteration-count: 1;
     
     display: grid;

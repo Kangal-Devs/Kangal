@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(19, 19, 20);
 
   align-items: center;
   /* max-width: 600px; */
@@ -20,7 +20,7 @@
   justify-content: center;
   width:40%;
   height:100%;
-  background: linear-gradient(150deg,rgb(51, 51, 51),rgb(37, 37, 37));
+  background: linear-gradient(150deg,rgb(36, 37, 41),rgb(37, 37, 37));
   padding-inline: 40px;
 }
 #hangman .image {
